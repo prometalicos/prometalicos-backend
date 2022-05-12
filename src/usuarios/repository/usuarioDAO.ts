@@ -143,62 +143,106 @@ export class UsuariosDAO {
         }
     }
 
-    public async getMenu(usuarioId: string, op?: any) {
+    public async getPermissions(query_permiso, result?: Array<NavData>, op?: any) {
+        let sub_menu = new Array();
+        if (typeof result !== 'undefined') {
+            sub_menu = result;
+        }
+        let row: NavData;
+        let query_permiso_menu = await this.connection.pool.query(`SELECT
+                        permiso_id, father,
+                        name, url, icon,
+                        level
+                        FROM adm.permiso
+                        WHERE father = $1;`, [query_permiso['permiso_id']]);
+        if (query_permiso_menu.rows.length > 0) {
+            let children = new Array<NavData>();
+            let row_children: NavData;
+            for (let index_permiso_menu = 0; index_permiso_menu < query_permiso_menu.rows.length; index_permiso_menu++) {
+                if (query_permiso_menu.rows[index_permiso_menu]['level'] == -1) {
+                    let children_son = <Array<NavData>>await this.getPermissions(query_permiso_menu.rows[index_permiso_menu]);
+                    children.push(children_son[0]);
+                }
+                else {
+                    if (query_permiso_menu.rows[index_permiso_menu]['level'] == -2) {
+
+                        if (op === "navBar") {
+                            let children_son = <Array<NavData>>await this.getPermissions(query_permiso_menu.rows[index_permiso_menu]);
+                            children.push(children_son[0]);
+                        }
+                        else {
+                            row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['name'], url: query_permiso_menu.rows[index_permiso_menu]['url'], icon: query_permiso_menu.rows[index_permiso_menu]['icon'] };
+                            children.push(row_children);
+                        }
+                    }
+                    else {
+                        row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['name'], url: query_permiso_menu.rows[index_permiso_menu]['url'], icon: query_permiso_menu.rows[index_permiso_menu]['icon'] };
+                        children.push(row_children);
+                    }
+                }
+            }
+            row = <NavData>{ name: query_permiso['name'], icon: query_permiso['icon'], url: query_permiso['url'], children: children }
+            sub_menu.push(row);
+        }
+        return sub_menu;
+    }
+
+    public async getMenu(peopleId: string, op?: any) {
         let result = new Array();
         try {
-            let con = await this.connection.getConnection();
-            let query_usuario_menu = await con.query(`SELECT
+            debugger
+            let query_usario_rol = await this.connection.pool.query(`SELECT
                         usuario_id,
-                        opciones_menu_id
-                        FROM usario_menu
-                        WHERE usuario_id = $1;`, [usuarioId]);
-            if (query_usuario_menu.length > 0) {
+                        rol_id
+                        FROM adm.usuario_rol
+                        WHERE usuario_id = $1;`, [peopleId]);
+            if (query_usario_rol.rows.length > 0) {
                 let row: NavData;
                 row = <NavData>{ name: "Escritorio", icon: "icon-speedometer", url: "/dashboard" };
                 result.push(row);
-                for (let index_usario_menu = 0; index_usario_menu < query_usuario_menu.length; index_usario_menu++) {
-                    let query_permissions_roles = await con.query(`SELECT
-                            id_permission,
-                            opciones_menu_id
-                            FROM permissions_roles
-                            WHERE opciones_menu_id = ?;`, [query_usuario_menu[index_usario_menu]['opciones_menu_id']]);
-                    if (query_permissions_roles.length > 0) {
-                        for (let index_permissions_roles = 0; index_permissions_roles < query_permissions_roles.length; index_permissions_roles++) {
-                            let query_permissions = await con.query(`SELECT
-                                opciones_menu_id,
-                                descripcion,
-                                url
-                                FROM opciones_menu
-                                WHERE opciones_menu_id = $1 and opciones_menu_id_padre = -1;`, [query_permissions_roles[index_permissions_roles]['opciones_menu_id']]);
-                            if (query_permissions.length > 0) {
-                                for (let index_permissions = 0; index_permissions < query_permissions.length; index_permissions++) {
-                                    //result = await this.getPermissions(query_permissions[index_permissions], result, op);
+                for (let index_usario_rol = 0; index_usario_rol < query_usario_rol.rows.length; index_usario_rol++) {
+                    let query_permiso_rol = await this.connection.pool.query(`SELECT
+                            permiso_id,
+                            rol_id
+                            FROM adm.permiso_rol
+                            WHERE rol_id = $1;`, [query_usario_rol.rows[index_usario_rol]['rol_id']]);
+                    if (query_permiso_rol.rows.length > 0) {
+                        for (let index_permiso_rol = 0; index_permiso_rol < query_permiso_rol.rows.length; index_permiso_rol++) {
+                            let query_permiso = await this.connection.pool.query(`SELECT
+                                permiso_id,
+                                name,
+                                icon
+                                FROM adm.permiso
+                                WHERE permiso_id = $1 and father = -1;`, [query_permiso_rol.rows[index_permiso_rol]['permiso_id']]);
+                            if (query_permiso.rows.length > 0) {
+                                for (let index_permiso = 0; index_permiso < query_permiso.rows.length; index_permiso++) {
+                                    result = await this.getPermissions(query_permiso.rows[index_permiso], result, op);
                                 }
                             }
                         }
                     }
                 }
             }
-            con.release();
             return result;
         } catch (error) {
-            throw new Error(error)
+            console.error(error);
+            return new Error(error);
         }
     }
 
     public async getSubMenu(permissionId: string) {
         try {
-
-            let query_permissions = await this.connection.pool.query(`SELECT
-                                opciones_menu_id,
-                                descripcion,
+            let query_permiso = await this.connection.pool.query(`SELECT
+                                permiso_id,
+                                name,
+                                icon,
                                 url
-                                FROM opciones_menu
-                                WHERE opciones_menu_id_padre = $1;`, [permissionId]);
-
-            return query_permissions;
+                                FROM adm.permiso
+                                WHERE father = $1;`, permissionId);
+            return query_permiso;
         } catch (error) {
-            throw new Error(error)
+            console.error(error);
+            return new Error(error);
         }
     }
 }

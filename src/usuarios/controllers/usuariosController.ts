@@ -83,6 +83,21 @@ export class UsuariosController {
 		}
 	}
 
+	public async getMenu(req: Request, res: Response, next) {
+		try {
+			res.send(await usuarios.getMenu(req.body.id, req.body.op));
+		} catch (error) {
+			let err: ErrorModel = new Error(error);
+			err.status = 500
+			next(err);
+			console.log(
+				"An error occurred while get menu :" +
+				error +
+				`: ${UsuariosController.name} -> getMenu`
+			);
+		}
+	}
+
 	public async getSubMenu(req: Request, res: Response, next) {
 		try {
 			res.send(await usuarios.getSubMenu(req.body.id));

@@ -23,6 +23,9 @@ export class UsiariosRoutes {
         app.route('/user/delete')
         .post(auth,this.usuariosController.deleteUsuario)
 
+        app.route('/user/get_menu')
+        .post(this.usuariosController.getMenu)
+
         app.route('/user/get_sub_menu')
         .post(auth,this.usuariosController.getSubMenu)
     }

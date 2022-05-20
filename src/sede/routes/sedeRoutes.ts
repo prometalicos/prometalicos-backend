@@ -12,19 +12,19 @@ export class SedeRoutes {
 
         app.use(cors());
 
-        app.route('/user')
+        app.route('/sede')
         .post(this.sedeController.insertSede)
 
-        app.route('/user/get')
+        app.route('/sede/get')
         .post(auth,this.sedeController.getSede)
 
-        app.route('/user/getById')
+        app.route('/sede/getById')
         .post(auth,this.sedeController.getSedeById)
 
-        app.route('/user/update')
+        app.route('/sede/update')
         .post(auth,this.sedeController.updateSede)
 
-        app.route('/user/delete')
+        app.route('/sede/delete')
         .post(auth,this.sedeController.deleteSede)
 
     }

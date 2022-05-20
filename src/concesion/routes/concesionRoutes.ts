@@ -12,19 +12,19 @@ export class ConcesionRoutes {
 
         app.use(cors());
 
-        app.route('/user')
+        app.route('/concesion')
         .post(this.concesionController.insertConcesion)
 
-        app.route('/user/get')
+        app.route('/concesion/get')
         .post(auth,this.concesionController.getConcesion)
 
-        app.route('/user/getById')
+        app.route('/concesion/getById')
         .post(auth,this.concesionController.getConcesionById)
 
-        app.route('/user/update')
+        app.route('/concesion/update')
         .post(auth,this.concesionController.updateConcesion)
 
-        app.route('/user/delete')
+        app.route('/concesion/delete')
         .post(auth,this.concesionController.deleteConcesion)
 
     }

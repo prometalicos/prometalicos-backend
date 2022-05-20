@@ -16,7 +16,7 @@ export class ConcesionController {
 			err.status = 400
 			next(err);
 			console.log(
-				"An error occurred while inserting user :" +
+				"An error occurred while inserting concesion :" +
 				error +
 				`: ${ConcesionController.name} -> insertConcesion`
 			);
@@ -46,7 +46,7 @@ export class ConcesionController {
 			err.status = 404
 			next(err);
 			console.log(
-				"An error occurred while getting user :" +
+				"An error occurred while getting concesion :" +
 				error +
 				`: ${ConcesionController.name} -> getConcesionById`
 			);
@@ -61,7 +61,7 @@ export class ConcesionController {
 			err.status = 400
 			next(err);
 			console.log(
-				"An error occurred while updating user :" +
+				"An error occurred while updating concesion :" +
 				error +
 				`: ${ConcesionController.name} -> updateConcesion`
 			);
@@ -76,7 +76,7 @@ export class ConcesionController {
 			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while deleting user :" +
+				"An error occurred while deleting concesion :" +
 				error +
 				`: ${ConcesionController.name} -> deleteConcesion`
 			);

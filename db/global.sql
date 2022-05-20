@@ -151,17 +151,17 @@ ALTER TABLE adm.eventos_usuario ADD CONSTRAINT FK_eventos_usuario__usuario FOREI
 
 CREATE TABLE adm.permiso (
     permiso_id int NOT NULL,
-    father int NOT NULL,
-    level int NOT NULL,
-    name character varying(64),
-    icon character varying(64),
+    padre int NOT NULL,
+    nivel int NOT NULL,
+    nombre character varying(64),
+    icono character varying(64),
     url character varying(128),
     CONSTRAINT permiso_pk PRIMARY KEY (permiso_id)
 );
 
 CREATE TABLE adm.rol (
     rol_id int NOT NULL,
-    name character varying(64),
+    nombre character varying(64),
     CONSTRAINT rol_pk PRIMARY KEY (rol_id)
 );
 

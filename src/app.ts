@@ -3,6 +3,7 @@ import * as bodyParser from "body-parser";
 import { DataBaseService } from "./db_connection/services/dataBaseService";
 import { AuthRoutes } from "./auth/routes/authRoutes";
 import { UsiariosRoutes } from "./usuarios/routes/usuariosRoutes";
+import { FtpWatcher } from "./ftpWatcher";
 
 
 class App {
@@ -10,7 +11,7 @@ class App {
     public app: express.Application;
     public authRoutes: AuthRoutes = new AuthRoutes()
     public usuariosRoutes: UsiariosRoutes = new UsiariosRoutes()
-
+    private ftpWatcher
     private connection;
     
     constructor() {
@@ -19,6 +20,7 @@ class App {
         this.authRoutes.routes(this.app)
         this.usuariosRoutes.routes(this.app)
         this.connection = DataBaseService.getInstance();
+        this.ftpWatcher = FtpWatcher.start();
     }
 
     private config(): void {

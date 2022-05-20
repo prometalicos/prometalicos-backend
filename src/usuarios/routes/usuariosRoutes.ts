@@ -2,11 +2,15 @@
 import {Request, Response, NextFunction} from "express";
 import * as auth from '../../auth/services/authService'
 import { UsuariosController } from "../../usuarios/controllers/usuariosController";
+import * as cors from 'cors'
+
 export class UsiariosRoutes { 
     
     public usuariosController: UsuariosController = new UsuariosController();
 
     public routes(app): void {   
+
+        app.use(cors());
 
         app.route('/user')
         .post(this.usuariosController.insertUsuario)

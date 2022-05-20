@@ -61,6 +61,7 @@ CREATE TABLE adm.usuario_sub_sistema(
 CREATE TABLE adm.usuario(
 	usuario_id varchar(64) not null,
         rol_id int not null,
+        frase varchar (128) not null,
         nombre_completo varchar(256) not null,
         direccion varchar(256) not null,
         estado bit not null,
@@ -170,7 +171,7 @@ CREATE TABLE adm.usuario_rol (
     CONSTRAINT usuario_rol_pk PRIMARY KEY (usuario_id, rol_id)
 );
 
-ALTER TABLE adm.usuario ADD CONSTRAINT FK_usuario__rol FOREIGN KEY (rol_id) REFERENCES adm.rol (rol_id);
+--ALTER TABLE adm.usuario ADD CONSTRAINT FK_usuario__rol FOREIGN KEY (rol_id) REFERENCES adm.rol (rol_id);
 ALTER TABLE adm.usuario_rol ADD CONSTRAINT FK_usuario_rol__usuario FOREIGN KEY (usuario_id) REFERENCES adm.usuario (usuario_id);
 ALTER TABLE adm.usuario_rol ADD CONSTRAINT FK_usuario_rol__rol FOREIGN KEY (rol_id) REFERENCES adm.rol (rol_id);
 
@@ -182,6 +183,9 @@ CREATE TABLE adm.permiso_rol (
 
 ALTER TABLE adm.permiso_rol ADD CONSTRAINT FK_permiso_rol__permiso FOREIGN KEY (permiso_id) REFERENCES adm.permiso (permiso_id);
 ALTER TABLE adm.permiso_rol ADD CONSTRAINT FK_permiso_rol FOREIGN KEY (rol_id) REFERENCES adm.rol (rol_id);
+
+INSERT INTO adm.usuario (usuario_id, rol_id, frase, nombre_completo, direccion, estado)
+        VALUES ('1', 00, '123', 'Test 1', 'test', '1');
 
 INSERT INTO adm.rol(rol_id, name) VALUES(00, 'SuperUser');
 INSERT INTO adm.rol(rol_id, name) VALUES(11, 'Administrador POS');
@@ -223,3 +227,4 @@ INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(2, 00);
 INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(3, 00);
 INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(4, 00);
 
+INSERT INTO adm.usuario_rol (usuario_id, rol_id) VALUES(1, 0);

@@ -121,7 +121,7 @@ export class UsuariosDAO {
                         nombre_completo,
                         direccion,
                         estado,
-                        contrasena
+                        frase
                         FROM adm.usuario
                         WHERE nombre_completo = $1 ;`, [nombre]);
             if (query.rows.length > 0) {

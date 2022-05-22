@@ -94,6 +94,7 @@ CREATE TABLE adm.periferico(
         numero_puertos varchar(256) not null,
         ip varchar(256) not null,
         documento_identificacion varchar(256) not null,
+        ruta_ftp varchar(128) not null,
         CONSTRAINT periferico_pk PRIMARY KEY (periferico_id)
         )
           WITH (

@@ -198,7 +198,7 @@ export class UsuariosDAO {
                         WHERE usuario_id = $1;`, [peopleId]);
             if (query_usario_rol.rows.length > 0) {
                 let row: NavData;
-                row = <NavData>{ name: "Escritorio", iconComponent: { name: "icon-speedometer"}, url: "/dashboard" };
+                row = <NavData>{ name: "Escritorio", iconComponent: { name: "cil-speedometer"}, url: "/dashboard" };
                 result.push(row);
                 for (let index_usario_rol = 0; index_usario_rol < query_usario_rol.rows.length; index_usario_rol++) {
                     let query_permiso_rol = await this.connection.pool.query(`SELECT

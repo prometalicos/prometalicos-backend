@@ -201,9 +201,9 @@ INSERT INTO adm.rol(rol_id, nombre) VALUES(31, 'Contador');
 INSERT INTO adm.rol(rol_id, nombre) VALUES(34, 'Auxiliar Contable');
 
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(1, -1, 0, 'Dashboard', 'cil-speedometer', '-');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(2, -1, 0, 'Administrar', 'icono-settings', '-');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(3, -1, 0, 'Subsistemas', 'icono-flag', '-');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(4, -1, 0, 'Estadísticas', 'icono-loop', '-');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(2, -1, 0, 'Administrar', 'cil-settings', '-');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(3, -1, 0, 'Subsistemas', 'cil-square', '-');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(4, -1, 0, 'Estadísticas', 'cil-puzzle', '-');
 
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(6, 2, 1, 'Concesión', 'icono-arrow-right', '/manage/concession');
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(7, 2, 1, 'Sede', 'icono-rocket ', '/manage/campus');

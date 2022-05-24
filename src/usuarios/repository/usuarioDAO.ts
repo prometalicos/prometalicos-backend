@@ -23,7 +23,7 @@ export class UsuariosDAO {
     public async insertUsuario(usuario: Usuario) {
         try {
             let id = uuid.v4();
-            usuario.contrasena = bcrypt.hashSync(usuario.contrasena, 10)
+            usuario.frase = bcrypt.hashSync(usuario.frase, 10)
             usuario.usuario_id = id;
 
             let query = await this.connection.pool.query(`INSERT INTO adm.usuario (
@@ -32,7 +32,7 @@ export class UsuariosDAO {
                 nombre_completo,
                 direccion,
                 estado,
-                contrasena) VALUES ($1,$2,$3,$4,$5,$6);`, [usuario.usuario_id, usuario.tipo_usuario_id, usuario.nombre_completo, usuario.direccion, usuario.estado, usuario.contrasena]);
+                frase) VALUES ($1,$2,$3,$4,$5,$6);`, [usuario.usuario_id, usuario.tipo_usuario_id, usuario.nombre_completo, usuario.direccion, usuario.estado, usuario.frase]);
 
             return usuario
         } catch (error) {
@@ -49,7 +49,7 @@ export class UsuariosDAO {
                         nombre_completo,
                         direccion,
                         estado,
-                        "*****" as contrasena
+                        "*****" as frase
                         FROM adm.usuario;`);
 
             return query
@@ -67,7 +67,7 @@ export class UsuariosDAO {
                         nombre_completo,
                         direccion,
                         estado,
-                        "*****" as contrasena
+                        "*****" as frase
                         FROM adm.usuario
                         WHERE usuario_id = $1;`, [usuarioId.usuario_id]);
 
@@ -79,17 +79,17 @@ export class UsuariosDAO {
 
     public async updateUsuario(usuario: Usuario) {
         try {
-            usuario.contrasena = bcrypt.hashSync(usuario.contrasena, 10)
+            usuario.frase = bcrypt.hashSync(usuario.frase, 10)
 
             let query = await this.connection.pool.query(`UPDATE adm.usuario SET
                         nombre_completo = $1,
-                        contrasena = $2,
+                        frase = $2,
                         direccion = $3,
                         estado = $4,
                         tipo_usuario_id = $5
                         WHERE usuario_id = $6;`,
                 [usuario.nombre_completo,
-                usuario.contrasena,
+                usuario.frase,
                 usuario.direccion,
                 usuario.estado,
                 usuario.tipo_usuario_id,
@@ -125,9 +125,9 @@ export class UsuariosDAO {
                         FROM adm.usuario
                         WHERE nombre_completo = $1 ;`, [nombre]);
             if (query.rows.length > 0) {
-                if (bcrypt.compareSync(pass, query.rows[0].contrasena)) {
+                if (bcrypt.compareSync(pass, query.rows[0].frase)) {
                     // Passwords match
-                    query.rows[0].contrasena = ''
+                    query.rows[0].frase = ''
                     return query.rows
                 } else {
                     // Passwords don't match

@@ -3,6 +3,6 @@ export class Usuario {
     public tipo_usuario_id: string;
     public nombre_completo: string;
     public direccion: string;
-    public contrasena: string;
+    public frase: string;
     public estado: boolean;
 }

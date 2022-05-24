@@ -17,7 +17,7 @@ export class SedeDAO {
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance();
+        this.connection = DataBaseService.getInstance('global');
     }
 
     public async insertSede(sede: Sede) {

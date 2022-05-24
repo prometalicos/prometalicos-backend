@@ -13,13 +13,15 @@ class App {
     public usuariosRoutes: UsiariosRoutes = new UsiariosRoutes()
     private ftpWatcher
     private connection;
+    private connection2;
     
     constructor() {
         this.app = express();
         this.config();
         this.authRoutes.routes(this.app)
         this.usuariosRoutes.routes(this.app)
-        this.connection = DataBaseService.getInstance();
+        this.connection = DataBaseService.getInstance('global');
+        this.connection2 = DataBaseService.getInstance('dimensionamiento');
         this.ftpWatcher = FtpWatcher.start();
     }
 

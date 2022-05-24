@@ -17,7 +17,7 @@ export class UsuariosDAO {
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance();
+        this.connection = DataBaseService.getInstance('global');
     }
 
     public async insertUsuario(usuario: Usuario) {

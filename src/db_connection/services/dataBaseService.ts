@@ -1,27 +1,30 @@
 
 import * as dotenv from 'dotenv'
 import { Pool, Client } from 'pg';
+import { DatabaseConection } from 'db_connection/model/dataBaseConection.model';
 
 export class DataBaseService {
     public static instance: DataBaseService;
-    private connection;
     private pool;
+    private static connectionList: DatabaseConection[] = [];
 
-    private constructor() {
+    private constructor(database: string) {
         try {
-
+            let selected: string = ''
             dotenv.config();
-
+            if(database ==="global"){
+                selected = process.env.DATABASE
+            } else if( database === "dimensionamiento"){
+                selected = process.env.DATABASE2
+            }
             const pool = new Pool({
                 user: process.env.DBUSER,
                 host: process.env.HOST,
-                database: process.env.DATABASE,
+                database: selected,
                 password: process.env.PASSWORD,
                 port: 5432
             });
-
-            this.pool = pool;
-
+            this.pool = pool
             // the pool will emit an error on behalf of any idle clients
             // it contains if a backend error or network partition happens
             pool.on('error', (err, client) => {
@@ -29,32 +32,38 @@ export class DataBaseService {
                 process.exit(-1)
             });
 
-            
-            
         } catch (error) {
             console.log('An error occurred while the connection was created ' + error + ` ${DataBaseService.name} -> constructor`);
         }
     }
 
-    static getInstance() {
+    static getInstance(database: string) {
         try {
-            if (!DataBaseService.instance) {
-                DataBaseService.instance = new DataBaseService();
+            let instance: DataBaseService;
+            if(this.connectionList.length < 1){
+                instance = this.createInstance(database)
+            } else{
+                let index = this.connectionList.findIndex(i => i.name == database)
+                if(index == -1){
+                    instance = this.createInstance(database);
+                } else{
+                    instance = this.connectionList[index].instance
+                }
             }
-            return DataBaseService.instance;
+            return instance;
         } catch (error) {
             console.log('An error occurred while the instance was returned ' + error + ` ${DataBaseService.name} -> ${this.getInstance.name}`);
         }
     }
 
-    public async query(sql, args) {
-        return new Promise((resolve, reject) => {
-            this.connection.query(sql, args, (err, rows) => {
-                if (err)
-                    return reject(err);
-                resolve(rows);
-            });
-        });
+    static createInstance(database: string){
+        try{
+            let newInstance = new DataBaseService(database)
+            this.connectionList.push({instance: newInstance, name: database})
+            return newInstance;
+        } catch(error){
+            console.log('An error occurred while the instance was cretated ' + error + ` ${DataBaseService.name} -> ${this.createInstance.name}`);
+        }
     }
 
 

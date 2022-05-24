@@ -18,7 +18,7 @@ export class PermisoDAO {
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance();
+        this.connection = DataBaseService.getInstance('global');
     }
 
     public async getPermiso() {

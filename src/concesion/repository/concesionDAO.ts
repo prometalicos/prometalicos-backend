@@ -4,20 +4,12 @@ import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Concesion } from "concesion/models/concesion";
 
-
-export interface NavData {
-    name?: string;
-    url?: string;
-    icon?: string;
-    children?: NavData[];
-}
-
 export class ConcesionDAO {
 
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance();
+        this.connection = DataBaseService.getInstance('global');
     }
 
     public async insertConcesion(concesion: Concesion) {

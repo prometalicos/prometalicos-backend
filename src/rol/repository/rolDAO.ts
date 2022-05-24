@@ -9,7 +9,7 @@ export class RolDAO {
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance();
+        this.connection = DataBaseService.getInstance('global');
     }
 
     public async insertRol(rol: Rol) {

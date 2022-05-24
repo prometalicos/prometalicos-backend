@@ -147,6 +147,7 @@ ALTER TABLE adm.usuario_sub_sistema ADD CONSTRAINT FK_usuario_sub_sistema__sub_s
 ALTER TABLE adm.tarjeta_puertos ADD CONSTRAINT FK_tarjeta_puertos__periferico FOREIGN KEY (periferico_id) REFERENCES adm.periferico (periferico_id);
 
 ALTER TABLE adm.periferico ADD CONSTRAINT FK_periferico__tipo_periferico FOREIGN KEY (tipo_periferico_id) REFERENCES adm.tipo_periferico (tipo_periferico_id);
+ALTER TABLE adm.periferico ADD CONSTRAINT FK_periferico__sub_sistema FOREIGN KEY (sub_sistema_id) REFERENCES adm.sub_sistema (sub_sistema_id);
 
 ALTER TABLE adm.eventos_usuario ADD CONSTRAINT FK_eventos_usuario__usuario FOREIGN KEY (usuario_id) REFERENCES adm.usuario (usuario_id);
 
@@ -229,3 +230,12 @@ INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(3, 00);
 INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(4, 00);
 
 INSERT INTO adm.usuario_rol (usuario_id, rol_id) VALUES(1, 0);
+
+INSERT INTO adm.concesion(concesion_id,id,nombre,direccion,telefono_contacto,correo_e,url,estado) VALUES ('1','1','Prueba','cra 1 # 1 - 1','54656546456','concesion@prueba.com','concesion.prueba.com',CAST(1 AS bit));
+INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('1','1','prueba',CAST(1 AS bit));
+INSERT INTO adm.sub_sistema(sub_sistema_id,sede_id,descripcion,estado) VALUES ('1','1','dimensionamiento',CAST(1 AS bit));
+INSERT INTO adm.tipo_periferico(tipo_periferico_id,descripcion,estado) VALUES ('1','Camara LPR',CAST(1 AS bit));
+INSERT INTO adm.periferico(periferico_id,sub_sistema_id,tipo_periferico_id,descripcion,marca,serial,modelo,
+voltaje,numero_puertos,ip,documento_identificacion,ruta_ftp) VALUES ('1','1','1','Cam1','PUMATRONIX','654654','5fs5','12','2424','127.0.0.1','2424242','/home/ceul/Descargas/ftp');
+
+INSERT INTO adm.tarjeta_puertos(tarjeta_id,puerto,periferico_id,ip,descripcion_puerto, estado,tipo) VALUES (1,'561','1','127.0.0.1','pureba',CAST(1 AS bit),CAST(1 AS bit));

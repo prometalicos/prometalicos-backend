@@ -62,8 +62,9 @@ CREATE TABLE adm.usuario(
 	usuario_id varchar(64) not null,
         rol_id int not null,
         frase varchar (128) not null,
-        nombre_completo varchar(256) not null,
-        direccion varchar(256) not null,
+        nombre_usuario varchar(32) not null,
+        nombre_completo varchar(128) not null,
+        direccion varchar(128) not null,
         estado bit not null,
         CONSTRAINT usuario_pk PRIMARY KEY (usuario_id)
         )

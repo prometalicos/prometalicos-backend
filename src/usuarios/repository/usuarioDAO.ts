@@ -123,7 +123,7 @@ export class UsuariosDAO {
                         estado,
                         frase
                         FROM adm.usuario
-                        WHERE nombre_completo = $1 ;`, [nombre]);
+                        WHERE nombre_usuario = $1 ;`, [nombre]);
             if (query.rows.length > 0) {
                 if (bcrypt.compareSync(pass, query.rows[0].frase)) {
                     // Passwords match

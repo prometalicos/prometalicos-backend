@@ -150,38 +150,38 @@ export class UsuariosDAO {
         }
         let row: NavData;
         let query_permiso_menu = await this.connection.pool.query(`SELECT
-                        permiso_id, father,
-                        name, url, icon,
-                        level
+                        permiso_id, padre,
+                        nombre, url, icono,
+                        nivel
                         FROM adm.permiso
-                        WHERE father = $1;`, [query_permiso['permiso_id']]);
+                        WHERE padre = $1;`, [query_permiso['permiso_id']]);
         if (query_permiso_menu.rows.length > 0) {
             let children = new Array<NavData>();
             let row_children: NavData;
             for (let index_permiso_menu = 0; index_permiso_menu < query_permiso_menu.rows.length; index_permiso_menu++) {
-                if (query_permiso_menu.rows[index_permiso_menu]['level'] == -1) {
+                if (query_permiso_menu.rows[index_permiso_menu]['nivel'] == -1) {
                     let children_son = <Array<NavData>>await this.getPermissions(query_permiso_menu.rows[index_permiso_menu]);
                     children.push(children_son[0]);
                 }
                 else {
-                    if (query_permiso_menu.rows[index_permiso_menu]['level'] == -2) {
+                    if (query_permiso_menu.rows[index_permiso_menu]['nivel'] == -2) {
 
                         if (op === "navBar") {
                             let children_son = <Array<NavData>>await this.getPermissions(query_permiso_menu.rows[index_permiso_menu]);
                             children.push(children_son[0]);
                         }
                         else {
-                            row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['name'], url: query_permiso_menu.rows[index_permiso_menu]['url'], icon: query_permiso_menu.rows[index_permiso_menu]['icon'] };
+                            row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre'], url: query_permiso_menu.rows[index_permiso_menu]['url'], icon: query_permiso_menu.rows[index_permiso_menu]['icono'] };
                             children.push(row_children);
                         }
                     }
                     else {
-                        row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['name'], url: query_permiso_menu.rows[index_permiso_menu]['url'], icon: query_permiso_menu.rows[index_permiso_menu]['icon'] };
+                        row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre'], url: query_permiso_menu.rows[index_permiso_menu]['url'], icon: query_permiso_menu.rows[index_permiso_menu]['icono'] };
                         children.push(row_children);
                     }
                 }
             }
-            row = <NavData>{ name: query_permiso['name'], icon: query_permiso['icon'], url: query_permiso['url'], children: children }
+            row = <NavData>{ name: query_permiso['nombre'], icon: query_permiso['icono'], url: query_permiso['url'], children: children }
             sub_menu.push(row);
         }
         return sub_menu;
@@ -210,10 +210,10 @@ export class UsuariosDAO {
                         for (let index_permiso_rol = 0; index_permiso_rol < query_permiso_rol.rows.length; index_permiso_rol++) {
                             let query_permiso = await this.connection.pool.query(`SELECT
                                 permiso_id,
-                                name,
-                                icon
+                                nombre,
+                                icono
                                 FROM adm.permiso
-                                WHERE permiso_id = $1 and father = -1;`, [query_permiso_rol.rows[index_permiso_rol]['permiso_id']]);
+                                WHERE permiso_id = $1 and padre = -1;`, [query_permiso_rol.rows[index_permiso_rol]['permiso_id']]);
                             if (query_permiso.rows.length > 0) {
                                 for (let index_permiso = 0; index_permiso < query_permiso.rows.length; index_permiso++) {
                                     result = await this.getPermissions(query_permiso.rows[index_permiso], result, op);
@@ -234,11 +234,11 @@ export class UsuariosDAO {
         try {
             let query_permiso = await this.connection.pool.query(`SELECT
                                 permiso_id,
-                                name,
-                                icon,
+                                nombre,
+                                icono,
                                 url
                                 FROM adm.permiso
-                                WHERE father = $1;`, permissionId);
+                                WHERE padre = $1;`, permissionId);
             return query_permiso;
         } catch (error) {
             console.error(error);

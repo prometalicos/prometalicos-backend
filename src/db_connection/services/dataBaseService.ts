@@ -6,7 +6,7 @@ import { DatabaseConection } from 'db_connection/model/dataBaseConection.model';
 export class DataBaseService {
     public static instance: DataBaseService;
     private pool;
-    private static connectionList: DatabaseConection[] = [];
+    private static connectionList: DatabaseConection[];
 
     private constructor(database: string) {
         try {
@@ -40,7 +40,8 @@ export class DataBaseService {
     static getInstance(database: string) {
         try {
             let instance: DataBaseService;
-            if(this.connectionList.length < 1){
+            if(this.connectionList == undefined){
+                this.connectionList = []
                 instance = this.createInstance(database)
             } else{
                 let index = this.connectionList.findIndex(i => i.name == database)

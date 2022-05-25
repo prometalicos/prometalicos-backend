@@ -4,6 +4,7 @@ import { DataBaseService } from "./db_connection/services/dataBaseService";
 import { AuthRoutes } from "./auth/routes/authRoutes";
 import { UsiariosRoutes } from "./usuarios/routes/usuariosRoutes";
 import { FtpWatcher } from "./ftpWatcher";
+import { ConcesionRoutes } from "./concesion/routes/concesionRoutes";
 
 
 class App {
@@ -11,6 +12,7 @@ class App {
     public app: express.Application;
     public authRoutes: AuthRoutes = new AuthRoutes()
     public usuariosRoutes: UsiariosRoutes = new UsiariosRoutes()
+    public concesionRoutes: ConcesionRoutes = new ConcesionRoutes()
     private ftpWatcher
     private connection;
     private connection2;
@@ -20,6 +22,7 @@ class App {
         this.config();
         this.authRoutes.routes(this.app)
         this.usuariosRoutes.routes(this.app)
+        this.concesionRoutes.routes(this.app)
         this.connection = DataBaseService.getInstance('global');
         this.connection2 = DataBaseService.getInstance('dimensionamiento');
         this.ftpWatcher = FtpWatcher.start();

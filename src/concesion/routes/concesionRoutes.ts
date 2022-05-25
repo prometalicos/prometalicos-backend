@@ -2,7 +2,7 @@
 import {Request, Response, NextFunction} from "express";
 import * as auth from '../../auth/services/authService'
 import * as cors from 'cors'
-import { ConcesionController } from "concesion/controller/concesionController";
+import { ConcesionController } from "../controller/concesionController";
 
 export class ConcesionRoutes { 
     
@@ -16,7 +16,7 @@ export class ConcesionRoutes {
         .post(this.concesionController.insertConcesion)
 
         app.route('/concesion/get')
-        .post(auth,this.concesionController.getConcesion)
+        .post(this.concesionController.getConcesion)
 
         app.route('/concesion/getById')
         .post(auth,this.concesionController.getConcesionById)

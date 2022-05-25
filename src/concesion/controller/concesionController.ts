@@ -1,7 +1,7 @@
 
 import { Request, Response } from "express";
 import { ErrorModel } from "../../error_handling/models/error";
-import { ConcesionDAO } from "concesion/repository/concesionDAO";
+import { ConcesionDAO } from "../repository/concesionDAO";
 
 
 let concesion = new ConcesionDAO();

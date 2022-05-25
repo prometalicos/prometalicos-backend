@@ -229,7 +229,7 @@ INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(4, 00);
 
 INSERT INTO adm.usuario_rol (usuario_id, rol_id) VALUES(1, 0);
 
-INSERT INTO adm.concesion(concesion_id,id,nombre,direccion,telefono_contacto,correo_e,url,estado) VALUES ('1','1','Prueba','cra 1 # 1 - 1','54656546456','concesion@prueba.com','concesion.prueba.com',CAST(1 AS bit));
+INSERT INTO adm.concesion(concesion_id,nombre,direccion,telefono_contacto,correo_e,url,estado) VALUES ('1','Prueba','cra 1 # 1 - 1','54656546456','concesion@prueba.com','concesion.prueba.com',CAST(1 AS bit));
 INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('1','1','prueba',CAST(1 AS bit));
 INSERT INTO adm.sub_sistema(sub_sistema_id,sede_id,descripcion,estado) VALUES ('1','1','dimensionamiento',CAST(1 AS bit));
 INSERT INTO adm.tipo_periferico(tipo_periferico_id,descripcion,estado) VALUES ('1','Camara LPR',CAST(1 AS bit));

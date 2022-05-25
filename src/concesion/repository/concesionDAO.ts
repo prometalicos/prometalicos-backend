@@ -19,14 +19,12 @@ export class ConcesionDAO {
 
             let query = await this.connection.pool.query(`INSERT INTO adm.concesion (
                 concesion_id,
-                id,
                 nombre,
                 direccion,
                 estado,
                 telefono_contacto,
                 correo_e,
-                url) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`, [concesion.concesion_id, 
-                    concesion.id, 
+                url) VALUES ($1,$2,$3,$4,$5,$6,$7);`, [concesion.concesion_id, 
                     concesion.nombre, 
                     concesion.direccion, 
                     concesion.estado, 
@@ -45,7 +43,6 @@ export class ConcesionDAO {
 
             let query = await this.connection.pool.query(`SELECT
                         concesion_id,
-                        id,
                         nombre,
                         direccion,
                         estado,
@@ -65,7 +62,6 @@ export class ConcesionDAO {
 
             let query = await this.connection.pool.query(`SELECT
                         concesion_id,
-                        id,
                         nombre,
                         direccion,
                         estado,
@@ -85,14 +81,13 @@ export class ConcesionDAO {
         try {
 
             let query = await this.connection.pool.query(`UPDATE adm.concesion SET
-                id = $1,
-                nombre = $2,
-                direccion = $3,
-                estado = $4,
-                telefono_contacto = $5,
-                correo_e = $6,
-                url = $7
-                WHERE concesion_id = $8;`,
+                nombre = $1,
+                direccion = $2,
+                estado = $3,
+                telefono_contacto = $4,
+                correo_e = $5,
+                url = $6
+                WHERE concesion_id = $7;`,
                     [concesion.id, 
                     concesion.nombre, 
                     concesion.direccion, 

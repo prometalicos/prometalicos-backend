@@ -13,7 +13,6 @@ CREATE SCHEMA log;
 
 CREATE TABLE adm.concesion(
 	concesion_id varchar(64) not null,
-        id varchar(256) not null,
         nombre varchar(256) not null,
         direccion varchar(256) not null,
         telefono_contacto varchar(64) not null,

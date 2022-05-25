@@ -10,6 +10,7 @@ export interface NavData {
     url?: string;
     iconComponent?: any;
     children?: NavData[];
+    attributes?: any;
 }
 
 export class UsuariosDAO {
@@ -171,17 +172,17 @@ export class UsuariosDAO {
                             children.push(children_son[0]);
                         }
                         else {
-                            row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre'], url: query_permiso_menu.rows[index_permiso_menu]['url'], iconComponent: { name: query_permiso_menu.rows[index_permiso_menu]['icono']} };
+                            row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre'], url: query_permiso_menu.rows[index_permiso_menu]['url'], iconComponent: { name: query_permiso_menu.rows[index_permiso_menu]['icono']}, attributes: { onClick: (e: any) => { e.preventDefault(); e.stopPropagation(); }} };
                             children.push(row_children);
                         }
                     }
                     else {
-                        row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre'], url: query_permiso_menu.rows[index_permiso_menu]['url'], iconComponent: { name: query_permiso_menu.rows[index_permiso_menu]['icono']} };
+                        row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre'], url: query_permiso_menu.rows[index_permiso_menu]['url'], iconComponent: { name: query_permiso_menu.rows[index_permiso_menu]['icono']}, attributes: { onClick: (e: any) => { e.preventDefault(); e.stopPropagation(); }} };
                         children.push(row_children);
                     }
                 }
             }
-            row = <NavData>{ name: query_permiso['nombre'], iconComponent: { name: query_permiso['icono'] }, url: query_permiso['url'], children: children }
+            row = <NavData>{ name: query_permiso['nombre'], iconComponent: { name: query_permiso['icono'] }, url: query_permiso['url'], children: children, attributes: { onClick: (e: any) => { e.preventDefault(); e.stopPropagation(); }} }
             sub_menu.push(row);
         }
         return sub_menu;
@@ -198,7 +199,8 @@ export class UsuariosDAO {
                         WHERE usuario_id = $1;`, [peopleId]);
             if (query_usario_rol.rows.length > 0) {
                 let row: NavData;
-                row = <NavData>{ name: "Escritorio", iconComponent: { name: "cil-speedometer"}, url: "/dashboard" };
+                
+                row = <NavData>{ name: "Escritorio", iconComponent: { name: "cil-speedometer"}, url: "/dashboard", attributes: { onClick: (e: any) => { e.preventDefault(); e.stopPropagation(); }} };
                 result.push(row);
                 for (let index_usario_rol = 0; index_usario_rol < query_usario_rol.rows.length; index_usario_rol++) {
                     let query_permiso_rol = await this.connection.pool.query(`SELECT

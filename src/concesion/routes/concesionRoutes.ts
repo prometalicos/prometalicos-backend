@@ -16,16 +16,15 @@ export class ConcesionRoutes {
         .post(this.concesionController.insertConcesion)
 
         app.route('/concesion/get')
-        .post(this.concesionController.getConcesion)
+        .get(this.concesionController.getConcesion)
 
         app.route('/concesion/getById')
-        .post(auth,this.concesionController.getConcesionById)
+        .get(auth,this.concesionController.getConcesionById)
 
         app.route('/concesion/update')
-        .post(auth,this.concesionController.updateConcesion)
+        .put(auth,this.concesionController.updateConcesion)
 
         app.route('/concesion/delete')
-        .post(auth,this.concesionController.deleteConcesion)
-
+        .delete(auth,this.concesionController.deleteConcesion)
     }
 }

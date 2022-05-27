@@ -1,5 +1,6 @@
 
 
+import { ClientSocketService } from "./../../sockets/dimensionamiento/clientService";
 import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Rol } from "../../rol/models/rol";
@@ -31,7 +32,12 @@ export class RolDAO {
     public async getRol() {
         try {
 
-            var net = require('net');
+
+            let clientSocketService = new ClientSocketService('http://172.19.150.5:12876');
+
+            return "";
+            
+/*       var net = require('net');
             function getConnection(connName) {
                 var client = net.connect({ port: 12876, host: '172.19.150.5' }, function () {
                     console.log(connName + ' Connected:');
@@ -70,7 +76,13 @@ export class RolDAO {
                 });
                 return client;
             }
+
+            
+
             var Dwarves = getConnection("Dwarves");
+
+            */
+
             /*
             let query = await this.connection.pool.query(`SELECT
                         rol_id,

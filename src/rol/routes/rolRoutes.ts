@@ -2,7 +2,7 @@
 import {Request, Response, NextFunction} from "express";
 import * as auth from '../../auth/services/authService'
 import * as cors from 'cors'
-import { RolController } from "rol/controller/rolController";
+import { RolController } from "../controller/rolController";
 
 export class RolRoutes { 
     
@@ -16,7 +16,7 @@ export class RolRoutes {
         .post(this.rolController.insertRol)
 
         app.route('/rol/get')
-        .post(auth,this.rolController.getRol)
+        .get(this.rolController.getRol)
 
         app.route('/rol/getById')
         .post(auth,this.rolController.getRolById)

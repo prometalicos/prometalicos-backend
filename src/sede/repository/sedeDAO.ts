@@ -3,6 +3,7 @@
 import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Sede } from "sede/models/sede.model";
+import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
 
 
 export interface NavData {
@@ -17,7 +18,7 @@ export class SedeDAO {
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance('global');
+        this.connection = DataBaseInterface.getInstance('global')
     }
 
     public async insertSede(sede: Sede) {

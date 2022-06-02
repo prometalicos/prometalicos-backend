@@ -3,13 +3,14 @@
 import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Concesion } from "concesion/models/concesion";
+import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
 
 export class ConcesionDAO {
 
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance('global');
+        this.connection = DataBaseInterface.getInstance('global');
     }
 
     public async insertConcesion(concesion: Concesion) {

@@ -3,13 +3,14 @@
 import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Periferico } from "periferico/models/periferico";
+import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
 
 export class PerifericoDAO {
 
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance('global');
+        this.connection = DataBaseInterface.getInstance('global');
     }
 
     public async insertPeriferico(periferico: Periferico) {
@@ -28,7 +29,7 @@ export class PerifericoDAO {
                 voltaje,
                 numero_puertos,
                 ip,
-                documento_identificacion,
+                puerto,
                 ruta_ftp) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12);`, [periferico.periferico_id, 
                     periferico.sub_sistema_id,
                     periferico.tipo_periferico_id,
@@ -39,7 +40,7 @@ export class PerifericoDAO {
                     periferico.voltaje,
                     periferico.numero_puertos,
                     periferico.ip,
-                    periferico.documento_identificacion,
+                    periferico.puerto,
                     periferico.ruta_ftp]);
 
             return periferico
@@ -62,7 +63,7 @@ export class PerifericoDAO {
                         voltaje,
                         numero_puertos,
                         ip,
-                        documento_identificacion,
+                        puerto,
                         ruta_ftp
                         FROM adm.periferico;`);
 
@@ -86,7 +87,7 @@ export class PerifericoDAO {
                         voltaje,
                         numero_puertos,
                         ip,
-                        documento_identificacion,
+                        puerto,
                         ruta_ftp
                         FROM adm.periferico
                         WHERE periferico_id = $1;`, [perifericoId.periferico_id]);
@@ -110,7 +111,7 @@ export class PerifericoDAO {
                 voltaje = $7,
                 numero_puertos = $8,
                 ip = $9,
-                documento_identificacion = $10,
+                puerto = $10,
                 ruta_ftp = $11
                 WHERE periferico_id = $12;`,
                     [periferico.sub_sistema_id,
@@ -122,7 +123,7 @@ export class PerifericoDAO {
                     periferico.voltaje,
                     periferico.numero_puertos,
                     periferico.ip,
-                    periferico.documento_identificacion,
+                    periferico.puerto,
                     periferico.ruta_ftp,
                     periferico.periferico_id]);
 

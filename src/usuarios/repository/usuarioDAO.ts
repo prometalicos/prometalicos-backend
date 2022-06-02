@@ -4,6 +4,7 @@ import * as uuid from "uuid";
 import * as bcrypt from 'bcrypt'
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Usuario } from "../../usuarios/models/usuario";
+import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
 
 export interface NavData {
     name?: string;
@@ -17,7 +18,7 @@ export class UsuariosDAO {
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance('global');
+        this.connection = DataBaseInterface.getInstance('global')
     }
 
     public async insertUsuario(usuario: Usuario) {
@@ -25,14 +26,15 @@ export class UsuariosDAO {
             let id = uuid.v4();
             usuario.frase = bcrypt.hashSync(usuario.frase, 10)
             usuario.usuario_id = id;
-
             let query = await this.connection.pool.query(`INSERT INTO adm.usuario (
                 usuario_id,
-                tipo_usuario_id,
+                rol_id,
                 nombre_completo,
+                nombre_usuario,
                 direccion,
                 estado,
-                frase) VALUES ($1,$2,$3,$4,$5,$6);`, [usuario.usuario_id, usuario.tipo_usuario_id, usuario.nombre_completo, usuario.direccion, usuario.estado, usuario.frase]);
+                frase) VALUES ($1,$2,$3,$4,$5,$6,$7);`, [usuario.usuario_id, usuario.rol_id, usuario.nombre_completo,
+                    usuario.nombre_usuario, usuario.direccion, usuario.estado, usuario.frase]);
 
             return usuario
         } catch (error) {
@@ -45,7 +47,8 @@ export class UsuariosDAO {
 
             let query = await this.connection.pool.query(`SELECT
                         usuario_id,
-                        tipo_usuario_id,
+                        rol_id,
+                        nombre_usuario,
                         nombre_completo,
                         direccion,
                         estado,
@@ -63,8 +66,9 @@ export class UsuariosDAO {
 
             let query = await this.connection.pool.query(`SELECT
                         usuario_id,
-                        tipo_usuario_id,
+                        rol_id,
                         nombre_completo,
+                        nombre_usuario,
                         direccion,
                         estado,
                         "*****" as frase
@@ -86,13 +90,15 @@ export class UsuariosDAO {
                         frase = $2,
                         direccion = $3,
                         estado = $4,
-                        tipo_usuario_id = $5
-                        WHERE usuario_id = $6;`,
+                        rol_id = $5,
+                        nombre_usuario = $6
+                        WHERE usuario_id = $7;`,
                 [usuario.nombre_completo,
                 usuario.frase,
                 usuario.direccion,
                 usuario.estado,
-                usuario.tipo_usuario_id,
+                usuario.rol_id,
+                usuario.nombre_usuario,
                 usuario.usuario_id]);
 
             return query
@@ -117,8 +123,9 @@ export class UsuariosDAO {
         try {
             let query = await this.connection.pool.query(`SELECT
                         usuario_id,
-                        tipo_usuario_id,
+                        rol_id,
                         nombre_completo,
+                        nombre_usuario,
                         direccion,
                         estado,
                         frase
@@ -190,7 +197,6 @@ export class UsuariosDAO {
     public async getMenu(peopleId: string, op?: any) {
         let result = new Array();
         try {
-            debugger
             let query_usario_rol = await this.connection.pool.query(`SELECT
                         usuario_id,
                         rol_id

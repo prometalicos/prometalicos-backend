@@ -1,6 +1,6 @@
-import { DataBaseService } from "db_connection/services/dataBaseService";
+import { DataBaseService } from "../../db_connection/services/dataBaseService";
 
-export class DatabaseConection{
+export class DataBaseConection{
     public name: string;
     public instance: DataBaseService;
 

@@ -1,11 +1,11 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { DataBaseService } from "./db_connection/services/dataBaseService";
 import { AuthRoutes } from "./auth/routes/authRoutes";
 import { UsiariosRoutes } from "./usuarios/routes/usuariosRoutes";
-import { FtpWatcher } from "./ftpWatcher";
 import { ConcesionRoutes } from "./concesion/routes/concesionRoutes";
 import { RolRoutes } from "./rol/routes/rolRoutes";
+import { Watcher } from "./watchers/watcher";
+import { DataBaseInterface } from "./db_connection/services/databaseInterface";
 
 
 class App {
@@ -15,7 +15,7 @@ class App {
     public usuariosRoutes: UsiariosRoutes = new UsiariosRoutes()
     public concesionRoutes: ConcesionRoutes = new ConcesionRoutes()
     public rolRoutes: RolRoutes = new RolRoutes()
-    private ftpWatcher
+    private watcher
     private connection;
     private connection2;
     
@@ -26,9 +26,9 @@ class App {
         this.usuariosRoutes.routes(this.app)
         this.concesionRoutes.routes(this.app)
         this.rolRoutes.routes(this.app)
-        this.connection = DataBaseService.getInstance('global');
-        this.connection2 = DataBaseService.getInstance('dimensionamiento');
-        this.ftpWatcher = FtpWatcher.start();
+        this.connection = DataBaseInterface.getInstance('global');
+        this.connection2 = DataBaseInterface.getInstance('evasion');
+        this.watcher = Watcher.getInstance();
     }
 
     private config(): void {

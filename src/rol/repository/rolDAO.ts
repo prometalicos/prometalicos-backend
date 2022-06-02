@@ -4,13 +4,14 @@ import { ClientSocketService } from "./../../sockets/dimensionamiento/clientServ
 import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Rol } from "../../rol/models/rol";
+import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
 
 export class RolDAO {
 
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance('global');
+        this.connection = DataBaseInterface.getInstance('global')
     }
 
     public async insertRol(rol: Rol) {

@@ -3,6 +3,7 @@
 import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Permiso } from "permiso/models/permiso.model";
+import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
 
 
 
@@ -18,7 +19,7 @@ export class PermisoDAO {
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance('global');
+        this.connection = DataBaseInterface.getInstance('global')
     }
 
     public async getPermiso() {

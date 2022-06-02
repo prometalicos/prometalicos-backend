@@ -3,13 +3,14 @@
 import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { SubSistema } from "../../subSistema/models/subSistema";
+import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
 
 export class SubSistemaDAO {
 
     private log
     private connection;
     constructor() {
-        this.connection = DataBaseService.getInstance('global');
+        this.connection = DataBaseInterface.getInstance('global')
     }
 
     public async insertSubSistema(subSistema: SubSistema) {

@@ -11,6 +11,22 @@ export class ClientSocketService {
 		const URL = server; // "http://localhost:3000";
 		const socket = io(URL, { autoConnect: true });
 
+		const deserialize = (xml) => {
+			var xml_string = 'your xml string';
+			
+			var xmlText = new XMLSerializer().serializeToString(xml);
+			var xmlTextNode = document.createTextNode(xmlText);
+			var parentDiv = document.getElementById('SomeDiv');
+			parentDiv.appendChild(xmlTextNode);
+
+			var output = parentDiv
+
+			var array = []; // <----------------------------- array for storing the keys
+
+			// display the output
+			console.log(output);
+		}
+
 		// const manager = new Manager(URL, {
 		// 	autoConnect: true
 		// });
@@ -34,10 +50,14 @@ export class ClientSocketService {
 		// 	}
 		//   });
 
-		console.log('Called!', socket);
+		console.log('Called!');
 		socket.on('connect', function (socket) {
 			console.log('Connected!');
 		});
+
+		socket.onAny((eventName) => {
+			console.log('Evento!', eventName);
+		  });
 
 		socket.on("data", (data) => {
 			console.log("Data: ", data);
@@ -61,5 +81,7 @@ export class ClientSocketService {
 		});
 
 	}
+
+
 }
 

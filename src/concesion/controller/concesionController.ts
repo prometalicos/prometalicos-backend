@@ -70,7 +70,7 @@ export class ConcesionController {
 
 	public async deleteConcesion(req: Request, res: Response, next) {
 		try {
-			res.send(await concesion.deleteConcesion(req.body.id));
+			res.send(await concesion.deleteConcesion(req.body.concesion_id));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

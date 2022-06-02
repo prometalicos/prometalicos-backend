@@ -34,7 +34,8 @@ export class RolDAO {
         try {
 
 
-            let clientSocketService = new ClientSocketService('http://172.19.150.5:12876');
+            //let clientSocketService = new ClientSocketService('http://172.19.150.5:12876'); // Laser principal
+            let clientSocketService = new ClientSocketService('http://172.19.150.5:12876'); // Laser principal
 
             return "";
             

@@ -89,7 +89,7 @@ export class ConcesionDAO {
                 correo_e = $5,
                 url = $6
                 WHERE concesion_id = $7;`,
-                    [concesion.id, 
+                    [
                     concesion.nombre, 
                     concesion.direccion, 
                     concesion.estado, 
@@ -104,11 +104,11 @@ export class ConcesionDAO {
         }
     }
 
-    public async deleteConcesion(concesionId: string) {
+    public async deleteConcesion(concesion_id: string) {
         try {
 
             let query = await this.connection.pool.query(`DELETE FROM adm.concesion 
-                        WHERE concesion_id = $1;`, [concesionId]);
+                        WHERE concesion_id = $1;`, [concesion_id]);
 
             return query
         } catch (error) {

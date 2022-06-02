@@ -19,12 +19,12 @@ export class ConcesionRoutes {
         .get(this.concesionController.getConcesion)
 
         app.route('/concesion/getById')
-        .get(auth,this.concesionController.getConcesionById)
+        .get(this.concesionController.getConcesionById)
 
         app.route('/concesion/update')
-        .put(auth,this.concesionController.updateConcesion)
+        .put(this.concesionController.updateConcesion)
 
         app.route('/concesion/delete')
-        .delete(auth,this.concesionController.deleteConcesion)
+        .delete(this.concesionController.deleteConcesion)
     }
 }

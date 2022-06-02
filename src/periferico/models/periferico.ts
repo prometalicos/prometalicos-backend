@@ -9,6 +9,6 @@ export class Periferico{
     public voltaje: string;
     public numero_puertos: string;
     public ip: string;
-    public documento_identificacion: string;
+    public puerto: string;
     public ruta_ftp: string;
 }

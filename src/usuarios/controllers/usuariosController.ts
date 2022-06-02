@@ -15,6 +15,7 @@ export class UsuariosController {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
 			next(err);
+			console.error(error)
 			console.log(
 				"An error occurred while inserting user :" +
 				error +

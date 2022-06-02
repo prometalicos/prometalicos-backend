@@ -88,7 +88,7 @@ export class ConcesionDAO {
                 correo_e = $5,
                 url = $6
                 WHERE concesion_id = $7;`,
-                    [concesion.id, 
+                    [
                     concesion.nombre, 
                     concesion.direccion, 
                     concesion.estado, 

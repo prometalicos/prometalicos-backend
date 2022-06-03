@@ -36,9 +36,9 @@ CREATE TABLE adm.posibles_infracciones(
         funcionario_id varchar(16) not null, -- Funcionario responsable
         infracciones_adm_id varchar(64) not null, -- Código de la infracción
         fecha_hora time not null,
+        fecha_novedad time, -- ?
+        nota text,
         estado bit not null,
-        fecha_novedad time not null, -- ?
-        nota text not null,
         CONSTRAINT posibles_infracciones_pk PRIMARY KEY (posibles_infracciones_id)
         )
           WITH (
@@ -47,7 +47,6 @@ CREATE TABLE adm.posibles_infracciones(
 
 CREATE TABLE adm.evento_transito(
 	evento_transito_id serial, -- Llave autonumérica
-        tipo bit, -- 1: lectura normal 2: Lectura por dispositivos de fugados
 	fecha_hora time not null,
         lectura_camara_lpr_id bigint not null,
         clase_vehiculo_id varchar(64) not null,

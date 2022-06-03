@@ -107,9 +107,7 @@ export class ConcesionDAO {
     public async deleteConcesion(concesion_id: string) {
         try {
 
-            let query = await this.connection.pool.query(`DELETE FROM adm.concesion 
-                        WHERE concesion_id = $1;`, [concesion_id]);
-
+            let query = await this.connection.pool.query(`DELETE FROM adm.concesion WHERE concesion_id = $1;`, [concesion_id]);
             return query
         } catch (error) {
             throw new Error(error)

@@ -36,7 +36,7 @@ export class LecturaSensoresLaserDAO {
                 direction,
                 wrong_way,
                 stop_and,
-                url) VALUES ($1, $2, $3, $4, $5, $6, $7, $9, $10, $11, $12, $13, $14, $16, $17);`, [lecturaSensoresLaser.id, 
+                url_file_pds) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18);`, [lecturaSensoresLaser.id, 
                     lecturaSensoresLaser.lane, 
                     lecturaSensoresLaser.lane_id, 
                     lecturaSensoresLaser.time_iso, 
@@ -52,6 +52,7 @@ export class LecturaSensoresLaserDAO {
                     lecturaSensoresLaser.position, 
                     lecturaSensoresLaser.direction, 
                     lecturaSensoresLaser.wrong_way,
+                    lecturaSensoresLaser.stop_and,
                     lecturaSensoresLaser.stop_and]);
 
             return lecturaSensoresLaser

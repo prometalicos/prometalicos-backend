@@ -31,8 +31,8 @@ export class ClientSocketService {
 								console.log('---------transit_end----------');
 								let obj_transit_end = new Transit_end();
 								obj_transit_end = value.transit_end; // Enviar a persistencia
-								let obj = new LecturaSensoresLaserDAO();
-								obj.insertLecturaSensoresLaser(obj_transit_end);
+								// let obj = new LecturaSensoresLaserDAO();
+								// obj.insertLecturaSensoresLaser(obj_transit_end);
 								Object.entries(value.transit_end).forEach(([key3, transit_end]) => {
 									console.log(`${key3} ${transit_end}`);
 								});
@@ -59,32 +59,32 @@ export class ClientSocketService {
 			return false;
 		}
 
-		const xml__ = '<sensor id="1" type="LaserStereoMaster"><transit_end id="16" lane="1" lane_id="15" time_iso="2022-06-04T22:56:55" speed="0" height="3900" width="2930" length="18500" refl_pos="100" gap="164969" headway="168914" occupancy="6476" class_id="7" position="C" direction="I" wrong_way="0" stop_and_go="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:54:47" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:55:17" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:55:47" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:56:17" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:56:47" tailgate_mode="0" photocell_status="0"/></sensor>';
-		console.log(deserialize(xml__));
+		//const xml__ = '<sensor id="1" type="LaserStereoMaster"><transit_end id="16" lane="1" lane_id="15" time_iso="2022-06-04T22:56:55" speed="0" height="3900" width="2930" length="18500" refl_pos="100" gap="164969" headway="168914" occupancy="6476" class_id="7" position="C" direction="I" wrong_way="0" stop_and_go="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:54:47" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:55:17" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:55:47" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:56:17" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:56:47" tailgate_mode="0" photocell_status="0"/></sensor>';
+		//console.log(deserialize(xml__));
 
-		// const net = require('net');
-		// const client = new net.Socket();
+		const net = require('net');
+		const client = new net.Socket();
 
-		// client.connect({ port: port, host: host }, function () {
-		// 	console.log('TCP connection established with the server.', { port: port, host: host }, '\n');
-		// });
+		client.connect({ port: port, host: host }, function () {
+			console.log('TCP connection established with the server.', { port: port, host: host }, '\n');
+		});
 
-		// client.on('data', function (data) {
+		client.on('data', function (data) {
 
-		// 	//console.log(`\nData received from the server: ${data.toString()}.`, '\n');
-		// 	let obj = deserialize(data.toString());
-		// 	//console.log(`\n\nDeserialize: ${obj}.`, '\n');
+			//console.log(`\nData received from the server: ${data.toString()}.`, '\n');
+			let obj = deserialize(data.toString());
+			//console.log(`\n\nDeserialize: ${obj}.`, '\n');
 
-		// });
+		});
 
-		// client.on('end', function () {
-		// 	console.log('\nRequested an end to the TCP connection');
-		// 	this.contador_conexiones++;
-		// 	client.connect({ port: port, host: host }, function () {
-		// 		console.log('TCP connection established with the server.', { port: port, host: host }, 'connection: ', this.contador_conexiones, '\n');
-		// 	});
+		client.on('end', function () {
+			console.log('\nRequested an end to the TCP connection');
+			this.contador_conexiones++;
+			client.connect({ port: port, host: host }, function () {
+				console.log('TCP connection established with the server.', { port: port, host: host }, 'connection: ', this.contador_conexiones, '\n');
+			});
 	
-		// });
+		});
 
 	}
 

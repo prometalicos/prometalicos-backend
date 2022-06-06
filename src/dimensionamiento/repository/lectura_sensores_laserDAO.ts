@@ -13,12 +13,14 @@ export class LecturaSensoresLaserDAO {
         this.connection = DataBaseInterface.getInstance('dimensionamiento');
     }
 
-    public async insertLecturaSensoresLaser(lecturaSensoresLaser: Transit_end) {
+    public async insertLecturaSensoresLaser(lecturaSensoresLaser: Transit_end, periferico_id: string) {
         try {
             //let id = uuid.v4();
             //.id = id;
 
             let query = await this.connection.pool.query(`INSERT INTO adm.lectura_sensores_laser (
+                
+                periferico_id,
                 id,
                 lane,
                 lane_id,
@@ -36,7 +38,9 @@ export class LecturaSensoresLaserDAO {
                 direction,
                 wrong_way,
                 stop_and,
-                url_file_pds) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18);`, [lecturaSensoresLaser.id, 
+                url_file_pds) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19);`, [
+                    periferico_id,
+                    lecturaSensoresLaser.id, 
                     lecturaSensoresLaser.lane, 
                     lecturaSensoresLaser.lane_id, 
                     lecturaSensoresLaser.time_iso, 

@@ -50,8 +50,8 @@ CREATE TABLE adm.lectura_sensores_laser(
         position varchar(1) not null, -- (L) Left (C) Center (R) Rigth
         direction char not null, -- (I) Entrante (A) Esta lejos el sensor (N) No dectada
         wrong_way char not null, -- (0) No activada (1) Activada
-        stop_and char not null, -- Si el vehículo se detuvo o no
-        url_file_pds  varchar(128) not null, -- Ruta de archivo con la lectura de todos los puntos del laser
+        stop_and char, -- Si el vehículo se detuvo o no
+        url_file_pds  varchar(128), -- Ruta de archivo con la lectura de todos los puntos del laser
         CONSTRAINT lectura_sensores_pk PRIMARY KEY (lectura_sensores_id)
         )
           WITH (

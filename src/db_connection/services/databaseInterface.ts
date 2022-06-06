@@ -49,7 +49,6 @@ export class DataBaseInterface {
                 this.connectionList = []
                 instance=this.setconnectionList(database);
             } else {
-                
                 let index = this.connectionList.findIndex(i => i.name == database)
                 if (index != -1) {
                     instance = this.connectionList[index].instance

@@ -10,7 +10,7 @@ export class LecturaSensoresLaserController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertLecturaSensoresLaser(req: Request, res: Response, next) {
 		try {
-			res.send(await LecturaSensoresLaser.insertLecturaSensoresLaser(req.body));
+			res.send(await LecturaSensoresLaser.insertLecturaSensoresLaser(req.body, '2'));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400

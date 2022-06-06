@@ -1,19 +1,23 @@
 import { text } from 'body-parser';
-import { Transit_end } from './../../dimensionamiento/models/transit_end';
+import { Transit_end } from '../../dimensionamiento/models/transit_end';
 import * as io from 'socket.io-client'
-import { Sensor_status } from './../../dimensionamiento/models/sensor_status';
-import { LecturaSensoresLaserDAO } from './../../dimensionamiento/repository/lectura_sensores_laserDAO';
+import { Sensor_status } from '../../dimensionamiento/models/sensor_status';
+import { LecturaSensoresLaserDAO } from '../../dimensionamiento/repository/lectura_sensores_laserDAO';
 
 export class ClientSocketService {
 
 	private static instance: ClientSocketService;
 
-	public contador_conexiones: number;
+	public sleep(ms) {
+        return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+        });
+    }
 	
 	public constructor(host: any, port?: any) {
 
 		var XMLMapping = require('xml-mapping');
-		this.contador_conexiones = 0;
+		var contador_conexiones: number;
 
 		const deserialize = (xml__) => {
 			try {
@@ -31,8 +35,8 @@ export class ClientSocketService {
 								console.log('---------transit_end----------');
 								let obj_transit_end = new Transit_end();
 								obj_transit_end = value.transit_end; // Enviar a persistencia
-								// let obj = new LecturaSensoresLaserDAO();
-								// obj.insertLecturaSensoresLaser(obj_transit_end);
+								let obj = new LecturaSensoresLaserDAO();
+								obj.insertLecturaSensoresLaser(obj_transit_end, '2');
 								Object.entries(value.transit_end).forEach(([key3, transit_end]) => {
 									console.log(`${key3} ${transit_end}`);
 								});
@@ -64,30 +68,35 @@ export class ClientSocketService {
 
 		const net = require('net');
 		const client = new net.Socket();
+		contador_conexiones = 0;
+
+		client.on('close', function() {
+			console.log('Connection closed');
+		});
+
+		client.on('data', function (data) {
+			//console.log(`\nData received from the server: ${data.toString()}.`, '\n');
+			let obj = deserialize(data.toString());
+			//console.log(`\n\nDeserialize: ${obj}.`, '\n');
+		});
+
+		client.on('error', function(err) {
+			console.log('Connection error ', err);
+		});
+
+		client.on('end', function () {
+			console.log('\nRequested an end to the TCP connection ', contador_conexiones);
+			client.destroy();
+			contador_conexiones++;
+			this.sleep(5000);
+			client.connect({ port: port, host: host }, function () {
+				console.log('TCP connection established with the server.', { port: port, host: host }, '\n');
+			});
+		});
 
 		client.connect({ port: port, host: host }, function () {
 			console.log('TCP connection established with the server.', { port: port, host: host }, '\n');
 		});
-
-		client.on('data', function (data) {
-
-			//console.log(`\nData received from the server: ${data.toString()}.`, '\n');
-			let obj = deserialize(data.toString());
-			//console.log(`\n\nDeserialize: ${obj}.`, '\n');
-
-		});
-
-		client.on('end', function () {
-			console.log('\nRequested an end to the TCP connection');
-			this.contador_conexiones++;
-			client.connect({ port: port, host: host }, function () {
-				console.log('TCP connection established with the server.', { port: port, host: host }, 'connection: ', this.contador_conexiones, '\n');
-			});
-	
-		});
-
 	}
-
-
 }
 

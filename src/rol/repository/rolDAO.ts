@@ -1,6 +1,6 @@
 
 
-import { ClientSocketService } from "./../../sockets/dimensionamiento/clientService";
+import { ClientSocketService } from "../../sockets/dimensionamiento/clientSocketService";
 import * as uuid from "uuid";
 import { DataBaseService } from "../../db_connection/services/dataBaseService";
 import { Rol } from "../../rol/models/rol";
@@ -97,13 +97,6 @@ export class RolDAO {
             throw new Error(error)
         }
     }
-
-    public sleep(ms) {
-        return new Promise((resolve) => {
-            setTimeout(resolve, ms);
-        });
-    }
-
 
     public async getRolById(rolId: Rol) {
         try {

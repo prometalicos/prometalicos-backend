@@ -18,7 +18,7 @@ CREATE TABLE adm.concesion(
         telefono_contacto varchar(64) not null,
         correo_e varchar(128) not null,
         url varchar(256) not null,
-        estado bit not null,
+        estado bool not null,
         CONSTRAINT concesion_pk PRIMARY KEY (concesion_id)
         )
           WITH (

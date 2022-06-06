@@ -9,12 +9,12 @@ export class DataBaseInterface {
     private log
     private static connectionList: DataBaseConection[];
 
-
     private constructor() {
     }
 
     public static getInstance(database: string) {
         try {
+            console.log('db ', database);
             let instance: DataBaseService;
             if (this.connectionList == undefined) {
                 dotenv.config();
@@ -34,6 +34,14 @@ export class DataBaseInterface {
                         process.env.EVASION_PASSWORD,
                         parseInt(process.env.EVASION_PORT),
                         'evasion')
+                } else if (database == 'dimensionamiento') {
+                    console.log('hdppppp');
+                    instance = this.createInstance(process.env.DIMENSIONAMIENTO_DBUSER,
+                        process.env.DIMENSIONAMIENTO_HOST,
+                        process.env.DIMENSIONAMIENTO_DATABASE,
+                        process.env.DIMENSIONAMIENTO_PASSWORD,
+                        parseInt(process.env.DIMENSIONAMIENTO_PORT),
+                        'dimensionamiento')
                 }
             } else {
                 let index = this.connectionList.findIndex(i => i.name == database)

@@ -1,61 +1,90 @@
+import { text } from 'body-parser';
+import { Transit_end } from './../../dimensionamiento/models/transit_end';
 import * as io from 'socket.io-client'
-import { Manager } from "socket.io-client";
-const WebSocket = require('ws');
+import { Sensor_status } from './../../dimensionamiento/models/sensor_status';
+import { LecturaSensoresLaserDAO } from './../../dimensionamiento/repository/lectura_sensores_laserDAO';
 
 export class ClientSocketService {
 
 	private static instance: ClientSocketService;
 
-	public constructor(host: any, port: any) {
+	public contador_conexiones: number;
+	
+	public constructor(host: any, port?: any) {
 
+		var XMLMapping = require('xml-mapping');
+		this.contador_conexiones = 0;
 
-		const deserialize = (xmlNode) => {
+		const deserialize = (xml__) => {
 			try {
-				var XMLSerializer = require('xmlserializer');
-				// Gecko- and Webkit-based browsers (Firefox, Chrome), Opera.
-				return (new XMLSerializer()).serializeToString(xmlNode);
+				var json = XMLMapping.load(xml__);
+				var xml = XMLMapping.dump(json);
+
+				//console.log('\n\n Lo recibido', json);
+				//console.log('\n\n Los atributos',);
+
+				Object.entries(json).forEach(obj_json => {
+					Object.entries(obj_json).forEach(([key, sensor]) => {
+						//console.log(`${key} ${sensor}`);
+						Object.entries(sensor).forEach(([key2, value]) => {
+							if (value.transit_end !== undefined) {
+								console.log('---------transit_end----------');
+								let obj_transit_end = new Transit_end();
+								obj_transit_end = value.transit_end; // Enviar a persistencia
+								let obj = new LecturaSensoresLaserDAO();
+								obj.insertLecturaSensoresLaser(obj_transit_end);
+								Object.entries(value.transit_end).forEach(([key3, transit_end]) => {
+									console.log(`${key3} ${transit_end}`);
+								});
+							} else if (value.sensor_status !== undefined) {
+								//console.log('----------sensor_status---------');
+								let obj_sensor_status = new Sensor_status();
+								obj_sensor_status = value.sensor_status; // Validar si no es 8 de ready
+								Object.entries(value.sensor_status).forEach(([key3, sensor_status]) => {
+									//console.log(`${key3} ${sensor_status}`);
+								});
+							}
+							//console.log(`${key2} ${value.transit_end}`);
+						});
+					});
+					//console.log('-------------------');
+				});
+
+				return XMLMapping.load(xml__);
 			}
 			catch (e) {
-			   try {
-				  // Internet Explorer.
-				  return xmlNode.xml;
-			   }
-			   catch (e) {  
-				  //Other browsers without XML Serializer
-				  console.log('Xmlserializer not supported');
-			   }
-			 }
-			 return false;
-			
+				//Other browsers without XML Serializer
+				console.log('Xmlserializer not supported ', e);
+			}
+			return false;
 		}
 
-		const Net = require('net');
-		// The port number and hostname of the server.
+		const xml__ = '<sensor id="1" type="LaserStereoMaster"><transit_end id="16" lane="1" lane_id="15" time_iso="2022-06-04T22:56:55" speed="0" height="3900" width="2930" length="18500" refl_pos="100" gap="164969" headway="168914" occupancy="6476" class_id="7" position="C" direction="I" wrong_way="0" stop_and_go="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:54:47" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:55:17" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:55:47" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:56:17" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:56:47" tailgate_mode="0" photocell_status="0"/></sensor>';
+		console.log(deserialize(xml__));
 
-		// Create a new TCP client.
-		const client = new Net.Socket();
-		// Send a connection request to the server.
-		client.connect({ port: port, host: host }, function () {
-			// If there is no error, the server has accepted the request and created a new 
-			// socket dedicated to us.
-			console.log('TCP connection established with the server.', { port: port, host: host });
-		});
+		// const net = require('net');
+		// const client = new net.Socket();
 
-		// The client can also receive data from the server by reading from its socket.
-		client.on('data', function (data) {
-			
-			console.log(`Data received from the server: ${data.toString()}.`);
+		// client.connect({ port: port, host: host }, function () {
+		// 	console.log('TCP connection established with the server.', { port: port, host: host }, '\n');
+		// });
 
-			let obj = deserialize(data.toString()) ;
-			console.log(`Data received from the server: ${obj}.`);
-			
-			// Request an end to the connection after the data has been received.
-			client.end();
-		});
+		// client.on('data', function (data) {
 
-		client.on('end', function () {
-			console.log('Requested an end to the TCP connection');
-		});
+		// 	//console.log(`\nData received from the server: ${data.toString()}.`, '\n');
+		// 	let obj = deserialize(data.toString());
+		// 	//console.log(`\n\nDeserialize: ${obj}.`, '\n');
+
+		// });
+
+		// client.on('end', function () {
+		// 	console.log('\nRequested an end to the TCP connection');
+		// 	this.contador_conexiones++;
+		// 	client.connect({ port: port, host: host }, function () {
+		// 		console.log('TCP connection established with the server.', { port: port, host: host }, 'connection: ', this.contador_conexiones, '\n');
+		// 	});
+	
+		// });
 
 	}
 

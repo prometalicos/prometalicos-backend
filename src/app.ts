@@ -18,6 +18,7 @@ class App {
     private watcher
     private connection;
     private connection2;
+    private connection3;
     
     constructor() {
         this.app = express();
@@ -28,6 +29,7 @@ class App {
         this.rolRoutes.routes(this.app)
         this.connection = DataBaseInterface.getInstance('global');
         this.connection2 = DataBaseInterface.getInstance('evasion');
+        this.connection3 = DataBaseInterface.getInstance('dimensionamiento');
         this.watcher = Watcher.getInstance();
     }
 

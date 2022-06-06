@@ -229,7 +229,7 @@ INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(4, 00);
 
 INSERT INTO adm.usuario_rol (usuario_id, rol_id) VALUES(1, 0);
 
-INSERT INTO adm.concesion(concesion_id,nombre,direccion,telefono_contacto,correo_e,url,estado) VALUES ('1','Corredores Viales','cra 1 # 1 - 1','54656546456','concesion@prueba.com','concesion.prueba.com',CAST(1 AS bit));
+INSERT INTO adm.concesion(concesion_id,nombre,direccion,telefono_contacto,correo_e,url,estado) VALUES ('1','Corredores Viales','cra 1 # 1 - 1','54656546456','concesion@prueba.com','concesion.prueba.com',true);
 
 INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('1','1','Sede A',CAST(1 AS bit));
 INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('2','1','Sede B',CAST(1 AS bit));

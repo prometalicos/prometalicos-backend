@@ -40,7 +40,12 @@ export class ConcesionController {
 
 	public async getConcesionById(req: Request, res: Response, next) {
 		try {
-			res.send(await concesion.getConcesionById(req.body));
+			let result = await concesion.getConcesionById(req.body);
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -55,7 +60,12 @@ export class ConcesionController {
 
 	public async updateConcesion(req: Request, res: Response, next) {
 		try {
-			res.send(await concesion.updateConcesion(req.body));
+			let result = await concesion.updateConcesion(req.body);
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -70,7 +80,12 @@ export class ConcesionController {
 
 	public async deleteConcesion(req: Request, res: Response, next) {
 		try {
-			res.send(await concesion.deleteConcesion(req.body.concesion_id));
+			let result = await concesion.deleteConcesion(req.body);
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

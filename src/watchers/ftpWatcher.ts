@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 import * as ch from "chokidar";
+import { LecturaCamaraLPRDAO } from '../lectura_camara_lpr/repository/lectura_camara_lprDAO';
+import { LecturaCamaraLpr } from '../lectura_camara_lpr/models/lectura_camara_lpr.model';
 
 
 
@@ -7,7 +9,7 @@ export class FtpWatcher {
 
     private static instance: FtpWatcher;
 
-    private constructor(ruta_ftp: string, sub_sistema_id: string) {
+    private constructor(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         let watchOptions = {
             persistent: true,
             ignoreInitial: true,
@@ -15,19 +17,20 @@ export class FtpWatcher {
             //usePolling: false,
             ignorePermissionErrors: false
         };
-        ch.watch(ruta_ftp, watchOptions).on('add', (event) => {
+        ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
 
-            let data = fs.readFileSync(event, { encoding: 'utf8', flag: 'r' });
-            if(sub_sistema_id == '1'){
-
+            let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
+            let properties = this.getMetadata(data);
+            if (sub_sistema_id == '1') {
+                this.evasion(properties, periferico_id, path);
             }
         });
 
     }
 
-    static start(ruta_ftp: string, sub_sistema_id: string) {
+    static start(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         try {
-            FtpWatcher.instance = new FtpWatcher(ruta_ftp, sub_sistema_id);
+            FtpWatcher.instance = new FtpWatcher(ruta_ftp, sub_sistema_id, periferico_id);
         } catch (error) {
             console.log('An error occurred while the ftp watcher was started ' + error + ` ${FtpWatcher.name} -> ${this.start.name}`);
         }
@@ -62,9 +65,19 @@ export class FtpWatcher {
         }
     }
 
-    private evasion() {
+    private evasion(properties: any, periferico_id: string, path: string) {
         try {
-            
+            let lectura_camara_lpr_obj: LecturaCamaraLpr = new LecturaCamaraLpr()
+
+            lectura_camara_lpr_obj.periferico_id = periferico_id,
+            lectura_camara_lpr_obj.placa_identificada = properties["Placa"],
+            lectura_camara_lpr_obj.estadistica = properties["Cc0"] + ", " + properties["Cc1"] + ", " + properties["Cc2"] + ", " + properties["Cc3"] + ", " + properties["Cc4"] + ", " + properties["Cc5"],
+            lectura_camara_lpr_obj.url_matricula = "",
+            lectura_camara_lpr_obj.url_foto_ampliada = path,
+            lectura_camara_lpr_obj.fecha_hora = Date()
+
+            let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
+            lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj);
         } catch (error) {
             console.log('An error occurred on evasion' + error + ` ${FtpWatcher.name} -> ${this.evasion.name}`);
         }

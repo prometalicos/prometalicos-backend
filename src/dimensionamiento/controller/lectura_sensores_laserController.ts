@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
-import { ErrorModel } from "../../error_handling/models/error";
+import { ErrorModel } from "../../util/error_handling/models/error";
 import { LecturaSensoresLaserDAO } from "../repository/lectura_sensores_laserDAO";
 
 

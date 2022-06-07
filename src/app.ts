@@ -1,11 +1,11 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { AuthRoutes } from "./auth/routes/authRoutes";
-import { UsiariosRoutes } from "./usuarios/routes/usuariosRoutes";
-import { ConcesionRoutes } from "./concesion/routes/concesionRoutes";
-import { RolRoutes } from "./rol/routes/rolRoutes";
-import { Watcher } from "./watchers/watcher";
-import { DataBaseInterface } from "./db_connection/services/databaseInterface";
+import { AuthRoutes } from "./util/auth/routes/authRoutes";
+import { UsiariosRoutes } from "./global/usuarios/routes/usuariosRoutes";
+import { ConcesionRoutes } from "./global/concesion/routes/concesionRoutes";
+import { RolRoutes } from "./global/rol/routes/rolRoutes";
+import { Watcher } from "./util/watchers/watcher";
+import { DataBaseInterface } from "./util/db_connection/services/databaseInterface";
 
 
 class App {

@@ -1,9 +1,9 @@
 
 
 import * as uuid from "uuid";
-import { DataBaseService } from "../../db_connection/services/dataBaseService";
-import { Transit_end } from "../models/transit_end";
-import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
+import { DataBaseService } from "../../util/db_connection/services/dataBaseService";
+import { Transit_end } from "../../util/drivers/comark/models/transit_end";
+import { DataBaseInterface } from "../../util/db_connection/services/databaseInterface";
 
 export class LecturaSensoresLaserDAO {
 

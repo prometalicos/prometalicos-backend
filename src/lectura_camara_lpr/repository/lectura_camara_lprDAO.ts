@@ -1,33 +1,52 @@
 
 
 import * as uuid from "uuid";
-import { DataBaseService } from "../../db_connection/services/dataBaseService";
-import { DataBaseInterface } from "../../db_connection/services/databaseInterface";
+import { DataBaseService } from "./../../util/db_connection/services/dataBaseService";
+import { DataBaseInterface } from "./../../util/db_connection/services/databaseInterface";
 import { LecturaCamaraLpr } from "lectura_camara_lpr/models/lectura_camara_lpr.model";
 
 export class LecturaCamaraLPRDAO {
 
     private log
-    private connection;
+    private connection_dimensionamiento;
+    private connection_evasion;
+    private connection_fuga;
+
     constructor() {
-        this.connection = DataBaseInterface.getInstance('evasion');
+        this.connection_dimensionamiento = DataBaseInterface.getInstance('dimensionamiento');
+        this.connection_evasion = DataBaseInterface.getInstance('evasion');
+        this.connection_fuga = DataBaseInterface.getInstance('fuga');
     }
 
-    public async insertLecturaCamaraLPR(lectura_camara_lpr: LecturaCamaraLpr) {
+    public getConnection(connection: string) {
+        switch (connection) {
+            case 'dimensionamiento':
+                return this.connection_dimensionamiento;
+                break;
+            case 'evasion':
+                return this.connection_evasion;
+                break;
+            case 'fuga':
+                return this.connection_fuga;
+                break;
+        }
+    }
+
+    public async insertLecturaCamaraLPR(lectura_camara_lpr: LecturaCamaraLpr, connection) {
         try {
-            let query = await this.connection.pool.query(`INSERT INTO adm.lectura_camara_lpr (
+            let query = await this.getConnection(connection).pool.query(`INSERT INTO adm.lectura_camara_lpr (
                 periferico_id,
                 placa_identificada,
                 estadistica,
                 url_matricula,
                 url_foto_ampliada,
                 fecha_hora) VALUES ($1,$2,$3,$4,$5,to_timestamp($6));`, [
-	                lectura_camara_lpr.periferico_id,
-                    lectura_camara_lpr.placa_identificada,
-                    lectura_camara_lpr.estadistica,
-                    lectura_camara_lpr.url_matricula,
-                    lectura_camara_lpr.url_foto_ampliada,
-                    Date.parse(lectura_camara_lpr.fecha_hora)]);
+                lectura_camara_lpr.periferico_id,
+                lectura_camara_lpr.placa_identificada,
+                lectura_camara_lpr.estadistica,
+                lectura_camara_lpr.url_matricula,
+                lectura_camara_lpr.url_foto_ampliada,
+                Date.parse(lectura_camara_lpr.fecha_hora)]);
 
             return lectura_camara_lpr
         } catch (error) {
@@ -35,10 +54,10 @@ export class LecturaCamaraLPRDAO {
         }
     }
 
-    public async getLecturaCamaraLPR() {
+    public async getLecturaCamaraLPR(connection) {
         try {
 
-            let query = await this.connection.pool.query(`SELECT
+            let query = await this.getConnection(connection).pool.query(`SELECT
                         lectura_camara_lpr_id,
                         nombre,
                         direccion,
@@ -54,10 +73,10 @@ export class LecturaCamaraLPRDAO {
         }
     }
 
-    public async getLecturaCamaraLPRById(lectura_camara_lpr: LecturaCamaraLpr) {
+    public async getLecturaCamaraLPRById(lectura_camara_lpr: LecturaCamaraLpr, connection) {
         try {
 
-            let query = await this.connection.pool.query(`SELECT
+            let query = await this.getConnection(connection).pool.query(`SELECT
                         lectura_camara_lpr_id,
                         nombre,
                         direccion,
@@ -73,6 +92,4 @@ export class LecturaCamaraLPRDAO {
             return new Error(error);
         }
     }
-
-   
 }

@@ -2,7 +2,7 @@
 import app from './app';
 import * as http from "http"
 import * as dotenv from "dotenv"
-import {SocketService} from "./sockets/socketService"
+import {SocketService} from "./util/sockets/socketService"
 
 dotenv.config();
 const PORT = `${process.env.PORT}`;

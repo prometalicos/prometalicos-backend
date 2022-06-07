@@ -102,7 +102,7 @@ CREATE TABLE adm.posibles_infracciones(
              OIDS=FALSE
         );
 
--- Gestión Administrativa
+-- Gestión Administrativa  OJO -- deberia ir en Global
 CREATE TABLE adm.infracciones_adm(
 	infracciones_adm_id varchar(64) not null,
         descripcion varchar(256) not null,
@@ -112,7 +112,7 @@ CREATE TABLE adm.infracciones_adm(
              OIDS=FALSE
         );
 
--- Registro de funcionarios
+-- Registro de funcionarios OJO -- deberia ir en Global
 CREATE TABLE adm.funcionario(
 	funcionario_id varchar(64) not null,
         nombre_completo varchar(256) not null,
@@ -122,7 +122,7 @@ CREATE TABLE adm.funcionario(
           WITH (
              OIDS=FALSE
         );
--- Administrativa para clases de vehiculos según normas
+-- Administrativa para clases de vehiculos según normas OJO -- deberia ir en Global
 CREATE TABLE adm.clase_vehiculo(
 	clase_vehiculo_id varchar(64) not null,
         descripcion varchar(256) not null,
@@ -133,6 +133,7 @@ CREATE TABLE adm.clase_vehiculo(
              OIDS=FALSE
         );  
 
+-- OJO -- deberia ir en fuga
 CREATE TABLE adm.registro_fugas(
         registro_fugas_id serial,
 	evento_transito_id integer not null, -- Llave foránea

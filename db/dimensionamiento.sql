@@ -170,3 +170,8 @@ ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__clase_vehicul
 
 ALTER TABLE adm.registro_evasion ADD CONSTRAINT FK_registro_evasion__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
 ALTER TABLE adm.registro_fugas ADD CONSTRAINT FK_registro_fugas__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
+
+
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('0', 'Camion', ' ');
+
+INSERT INTO adm.lectura_sensores_laser (periferico_id,id,lane,lane_id,time_iso,speed,height,width,length,refl_pos,gap, headway,occupancy,class_id,position,direction,wrong_way,stop_and,url_file_pds) VALUES ('1', 1 , 1 , 1 ,'4',1,1,1,1,1,1,1,1,'1','L','I','0','0','1');

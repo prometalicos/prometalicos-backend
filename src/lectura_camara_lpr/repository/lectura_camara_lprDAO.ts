@@ -1,9 +1,5 @@
-
-
-import * as uuid from "uuid";
-import { DataBaseService } from "./../../util/db_connection/services/dataBaseService";
 import { DataBaseInterface } from "./../../util/db_connection/services/databaseInterface";
-import { LecturaCamaraLpr } from "lectura_camara_lpr/models/lectura_camara_lpr.model";
+import { LecturaCamaraLpr } from "../../lectura_camara_lpr/models/lectura_camara_lpr.model";
 
 export class LecturaCamaraLPRDAO {
 
@@ -40,14 +36,16 @@ export class LecturaCamaraLPRDAO {
                 estadistica,
                 url_matricula,
                 url_foto_ampliada,
-                fecha_hora) VALUES ($1,$2,$3,$4,$5,to_timestamp($6));`, [
+                fecha_hora) VALUES ($1,$2,$3,$4,$5,to_timestamp($6)) RETURNING lectura_camara_lpr_id;`, [
                 lectura_camara_lpr.periferico_id,
                 lectura_camara_lpr.placa_identificada,
                 lectura_camara_lpr.estadistica,
                 lectura_camara_lpr.url_matricula,
                 lectura_camara_lpr.url_foto_ampliada,
                 Date.parse(lectura_camara_lpr.fecha_hora)]);
-
+                if(query.rows.length > 0){
+                    lectura_camara_lpr.lectura_camara_lpr_id = query.rows[0]["lectura_camara_lpr_id"]
+                }
             return lectura_camara_lpr
         } catch (error) {
             throw new Error(error)

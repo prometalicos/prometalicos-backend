@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
-import { ErrorModel } from "../../util/error_handling/models/error";
+import { ErrorModel } from "../../../util/error_handling/models/error";
 import { LecturaSensoresLaserDAO } from "../repository/lectura_sensores_laserDAO";
 
 
@@ -25,7 +25,12 @@ export class LecturaSensoresLaserController {
 
 	public async getLecturaSensoresLaser(req: Request, res: Response, next) {
 		try {
-			res.send(await LecturaSensoresLaser.getLecturaSensoresLaser());
+			let result = await LecturaSensoresLaser.getLecturaSensoresLaser();
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -40,7 +45,12 @@ export class LecturaSensoresLaserController {
 
 	public async getLecturaSensoresLaserById(req: Request, res: Response, next) {
 		try {
-			res.send(await LecturaSensoresLaser.getLecturaSensoresLaserById(req.body));
+			let result = (await LecturaSensoresLaser.getLecturaSensoresLaserById(req.body));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -70,7 +80,12 @@ export class LecturaSensoresLaserController {
 
 	public async deleteLecturaSensoresLaser(req: Request, res: Response, next) {
 		try {
-			res.send(await LecturaSensoresLaser.deleteLecturaSensoresLaser(req.body.LecturaSensoresLaser_id));
+			let result = (await LecturaSensoresLaser.deleteLecturaSensoresLaser(req.body.LecturaSensoresLaser_id));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

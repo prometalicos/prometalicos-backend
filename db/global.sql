@@ -265,7 +265,7 @@ INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, d
  VALUES ('6','1','0','CPU','Comark','654654','5fs5','12','2424','172.19.150.9','2424242','/home/ceul/Descargas/ftp');
 
 INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
- VALUES ('7','1','1','LPR Dimensionamiento','Pumatronic','654654','5fs5','12','2424','172.19.150.9','21','/');
+ VALUES ('7','1','1','LPR Dimensionamiento','Pumatronic','654654','5fs5','12','2424','172.19.150.9','21','/mnt/test');
 
 INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
  VALUES ('8','1','5','Placa supervisora FUGA','Comark','654654','5fs5','12','2424','172.19.150.20','2424242','/home/ceul/Descargas/ftp');

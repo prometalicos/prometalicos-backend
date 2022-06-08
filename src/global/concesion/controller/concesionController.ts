@@ -10,7 +10,7 @@ export class ConcesionController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertConcesion(req: Request, res: Response, next) {
 		try {
-			res.send(await concesion.insertConcesion(req.body));
+			res.status(201).send(await concesion.insertConcesion(req.body));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -62,7 +62,7 @@ export class ConcesionController {
 		try {
 			let result = await concesion.updateConcesion(req.body);
 			if(result["rowCount"] != 0){
-				res.send(result);
+				res.status(204).send(result);
 			} else {
 				res.status(404).send(result);
 			}

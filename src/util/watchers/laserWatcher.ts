@@ -78,9 +78,15 @@ export class LaserWatcher {
 			});
 		}
 
-		client.on('close', function() {
-			console.log('Connection closed');
-		});
+		// client.on('close', function() {
+		// 	console.log('Connection closed');
+		// 	client.destroy();
+		// 	contador_conexiones++;
+		// 	sleep(5000);
+		// 	client.connect({ port: port, host: host }, function () {
+		// 		console.log('TCP reconnect (close) connection established with the server.', { port: port, host: host }, '\n');
+		// 	});
+		// });
 
 		client.on('data', function (data) {
 			//console.log(`\nData received from the server: ${data.toString()}.`, '\n');
@@ -94,16 +100,18 @@ export class LaserWatcher {
 
 		client.on('end', function () {
 			console.log('\nRequested an end to the TCP connection ', contador_conexiones);
-			client.destroy();
+			//client.destroy();
 			contador_conexiones++;
-			sleep(5000);
+			sleep(10000);
 			client.connect({ port: port, host: host }, function () {
-				console.log('TCP connection established with the server.', { port: port, host: host }, '\n');
+				console.log('TCP reconnection (end) established with the server.', { port: port, host: host, sub_sistema_id: sub_sistema_id, 
+					periferico_id: periferico_id }, '\n');
 			});
 		});
 
 		client.connect({ port: port, host: host }, function () {
-			console.log('TCP connection established with the server.', { port: port, host: host }, '\n');
+			console.log('TCP connection established with the server.', { port: port, host: host, sub_sistema_id: sub_sistema_id, 
+				periferico_id: periferico_id }, '\n');
 		});
 	}
 }

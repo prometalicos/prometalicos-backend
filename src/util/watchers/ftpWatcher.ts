@@ -2,6 +2,8 @@ import * as fs from 'fs';
 import * as ch from "chokidar";
 import { LecturaCamaraLPRDAO } from '../../lectura_camara_lpr/repository/lectura_camara_lprDAO';
 import { LecturaCamaraLpr } from '../../lectura_camara_lpr/models/lectura_camara_lpr.model';
+import { EventoTransitoDAO } from '../../dimensionamiento/evento_transito/repository/evento_transitoDAO';
+import { EventoTransito } from '../../dimensionamiento/evento_transito/models/evento_transito.model';
 
 
 
@@ -23,6 +25,8 @@ export class FtpWatcher {
             let properties = this.getMetadata(data);
             if (sub_sistema_id == '1') {
                 this.evasion(properties, periferico_id, path);
+            } else if (sub_sistema_id == '2') {
+                this.dimensionamiento(properties, periferico_id, path);
             }
         });
     }
@@ -34,7 +38,7 @@ export class FtpWatcher {
             console.log('An error occurred while the ftp watcher was started ' + error + ` ${FtpWatcher.name} -> ${this.start.name}`);
         }
     }
-    
+
 
     private getMetadata(data) {
         try {
@@ -57,11 +61,29 @@ export class FtpWatcher {
         }
     }
 
-    private dimensionamiento() {
+    private async dimensionamiento(properties: any, periferico_id: string, path: string) {
         try {
+            let lectura_camara_lpr_obj: LecturaCamaraLpr = new LecturaCamaraLpr()
+            lectura_camara_lpr_obj.periferico_id = periferico_id,
+            lectura_camara_lpr_obj.placa_identificada = properties["Placa"],
+            lectura_camara_lpr_obj.estadistica = properties["Cc0"] + ", " + properties["Cc1"] + ", " + properties["Cc2"] + ", " + properties["Cc3"] + ", " + properties["Cc4"] + ", " + properties["Cc5"],
+            lectura_camara_lpr_obj.url_matricula = "",
+            lectura_camara_lpr_obj.url_foto_ampliada = path,
+            lectura_camara_lpr_obj.fecha_hora = Date()
+            let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
+            lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
 
+
+            let evento_transito_obj: EventoTransito = new EventoTransito();
+            evento_transito_obj.fecha_hora = Date();
+            evento_transito_obj.lectura_camara_lpr_id = lectura_camara_lpr_obj.lectura_camara_lpr_id;
+            evento_transito_obj.lectura_sensores_id = 1;
+            evento_transito_obj.clase_vehiculo_id = "0";
+            evento_transito_obj.tipo = 1;
+            let evento_transitoDAO = new EventoTransitoDAO(); 
+            evento_transitoDAO.insertEventoTransito(evento_transito_obj)
         } catch (error) {
-            console.log('An error occurred on dimesionamiento' + error + ` ${FtpWatcher.name} -> ${this.dimensionamiento.name}`);
+            console.log('An error occurred on dimesionamiento' + error + ` ${FtpWatcher.name} -> ${this.evasion.name}`);
         }
     }
 
@@ -70,14 +92,14 @@ export class FtpWatcher {
             let lectura_camara_lpr_obj: LecturaCamaraLpr = new LecturaCamaraLpr()
 
             lectura_camara_lpr_obj.periferico_id = periferico_id,
-            lectura_camara_lpr_obj.placa_identificada = properties["Placa"],
-            lectura_camara_lpr_obj.estadistica = properties["Cc0"] + ", " + properties["Cc1"] + ", " + properties["Cc2"] + ", " + properties["Cc3"] + ", " + properties["Cc4"] + ", " + properties["Cc5"],
-            lectura_camara_lpr_obj.url_matricula = "",
-            lectura_camara_lpr_obj.url_foto_ampliada = path,
-            lectura_camara_lpr_obj.fecha_hora = Date()
+                lectura_camara_lpr_obj.placa_identificada = properties["Placa"],
+                lectura_camara_lpr_obj.estadistica = properties["Cc0"] + ", " + properties["Cc1"] + ", " + properties["Cc2"] + ", " + properties["Cc3"] + ", " + properties["Cc4"] + ", " + properties["Cc5"],
+                lectura_camara_lpr_obj.url_matricula = "",
+                lectura_camara_lpr_obj.url_foto_ampliada = path,
+                lectura_camara_lpr_obj.fecha_hora = Date()
 
             let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
-            lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
+            lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'evasion');
         } catch (error) {
             console.log('An error occurred on evasion' + error + ` ${FtpWatcher.name} -> ${this.evasion.name}`);
         }

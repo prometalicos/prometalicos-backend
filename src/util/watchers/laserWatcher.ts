@@ -2,7 +2,7 @@ import { text } from 'body-parser';
 import { Transit_end } from '../drivers/comark/models/transit_end';
 import * as io from 'socket.io-client'
 import { Sensor_status } from '../drivers/comark/models/sensor_status';
-import { LecturaSensoresLaserDAO } from '../../dimensionamiento/repository/lectura_sensores_laserDAO';
+import { LecturaSensoresLaserDAO } from '../../dimensionamiento/lectura_sensor_laser/repository/lectura_sensores_laserDAO';
 
 export class LaserWatcher {
 

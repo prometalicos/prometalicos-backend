@@ -9,7 +9,7 @@ export class RolController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertRol(req: Request, res: Response, next) {
 		try {
-			res.send(await rol.insertRol(req.body));
+			res.status(201).send(await rol.insertRol(req.body));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -39,7 +39,12 @@ export class RolController {
 
 	public async getRolById(req: Request, res: Response, next) {
 		try {
-			res.send(await rol.getRolById(req.body));
+			let result = (await rol.getRolById(req.body));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -54,7 +59,12 @@ export class RolController {
 
 	public async updateRol(req: Request, res: Response, next) {
 		try {
-			res.send(await rol.updateRol(req.body));
+			let result = (await rol.updateRol(req.body));
+			if(result["rowCount"] != 0){
+				res.status(204).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -69,7 +79,12 @@ export class RolController {
 
 	public async deleteRol(req: Request, res: Response, next) {
 		try {
-			res.send(await rol.deleteRol(req.body.id));
+			let result = (await rol.deleteRol(req.body.id));
+			if(result["rowCount"] != 0){
+				res.status(202).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

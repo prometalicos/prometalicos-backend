@@ -10,7 +10,7 @@ export class UsuariosController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertUsuario(req: Request, res: Response, next) {
 		try {
-			res.send(await usuarios.insertUsuario(req.body));
+			res.status(201).send(await usuarios.insertUsuario(req.body));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -41,7 +41,12 @@ export class UsuariosController {
 
 	public async getUsuarioById(req: Request, res: Response, next) {
 		try {
-			res.send(await usuarios.getUsuarioById(req.body));
+			let result = (await usuarios.getUsuarioById(req.body));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -56,7 +61,12 @@ export class UsuariosController {
 
 	public async updateUsuario(req: Request, res: Response, next) {
 		try {
-			res.send(await usuarios.updateUsuario(req.body));
+			let result = (await usuarios.updateUsuario(req.body));
+			if(result["rowCount"] != 0){
+				res.status(204).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -71,7 +81,12 @@ export class UsuariosController {
 
 	public async deleteUsuario(req: Request, res: Response, next) {
 		try {
-			res.send(await usuarios.deleteUsuario(req.body.id));
+			let result = (await usuarios.deleteUsuario(req.body.id));
+			if(result["rowCount"] != 0){
+				res.status(202).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500
@@ -101,7 +116,12 @@ export class UsuariosController {
 
 	public async getSubMenu(req: Request, res: Response, next) {
 		try {
-			res.send(await usuarios.getSubMenu(req.body.id));
+			let result = (await usuarios.getSubMenu(req.body.id));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

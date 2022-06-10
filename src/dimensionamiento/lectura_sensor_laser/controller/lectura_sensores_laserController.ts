@@ -65,7 +65,12 @@ export class LecturaSensoresLaserController {
 
 	public async updateLecturaSensoresLaser(req: Request, res: Response, next) {
 		try {
-			res.send(await LecturaSensoresLaser.updateLecturaSensoresLaser(req.body));
+			let result = (await LecturaSensoresLaser.updateLecturaSensoresLaser(req.body));
+			if(result["rowCount"] != 0){
+				res.status(204).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -82,7 +87,7 @@ export class LecturaSensoresLaserController {
 		try {
 			let result = (await LecturaSensoresLaser.deleteLecturaSensoresLaser(req.body.LecturaSensoresLaser_id));
 			if(result["rowCount"] != 0){
-				res.send(result);
+				res.status(202).send(result);
 			} else {
 				res.status(404).send(result);
 			}

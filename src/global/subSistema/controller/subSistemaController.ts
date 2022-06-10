@@ -9,7 +9,7 @@ export class SubSistemaController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertSubSistema(req: Request, res: Response, next) {
 		try {
-			res.send(await subSistema.insertSubSistema(req.body));
+			res.status(201).send(await subSistema.insertSubSistema(req.body));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -39,7 +39,12 @@ export class SubSistemaController {
 
 	public async getSubSistemaById(req: Request, res: Response, next) {
 		try {
-			res.send(await subSistema.getSubSistemaById(req.body));
+			let result = (await subSistema.getSubSistemaById(req.body));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -54,7 +59,12 @@ export class SubSistemaController {
 
 	public async updateSubSistema(req: Request, res: Response, next) {
 		try {
-			res.send(await subSistema.updateSubSistema(req.body));
+			let result = (await subSistema.updateSubSistema(req.body));
+			if(result["rowCount"] != 0){
+				res.status(204).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -69,7 +79,12 @@ export class SubSistemaController {
 
 	public async deleteSubSistema(req: Request, res: Response, next) {
 		try {
-			res.send(await subSistema.deleteSubSistema(req.body.id));
+			let result = (await subSistema.deleteSubSistema(req.body.id));
+			if(result["rowCount"] != 0){
+				res.status(202).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

@@ -11,7 +11,7 @@ export class PermisoController {
 
 	public async getPermiso(req: Request, res: Response, next) {
 		try {
-			res.send(await permiso.getPermiso());
+			res.status(201).send(await permiso.getPermiso());
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -26,7 +26,12 @@ export class PermisoController {
 
 	public async getPermisoById(req: Request, res: Response, next) {
 		try {
-			res.send(await permiso.getPermisoById(req.body));
+			let result = (await permiso.getPermisoById(req.body));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -41,7 +46,12 @@ export class PermisoController {
 
 	public async updatePermiso(req: Request, res: Response, next) {
 		try {
-			res.send(await permiso.updatePermiso(req.body));
+			let result = (await permiso.updatePermiso(req.body));
+			if(result["rowCount"] != 0){
+				res.status(204).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -56,7 +66,12 @@ export class PermisoController {
 
 	public async deletePermiso(req: Request, res: Response, next) {
 		try {
-			res.send(await permiso.deletePermiso(req.body.id));
+			let result = (await permiso.deletePermiso(req.body.id));
+			if(result["rowCount"] != 0){
+				res.status(202).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

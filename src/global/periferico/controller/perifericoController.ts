@@ -10,7 +10,7 @@ export class PerifericoController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertPeriferico(req: Request, res: Response, next) {
 		try {
-			res.send(await periferico.insertPeriferico(req.body));
+			res.status(201).send(await periferico.insertPeriferico(req.body));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -25,7 +25,7 @@ export class PerifericoController {
 
 	public async getPeriferico(req: Request, res: Response, next) {
 		try {
-			res.send(await periferico.getPeriferico());
+			let result = (await periferico.getPeriferico());
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -40,7 +40,12 @@ export class PerifericoController {
 
 	public async getPerifericoById(req: Request, res: Response, next) {
 		try {
-			res.send(await periferico.getPerifericoById(req.body));
+			let result = (await periferico.getPerifericoById(req.body));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -55,7 +60,12 @@ export class PerifericoController {
 
 	public async updatePeriferico(req: Request, res: Response, next) {
 		try {
-			res.send(await periferico.updatePeriferico(req.body));
+			let result = (await periferico.updatePeriferico(req.body));
+			if(result["rowCount"] != 0){
+				res.status(204).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -70,7 +80,12 @@ export class PerifericoController {
 
 	public async deletePeriferico(req: Request, res: Response, next) {
 		try {
-			res.send(await periferico.deletePeriferico(req.body.id));
+			let result = (await periferico.deletePeriferico(req.body.id));
+			if(result["rowCount"] != 0){
+				res.status(202).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

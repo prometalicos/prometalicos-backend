@@ -13,7 +13,7 @@ export class ConcesionController {
 			res.status(201).send(await concesion.insertConcesion(req.body));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 400
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while inserting concesion :" +
@@ -28,7 +28,7 @@ export class ConcesionController {
 			res.send(await concesion.getConcesion());
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 404
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while getting users :" +
@@ -48,7 +48,7 @@ export class ConcesionController {
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 404
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while getting concesion :" +
@@ -68,7 +68,7 @@ export class ConcesionController {
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 400
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while updating concesion :" +

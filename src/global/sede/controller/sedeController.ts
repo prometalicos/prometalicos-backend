@@ -10,7 +10,7 @@ export class SedeController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertSede(req: Request, res: Response, next) {
 		try {
-			res.send(await sede.insertSede(req.body));
+			res.status(201).send(await sede.insertSede(req.body));
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -40,7 +40,12 @@ export class SedeController {
 
 	public async getSedeById(req: Request, res: Response, next) {
 		try {
-			res.send(await sede.getSedeById(req.body));
+			let result = (await sede.getSedeById(req.body));
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 404
@@ -55,7 +60,12 @@ export class SedeController {
 
 	public async updateSede(req: Request, res: Response, next) {
 		try {
-			res.send(await sede.updateSede(req.body));
+			let result = (await sede.updateSede(req.body));
+			if(result["rowCount"] != 0){
+				res.status(204).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 400
@@ -70,7 +80,12 @@ export class SedeController {
 
 	public async deleteSede(req: Request, res: Response, next) {
 		try {
-			res.send(await sede.deleteSede(req.body.id));
+			let result = (await sede.deleteSede(req.body.id));
+			if(result["rowCount"] != 0){
+				res.status(202).send(result);
+			} else {
+				res.status(404).send(result);
+			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500

@@ -98,20 +98,20 @@ export class LaserWatcher {
 			console.log('Connection error ', err);
 		});
 
-		client.on('end', function () {
-			console.log('\nRequested an end to the TCP connection ', contador_conexiones);
-			//client.destroy();
-			contador_conexiones++;
-			sleep(10000);
-			client.connect({ port: port, host: host }, function () {
-				console.log('TCP reconnection (end) established with the server.', { port: port, host: host, sub_sistema_id: sub_sistema_id, 
-					periferico_id: periferico_id }, '\n');
-			});
-		});
+		// client.on('end', function () {
+		// 	console.log('\nRequested an end to the TCP connection ', contador_conexiones);
+		// 	//client.destroy();
+		// 	contador_conexiones++;
+		// 	sleep(10000);
+		// 	client.connect({ port: port, host: host }, function () {
+		// 		console.log('TCP reconnection (end) established with the server.', { port: port, host: host, sub_sistema_id: sub_sistema_id, 
+		// 			periferico_id: periferico_id }, '\n');
+		// 	});
+		// });
 
 		client.connect({ port: port, host: host }, function () {
-			console.log('TCP connection established with the server.', { port: port, host: host, sub_sistema_id: sub_sistema_id, 
-				periferico_id: periferico_id }, '\n');
+			console.log('Iniciando watcher periferico: ', { port: port, host: host, sub_sistema_id: sub_sistema_id, 
+				periferico_id: periferico_id });
 		});
 	}
 }

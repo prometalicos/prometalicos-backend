@@ -171,7 +171,28 @@ ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__clase_vehicul
 ALTER TABLE adm.registro_evasion ADD CONSTRAINT FK_registro_evasion__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
 ALTER TABLE adm.registro_fugas ADD CONSTRAINT FK_registro_fugas__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
 
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('0', 'No clasificado', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('1', 'Peaton', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('2', 'Bibicleta', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('100', 'Motocicleta', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('200', 'Carro', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('220', 'SUV', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('240', 'Pickup', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('250', 'Carro con trailer', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('270', 'SUV con trailer', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('290', 'Pickup con trailer', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('300', 'Van', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('350', 'Van con trailer', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('400', 'Bus', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('401', 'Coach', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('402', 'Bus articulado', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('403', 'Bus dos pisos', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('450', 'Bus trailer', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('451', 'Coach trailer', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('453', 'Bus dos pisos trailer', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('500', 'Camión', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('501', 'Camión trailer', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('502', 'Semitruck', ' ');
 
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('0', 'Camion', ' ');
 
 INSERT INTO adm.lectura_sensores_laser (periferico_id,id,lane,lane_id,time_iso,speed,height,width,length,refl_pos,gap, headway,occupancy,class_id,position,direction,wrong_way,stop_and,url_file_pds) VALUES ('1', 1 , 1 , 1 ,'4',1,1,1,1,1,1,1,1,'1','L','I','0','0','1');

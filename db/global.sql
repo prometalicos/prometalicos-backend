@@ -209,7 +209,7 @@ INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(7,
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(8, 2, 1, 'Subsistema', 'icono-book-open', '/manage/subsystem');
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(9, 2, 1, 'Usuarios', 'icono-settings', '/manage/users');
 
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(11, 3, 1, 'Dimensionamiento', 'cil-puzzle', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(11, 3, 1, 'Dimensionamiento', 'cil-puzzle', '/subsystems/sizing');
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(12, 3, 1, 'Evasión', 'cil-bell-exclamation', '/manage');
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(13, 3, 1, 'Fuga', 'cil-warning', '/manage');
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(14, 3, 1, 'Estática', 'cil-square', '/manage');
@@ -265,7 +265,7 @@ INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, d
  VALUES ('6','1','0','CPU','Comark','654654','5fs5','12','2424','172.19.150.9','2424242','/home/ceul/Descargas/ftp');
 
 INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
- VALUES ('7','1','1','LPR Dimensionamiento','Pumatronic','654654','5fs5','12','2424','172.19.150.9','21','/mnt/test');
+ VALUES ('7','2','1','LPR Dimensionamiento','Pumatronic','654654','5fs5','12','2424','172.19.150.9','21','/mnt/test');
 
 INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
  VALUES ('8','1','5','Placa supervisora FUGA','Comark','654654','5fs5','12','2424','172.19.150.20','2424242','/home/ceul/Descargas/ftp');

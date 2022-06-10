@@ -6,6 +6,7 @@ import { ConcesionRoutes } from "./global/concesion/routes/concesionRoutes";
 import { RolRoutes } from "./global/rol/routes/rolRoutes";
 import { Watcher } from "./util/watchers/watcher";
 import { DataBaseInterface } from "./util/db_connection/services/databaseInterface";
+import { LecturaSensoresLaserRoutes } from "dimensionamiento/lectura_sensor_laser/routes/lectura_sensores_laserRoutes";
 
 
 class App {
@@ -15,6 +16,7 @@ class App {
     public usuariosRoutes: UsiariosRoutes = new UsiariosRoutes()
     public concesionRoutes: ConcesionRoutes = new ConcesionRoutes()
     public rolRoutes: RolRoutes = new RolRoutes()
+    public lecturaSensoresLaser: LecturaSensoresLaserRoutes = new LecturaSensoresLaserRoutes()
     private watcher
     private connection;
     private connection2;
@@ -27,6 +29,7 @@ class App {
         this.usuariosRoutes.routes(this.app)
         this.concesionRoutes.routes(this.app)
         this.rolRoutes.routes(this.app)
+        this.lecturaSensoresLaser.routes(this.app)
         this.connection = DataBaseInterface.getInstance('global');
         this.connection2 = DataBaseInterface.getInstance('evasion');
         this.connection3 = DataBaseInterface.getInstance('dimensionamiento');

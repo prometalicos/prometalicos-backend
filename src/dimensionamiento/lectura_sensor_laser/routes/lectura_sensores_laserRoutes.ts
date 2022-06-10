@@ -4,7 +4,7 @@ import * as auth from '../../../util/auth/services/authService'
 import * as cors from 'cors'
 import { LecturaSensoresLaserController } from "../controller/lectura_sensores_laserController";
 
-export class ConcesionRoutes { 
+export class LecturaSensoresLaserRoutes { 
     
     public lecturaSensoresLaserController: LecturaSensoresLaserController = new LecturaSensoresLaserController();
 

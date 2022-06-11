@@ -6,7 +6,8 @@ import { ConcesionRoutes } from "./global/concesion/routes/concesionRoutes";
 import { RolRoutes } from "./global/rol/routes/rolRoutes";
 import { Watcher } from "./util/watchers/watcher";
 import { DataBaseInterface } from "./util/db_connection/services/databaseInterface";
-import { LecturaSensoresLaserRoutes } from "dimensionamiento/lectura_sensor_laser/routes/lectura_sensores_laserRoutes";
+import { LecturaSensoresLaserRoutes } from "./dimensionamiento/lectura_sensor_laser/routes/lectura_sensores_laserRoutes";
+import { DimensionamientoOrchestrator } from "./dimensionamiento/orchestrator/dimensionamientoOrchestrator";
 
 
 class App {
@@ -17,7 +18,8 @@ class App {
     public concesionRoutes: ConcesionRoutes = new ConcesionRoutes()
     public rolRoutes: RolRoutes = new RolRoutes()
     public lecturaSensoresLaser: LecturaSensoresLaserRoutes = new LecturaSensoresLaserRoutes()
-    private watcher
+    private watcher;
+    private dimensionamientoOrchestrator;
     private connection;
     private connection2;
     private connection3;
@@ -34,6 +36,7 @@ class App {
         this.connection2 = DataBaseInterface.getInstance('evasion');
         this.connection3 = DataBaseInterface.getInstance('dimensionamiento');
         this.watcher = Watcher.getInstance();
+        this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
     }
 
     private config(): void {

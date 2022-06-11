@@ -3,9 +3,13 @@ import { Transit_end } from '../drivers/comark/models/transit_end';
 import * as io from 'socket.io-client'
 import { Sensor_status } from '../drivers/comark/models/sensor_status';
 import { LecturaSensoresLaserDAO } from '../../dimensionamiento/lectura_sensor_laser/repository/lectura_sensores_laserDAO';
+import { DimensionamientoOrchestrator } from '../../dimensionamiento/orchestrator/dimensionamientoOrchestrator';
+
+
 
 export class LaserWatcher {
 
+    private dimensionamientoOrchestrator: DimensionamientoOrchestrator;
 	private static instance: LaserWatcher;
 	
 	static start(host: string, port: number, sub_sistema_id: string, periferico_id: string) {
@@ -20,7 +24,7 @@ export class LaserWatcher {
 
 		var XMLMapping = require('xml-mapping');
 		var contador_conexiones: number;
-
+        this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
 		const deserialize = (xml__) => {
 			try {
 				var json = XMLMapping.load(xml__);
@@ -91,6 +95,7 @@ export class LaserWatcher {
 		client.on('data', function (data) {
 			//console.log(`\nData received from the server: ${data.toString()}.`, '\n');
 			let obj = deserialize(data.toString());
+            this.dimensionamientoOrchestrator.laser(obj)
 			//console.log(`\n\nDeserialize: ${obj}.`, '\n');
 		});
 

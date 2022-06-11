@@ -4,12 +4,14 @@ import { LecturaCamaraLPRDAO } from '../../lectura_camara_lpr/repository/lectura
 import { LecturaCamaraLpr } from '../../lectura_camara_lpr/models/lectura_camara_lpr.model';
 import { EventoTransitoDAO } from '../../dimensionamiento/evento_transito/repository/evento_transitoDAO';
 import { EventoTransito } from '../../dimensionamiento/evento_transito/models/evento_transito.model';
+import { DimensionamientoOrchestrator } from '../../dimensionamiento/orchestrator/dimensionamientoOrchestrator';
 
 
 
 export class FtpWatcher {
 
     private static instance: FtpWatcher;
+    private dimensionamientoOrchestrator: DimensionamientoOrchestrator;
 
     private constructor(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         let watchOptions = {
@@ -19,6 +21,7 @@ export class FtpWatcher {
             //usePolling: false,
             ignorePermissionErrors: false
         };
+        this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
         ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
 
             let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
@@ -64,6 +67,7 @@ export class FtpWatcher {
 
     private async dimensionamiento(properties: any, periferico_id: string, path: string) {
         try {
+            this.dimensionamientoOrchestrator.eventStart();
             let lectura_camara_lpr_obj: LecturaCamaraLpr = new LecturaCamaraLpr()
             lectura_camara_lpr_obj.periferico_id = periferico_id,
             lectura_camara_lpr_obj.placa_identificada = properties["Placa"],
@@ -71,9 +75,12 @@ export class FtpWatcher {
             lectura_camara_lpr_obj.url_matricula = "",
             lectura_camara_lpr_obj.url_foto_ampliada = path,
             lectura_camara_lpr_obj.fecha_hora = Date()
+            this.dimensionamientoOrchestrator.lpr(lectura_camara_lpr_obj)
+
+            /*
             let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
             lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
-
+            
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
             evento_transito_obj.fecha_hora = Date();
@@ -83,6 +90,7 @@ export class FtpWatcher {
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO(); 
             evento_transitoDAO.insertEventoTransito(evento_transito_obj)
+            */
         } catch (error) {
             console.log('An error occurred on dimesionamiento' + error + ` ${FtpWatcher.name} -> ${this.evasion.name}`);
         }

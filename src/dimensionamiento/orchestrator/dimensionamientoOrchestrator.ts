@@ -3,6 +3,7 @@ import { LecturaCamaraLPRDAO } from "../../lectura_camara_lpr/repository/lectura
 import { LecturaCamaraLpr } from "../../lectura_camara_lpr/models/lectura_camara_lpr.model";
 import { EventoTransito } from "../evento_transito/models/evento_transito.model";
 import { EventoTransitoDAO } from "../evento_transito/repository/evento_transitoDAO";
+import { LecturaSensoresLaserDAO } from "../../dimensionamiento/lectura_sensor_laser/repository/lectura_sensores_laserDAO";
 
 export class DimensionamientoOrchestrator {
 
@@ -72,18 +73,16 @@ export class DimensionamientoOrchestrator {
             let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
             lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
 
-            /*
-            let lectura_sensor_laser_obj = this.queue[0]["laser"]
-            let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
-            lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, 'dimensionamiento');
-            */
-
-            //codigo provisional
             let lectura_sensor_laser_obj = {
                 id: 1,
                 clase_vehiculo_id: "0"
             }
 
+            if (this.queue[0]['laser'] != null) {
+                let lectura_sensor_laser_obj = this.queue[0]["laser"]
+                let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
+                lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, 'dimensionamiento');
+            }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
             evento_transito_obj.fecha_hora = Date();

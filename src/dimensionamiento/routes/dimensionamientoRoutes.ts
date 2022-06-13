@@ -1,8 +1,8 @@
 
 import {Request, Response, NextFunction} from "express";
-import * as auth from '../../../util/auth/services/authService'
+import * as auth from './../../util/auth//services/authService'
 import * as cors from 'cors'
-import { PerifericoController } from "../controller/perifericoController";
+import { PerifericoController } from "./../../global/periferico/controller/perifericoController";
 
 export class PerifericoRoutes { 
     

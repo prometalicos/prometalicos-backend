@@ -21,10 +21,10 @@ export class SedeRoutes {
         app.route('/sede/getById')
         .post(auth,this.sedeController.getSedeById)
 
-        app.route('/sede/update')
+        app.route('/sede')
         .post(auth,this.sedeController.updateSede)
 
-        app.route('/sede/delete')
+        app.route('/sede')
         .post(auth,this.sedeController.deleteSede)
 
     }

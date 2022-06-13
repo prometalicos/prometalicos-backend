@@ -21,10 +21,10 @@ export class ConcesionRoutes {
         app.route('/concesion/getById')
         .get(this.concesionController.getConcesionById)
 
-        app.route('/concesion/update')
+        app.route('/concesion')
         .put(this.concesionController.updateConcesion)
 
-        app.route('/concesion/delete')
+        app.route('/concesion')
         .delete(this.concesionController.deleteConcesion)
     }
 }

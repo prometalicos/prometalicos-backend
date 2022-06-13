@@ -16,16 +16,16 @@ export class SedeRoutes {
         .post(this.sedeController.insertSede)
 
         app.route('/sede/get')
-        .get(auth,this.sedeController.getSede)
+        .get(this.sedeController.getSede)
 
         app.route('/sede/getById')
-        .get(auth,this.sedeController.getSedeById)
+        .get(this.sedeController.getSedeById)
 
         app.route('/sede')
-        .put(auth,this.sedeController.updateSede)
+        .put(this.sedeController.updateSede)
 
         app.route('/sede')
-        .delete(auth,this.sedeController.deleteSede)
+        .delete(this.sedeController.deleteSede)
 
     }
 }

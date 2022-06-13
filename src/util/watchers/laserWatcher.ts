@@ -25,6 +25,7 @@ export class LaserWatcher {
 		var XMLMapping = require('xml-mapping');
 		var contador_conexiones: number;
         this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
+		
 		const deserialize = (xml__) => {
 			try {
 				var json = XMLMapping.load(xml__);
@@ -41,13 +42,20 @@ export class LaserWatcher {
 								console.log('---------transit_end----------');
 								let obj_transit_end = new Transit_end();
 								obj_transit_end = value.transit_end; // Enviar a persistencia
-								let obj = new LecturaSensoresLaserDAO();
-								obj.insertLecturaSensoresLaser(obj_transit_end, '2');
+
+								if (this.dimensionamientoOrchestrator === undefined){
+									this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
+									console.log(`\n\nDeserialize undefined: ${obj_transit_end}.`, '\n');
+								}
+								this.dimensionamientoOrchestrator.laser(obj_transit_end);
+
+								//let obj = new LecturaSensoresLaserDAO();
+								//obj.insertLecturaSensoresLaser(obj_transit_end, '2');
 								Object.entries(value.transit_end).forEach(([key3, transit_end]) => {
 									console.log(`${key3} ${transit_end}`);
 								});
 							} else if (value.sensor_status !== undefined) {
-								//console.log('----------sensor_status---------');
+								console.log('----------sensor_status---------');
 								let obj_sensor_status = new Sensor_status();
 								obj_sensor_status = value.sensor_status; // Validar si no es 8 de ready
 								Object.entries(value.sensor_status).forEach(([key3, sensor_status]) => {
@@ -93,10 +101,7 @@ export class LaserWatcher {
 		// });
 
 		client.on('data', function (data) {
-			//console.log(`\nData received from the server: ${data.toString()}.`, '\n');
 			let obj = deserialize(data.toString());
-            this.dimensionamientoOrchestrator.laser(obj)
-			//console.log(`\n\nDeserialize: ${obj}.`, '\n');
 		});
 
 		client.on('error', function(err) {

@@ -2,7 +2,7 @@
 import {Request, Response, NextFunction} from "express";
 import * as auth from '../../../util/auth/services/authService'
 import * as cors from 'cors'
-import { LecturaSensoresLaserController } from "../controller/lectura_sensores_laserController";
+import { LecturaSensoresLaserController } from "./../controller/lectura_sensor_laserController";
 
 export class LecturaSensoresLaserRoutes { 
     

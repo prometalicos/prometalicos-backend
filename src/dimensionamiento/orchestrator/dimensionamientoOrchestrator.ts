@@ -69,19 +69,22 @@ export class DimensionamientoOrchestrator {
 
     private async insertData() {
         try {
-            let lectura_camara_lpr_obj = this.queue[0]["lpr"]
+            let lectura_camara_lpr_obj = this.queue[0]["lpr"];
             let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
             lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
-
             let lectura_sensor_laser_obj = {
                 id: 1,
                 clase_vehiculo_id: "0"
             }
 
             if (this.queue[0]['laser'] != null) {
+
+                //let obj = new LecturaSensoresLaserDAO();
+				//obj.insertLecturaSensoresLaser(obj_transit_end, '2');
+
                 let lectura_sensor_laser_obj = this.queue[0]["laser"]
                 let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
-                lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, 'dimensionamiento');
+                lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
             }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
@@ -91,8 +94,9 @@ export class DimensionamientoOrchestrator {
             evento_transito_obj.clase_vehiculo_id = lectura_sensor_laser_obj.clase_vehiculo_id;
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO();
-            evento_transitoDAO.insertEventoTransito(evento_transito_obj)
-            this.queue.shift()
+            evento_transitoDAO.insertEventoTransito(evento_transito_obj);
+            console.log('Registro vehiculo ', lectura_camara_lpr_obj.placa_identificada );
+            this.queue.shift();
         } catch (error) {
             console.log('An error occurred in the insertData ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.insertData.name}`);
         }

@@ -46,19 +46,17 @@ export class FtpWatcher {
 
     private getMetadata(data) {
         try {
-
             let test = data.split('/n')
             data = null
-            let re = /FwV?(.*)/g
+            let re = /DataComp?(.*)/g
             let x = re.exec(test[test.length - 1])
             test = null
             let result = x[0].split(';')
             let properties: any = {}
             for (let i = 0; i < result.length - 1; i++) {
-                let b = result[i].split('=')
-                properties[b[0]] = b[1]
+                let b = result[i].split('=');
+                properties[b[0]] = b[1];
             }
-            console.log(properties)
             return properties
         } catch (error) {
             console.log('An error occurred getting the meta data' + error + ` ${FtpWatcher.name} -> ${this.getMetadata.name}`);
@@ -76,23 +74,8 @@ export class FtpWatcher {
             lectura_camara_lpr_obj.url_foto_ampliada = path,
             lectura_camara_lpr_obj.fecha_hora = Date()
             this.dimensionamientoOrchestrator.lpr(lectura_camara_lpr_obj)
-
-            /*
-            let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
-            lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
-            
-
-            let evento_transito_obj: EventoTransito = new EventoTransito();
-            evento_transito_obj.fecha_hora = Date();
-            evento_transito_obj.lectura_camara_lpr_id = lectura_camara_lpr_obj.lectura_camara_lpr_id;
-            evento_transito_obj.lectura_sensores_id = 1;
-            evento_transito_obj.clase_vehiculo_id = "0";
-            evento_transito_obj.tipo = 1;
-            let evento_transitoDAO = new EventoTransitoDAO(); 
-            evento_transitoDAO.insertEventoTransito(evento_transito_obj)
-            */
         } catch (error) {
-            console.log('An error occurred on dimesionamiento' + error + ` ${FtpWatcher.name} -> ${this.evasion.name}`);
+            console.log('An error occurred on dimesionamiento' + error + ` ${FtpWatcher.name} -> ${this.dimensionamiento.name}`);
         }
     }
 

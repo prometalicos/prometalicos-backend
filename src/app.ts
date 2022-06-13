@@ -8,7 +8,7 @@ import { Watcher } from "./util/watchers/watcher";
 import { DataBaseInterface } from "./util/db_connection/services/databaseInterface";
 import { LecturaSensoresLaserRoutes } from "./dimensionamiento/lectura_sensor_laser/routes/lectura_sensores_laserRoutes";
 import { DimensionamientoOrchestrator } from "./dimensionamiento/orchestrator/dimensionamientoOrchestrator";
-
+import { SedeRoutes } from "global/sede/routes/sedeRoutes";
 
 class App {
 
@@ -16,6 +16,7 @@ class App {
     public authRoutes: AuthRoutes = new AuthRoutes()
     public usuariosRoutes: UsiariosRoutes = new UsiariosRoutes()
     public concesionRoutes: ConcesionRoutes = new ConcesionRoutes()
+    public sedeRoutes: SedeRoutes = new SedeRoutes();
     public rolRoutes: RolRoutes = new RolRoutes()
     public lecturaSensoresLaser: LecturaSensoresLaserRoutes = new LecturaSensoresLaserRoutes()
     private watcher;
@@ -27,11 +28,12 @@ class App {
     constructor() {
         this.app = express();
         this.config();
-        this.authRoutes.routes(this.app)
-        this.usuariosRoutes.routes(this.app)
-        this.concesionRoutes.routes(this.app)
-        this.rolRoutes.routes(this.app)
-        this.lecturaSensoresLaser.routes(this.app)
+        this.authRoutes.routes(this.app);
+        this.usuariosRoutes.routes(this.app);
+        this.concesionRoutes.routes(this.app);
+        this.rolRoutes.routes(this.app);
+        this.sedeRoutes.routes(this.app);
+        this.lecturaSensoresLaser.routes(this.app);
         this.connection = DataBaseInterface.getInstance('global');
         this.connection2 = DataBaseInterface.getInstance('evasion');
         this.connection3 = DataBaseInterface.getInstance('dimensionamiento');

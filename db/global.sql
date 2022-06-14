@@ -28,7 +28,7 @@ CREATE TABLE adm.concesion(
 CREATE TABLE adm.sede(
 	sede_id varchar(64) not null,
         concesion_id varchar(64) not null,
-        descripcion varchar(128) not null,
+        nombre varchar(128) not null,
         estado bool not null,
         CONSTRAINT sede_pk PRIMARY KEY (sede_id)
         )
@@ -231,9 +231,9 @@ INSERT INTO adm.usuario_rol (usuario_id, rol_id) VALUES(1, 0);
 
 INSERT INTO adm.concesion(concesion_id,nombre,direccion,telefono_contacto,correo_e,url,estado) VALUES ('1','Corredores Viales','cra 1 # 1 - 1','54656546456','concesion@prueba.com','concesion.prueba.com',true);
 
-INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('1','1','Sede A',true);
-INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('2','1','Sede B',true);
-INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('3','1','Sede C',true);
+INSERT INTO adm.sede(sede_id,concesion_id,nombre,estado) VALUES ('1','1','Sede A',true);
+INSERT INTO adm.sede(sede_id,concesion_id,nombre,estado) VALUES ('2','1','Sede B',true);
+INSERT INTO adm.sede(sede_id,concesion_id,nombre,estado) VALUES ('3','1','Sede C',true);
 
 INSERT INTO adm.sub_sistema(sub_sistema_id,sede_id,descripcion,estado) VALUES ('1','1','Evasión',CAST(1 AS bit));
 INSERT INTO adm.sub_sistema(sub_sistema_id,sede_id,descripcion,estado) VALUES ('2','1','Dimensionamiento',CAST(1 AS bit));

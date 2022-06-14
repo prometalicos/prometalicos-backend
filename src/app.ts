@@ -8,7 +8,7 @@ import { Watcher } from "./util/watchers/watcher";
 import { DataBaseInterface } from "./util/db_connection/services/databaseInterface";
 import { LecturaSensoresLaserRoutes } from "./dimensionamiento/lectura_sensor_laser/routes/lectura_sensores_laserRoutes";
 import { DimensionamientoOrchestrator } from "./dimensionamiento/orchestrator/dimensionamientoOrchestrator";
-import { SedeRoutes } from "global/sede/routes/sedeRoutes";
+import { SedeRoutes } from "./global/sede/routes/sedeRoutes";
 
 class App {
 

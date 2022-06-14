@@ -1,7 +1,7 @@
 
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
-import { SedeDAO } from "global/sede/repository/sedeDAO";
+import { SedeDAO } from "./../repository/sedeDAO";
 
 
 let sede = new SedeDAO();

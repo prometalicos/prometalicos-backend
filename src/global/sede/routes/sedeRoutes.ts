@@ -2,7 +2,7 @@
 import {Request, Response, NextFunction} from "express";
 import * as auth from '../../../util/auth/services/authService'
 import * as cors from 'cors'
-import { SedeController } from "global/sede/controller/sedeController";
+import { SedeController } from "./../controller/sedeController";
 
 export class SedeRoutes { 
     

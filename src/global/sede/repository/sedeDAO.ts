@@ -2,7 +2,7 @@
 
 import * as uuid from "uuid";
 import { DataBaseService } from "../../../util/db_connection/services/dataBaseService";
-import { Sede } from "global/sede/models/sede.model";
+import { Sede } from "./../models/sede.model";
 import { DataBaseInterface } from "../../../util/db_connection/services/databaseInterface";
 
 
@@ -43,7 +43,6 @@ export class SedeDAO {
 
     public async getSede() {
         try {
-
             let query = await this.connection.pool.query(`SELECT
                         sede_id,
                         concesion_id,

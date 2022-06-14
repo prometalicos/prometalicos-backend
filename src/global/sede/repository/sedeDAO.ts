@@ -29,10 +29,10 @@ export class SedeDAO {
             let query = await this.connection.pool.query(`INSERT INTO adm.sede (
                 sede_id,
                 concesion_id,
-                descripcion,
+                nombre,
                 estado) VALUES ($1,$2,$3,$4);`, [sede.sede_id, 
                     sede.concesion_id,
-                    sede.descripcion,
+                    sede.nombre,
                     sede.estado]);
 
             return sede
@@ -61,7 +61,7 @@ export class SedeDAO {
             let query = await this.connection.pool.query(`SELECT
                         sede_id,
                         concesion_id,
-                        descripcion,
+                        nombre,
                         estado
                         FROM adm.sede
                         WHERE sede_id = $1;`, [sedeId.sede_id]);
@@ -77,11 +77,11 @@ export class SedeDAO {
 
             let query = await this.connection.pool.query(`UPDATE adm.sede SET
                 concesion_id = $1,
-                descripcion = $2,
+                nombre = $2,
                 estado = $3
                 WHERE sede_id = $4;`,
                     [sede.concesion_id,
-                    sede.descripcion,
+                    sede.nombre,
                     sede.estado,
                     sede.sede_id]);
 

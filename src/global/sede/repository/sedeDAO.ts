@@ -46,7 +46,7 @@ export class SedeDAO {
             let query = await this.connection.pool.query(`select sede_id,
             s.concesion_id,
             c.nombre concesion_nombre,
-            s.descripcion,
+            s.nombre,
             s.estado
             FROM adm.sede s inner join adm.concesion c ON s.concesion_id = c.concesion_id;`);
             return query

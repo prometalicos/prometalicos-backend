@@ -48,8 +48,7 @@ export class SedeDAO {
             c.nombre,
             s.descripcion,
             s.estado
-            FROM adm.sede s inner join concesion c ON s.concesion_id = c.concesion_id;`);
-
+            FROM adm.sede s inner join adm.concesion c ON s.concesion_id = c.concesion_id;`);
             return query
         } catch (error) {
             throw new Error(error)

@@ -28,7 +28,7 @@ export class DimensionamientoOrchestrator {
     public eventStart() {
         try {
             if (this.queue.length > 0) {
-                this.insertData()
+                this.insertData();
             }
             this.queue.push({
                 id: uuid.v4(),
@@ -95,7 +95,7 @@ export class DimensionamientoOrchestrator {
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO();
             evento_transitoDAO.insertEventoTransito(evento_transito_obj);
-            console.log('Registro vehiculo ', lectura_camara_lpr_obj.placa_identificada );
+            console.log('Registro vehiculo desde el orquestador', lectura_camara_lpr_obj.placa_identificada );
             this.queue.shift();
         } catch (error) {
             console.log('An error occurred in the insertData ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.insertData.name}`);

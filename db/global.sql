@@ -28,8 +28,8 @@ CREATE TABLE adm.concesion(
 CREATE TABLE adm.sede(
 	sede_id varchar(64) not null,
         concesion_id varchar(64) not null,
-        descripcion varchar(256) not null,
-        estado bit not null,
+        descripcion varchar(128) not null,
+        estado bool not null,
         CONSTRAINT sede_pk PRIMARY KEY (sede_id)
         )
           WITH (
@@ -231,9 +231,9 @@ INSERT INTO adm.usuario_rol (usuario_id, rol_id) VALUES(1, 0);
 
 INSERT INTO adm.concesion(concesion_id,nombre,direccion,telefono_contacto,correo_e,url,estado) VALUES ('1','Corredores Viales','cra 1 # 1 - 1','54656546456','concesion@prueba.com','concesion.prueba.com',true);
 
-INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('1','1','Sede A',CAST(1 AS bit));
-INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('2','1','Sede B',CAST(1 AS bit));
-INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('3','1','Sede C',CAST(1 AS bit));
+INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('1','1','Sede A',true);
+INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('2','1','Sede B',true);
+INSERT INTO adm.sede(sede_id,concesion_id,descripcion,estado) VALUES ('3','1','Sede C',true);
 
 INSERT INTO adm.sub_sistema(sub_sistema_id,sede_id,descripcion,estado) VALUES ('1','1','Evasión',CAST(1 AS bit));
 INSERT INTO adm.sub_sistema(sub_sistema_id,sede_id,descripcion,estado) VALUES ('2','1','Dimensionamiento',CAST(1 AS bit));
@@ -247,37 +247,37 @@ INSERT INTO adm.tipo_periferico (tipo_periferico_id, descripcion, estado) VALUES
 INSERT INTO adm.tipo_periferico (tipo_periferico_id, descripcion, estado) VALUES('5', 'Placa', CAST(1 AS bit));
 INSERT INTO adm.tipo_periferico (tipo_periferico_id, descripcion, estado) VALUES('6', 'Panel', CAST(1 AS bit));
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('1','1','4','Placa supervisora perfilador','Electro Tax','654654','5fs5','12','2424','127.0.0.1','2424242','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('2','1','2','Laser Principal','Comark','654654','5fs5','12','2424','172.19.150.5','12876','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('3','1','3','Laser Secundario','Comark','654654','5fs5','12','2424','172.19.150.6','2424242','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('4','1','3','Laser Frontal','Comark','654654','5fs5','12','2424','172.19.150.7','2424242','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('5','1','4','CCTV Perfilador','Comark','654654','5fs5','12','2424','172.19.150.8','2424242','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('6','1','0','CPU','Comark','654654','5fs5','12','2424','172.19.150.9','2424242','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('7','2','1','LPR Dimensionamiento','Pumatronic','654654','5fs5','12','2424','172.19.150.9','21','/mnt/test', 1800);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('8','1','5','Placa supervisora FUGA','Comark','654654','5fs5','12','2424','172.19.150.20','2424242','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('9','1','6','LPR FUGA','Comark','654654','5fs5','12','2424','172.19.150.21','2424242','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('10','1','6','PAN FUGA','Comark','654654','5fs5','12','2424','172.19.150.22','2424242','/home/ceul/Descargas/ftp', 0);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp)
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('11','1','4','CCTV FUGA','Comark','654654','5fs5','12','2424','172.19.150.23','2424242','/home/ceul/Descargas/ftp', 0);
 
 INSERT INTO adm.tarjeta_puertos(tarjeta_id,puerto,periferico_id,ip,descripcion_puerto, estado,tipo) VALUES (1,'561','1','127.0.0.1','pureba',CAST(1 AS bit),CAST(1 AS bit));

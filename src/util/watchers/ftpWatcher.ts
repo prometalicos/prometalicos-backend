@@ -22,16 +22,39 @@ export class FtpWatcher {
             ignorePermissionErrors: false
         };
         this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
-        ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
+        console.log("Iniciando watcher ",ruta_ftp);
 
-            let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
-            let properties = this.getMetadata(data);
-            if (sub_sistema_id == '1') {
-                this.evasion(properties, periferico_id, path);
-            } else if (sub_sistema_id == '2') {
-                this.dimensionamiento(properties, periferico_id, path);
-            }
-        });
+        const fs = require('fs');
+        let cont: number;
+        cont = -1;
+        const countFiles = () => {
+            fs.readdir(ruta_ftp, (err, files) => {
+                if (files.length > cont){
+                    console.log(files[files.length-2], files.length);
+                    cont=files.length;
+                                
+                    let data = fs.readFileSync(ruta_ftp+'/'+files[files.length-2], { encoding: 'utf8', flag: 'r' });
+                    let properties = this.getMetadata(data);
+                    if (sub_sistema_id == '1') {
+                        this.evasion(properties, periferico_id, ruta_ftp+'/'+files[files.length-2]);
+                    } else if (sub_sistema_id == '2') {
+                        this.dimensionamiento(properties, periferico_id, ruta_ftp+'/'+files[files.length-2]);
+                    }
+                }
+                });
+        }
+        setInterval(countFiles, 1000);
+
+        // ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
+            
+        //     let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
+        //     let properties = this.getMetadata(data);
+        //     if (sub_sistema_id == '1') {
+        //         this.evasion(properties, periferico_id, path);
+        //     } else if (sub_sistema_id == '2') {
+        //         this.dimensionamiento(properties, periferico_id, path);
+        //     }
+        // });
     }
 
     static start(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {

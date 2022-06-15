@@ -51,7 +51,6 @@ export class ConcesionDAO {
                         correo_e,
                         url
                         FROM adm.concesion;`);
-
             return query
         } catch (error) {
             throw new Error(error)
@@ -71,7 +70,6 @@ export class ConcesionDAO {
                         url
                         FROM adm.concesion
                         WHERE concesion_id = $1;`, [concesionId.concesion_id]);
-
             return query;
         } catch (error) {
             return new Error(error);
@@ -97,7 +95,6 @@ export class ConcesionDAO {
                     concesion.correo_e,
                     concesion.url,
                     concesion.concesion_id]);
-
             return query
         } catch (error) {
             throw new Error(error)

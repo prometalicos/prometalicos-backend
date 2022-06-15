@@ -80,7 +80,7 @@ export class ConcesionController {
 
 	public async deleteConcesion(req: Request, res: Response, next) {
 		try {
-			let result = await concesion.deleteConcesion(req.body);
+			let result = await concesion.deleteConcesion(req.body.concesion_id);
 			if(result["rowCount"] != 0){
 				res.status(202).send(result);
 			} else {

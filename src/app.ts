@@ -3,6 +3,7 @@ import * as bodyParser from "body-parser";
 import { AuthRoutes } from "./util/auth/routes/authRoutes";
 import { UsiariosRoutes } from "./global/usuarios/routes/usuariosRoutes";
 import { ConcesionRoutes } from "./global/concesion/routes/concesionRoutes";
+import { DimensionamientoRoutes } from "./dimensionamiento/routes/dimensionamientoRoutes";
 import { RolRoutes } from "./global/rol/routes/rolRoutes";
 import { Watcher } from "./util/watchers/watcher";
 import { DataBaseInterface } from "./util/db_connection/services/databaseInterface";
@@ -17,7 +18,8 @@ class App {
     public usuariosRoutes: UsiariosRoutes = new UsiariosRoutes()
     public concesionRoutes: ConcesionRoutes = new ConcesionRoutes()
     public sedeRoutes: SedeRoutes = new SedeRoutes();
-    public rolRoutes: RolRoutes = new RolRoutes()
+    public rolRoutes: RolRoutes = new RolRoutes();
+    public dimensionamientoRoutes: DimensionamientoRoutes = new DimensionamientoRoutes();
     public lecturaSensoresLaser: LecturaSensoresLaserRoutes = new LecturaSensoresLaserRoutes()
     private watcher;
     private dimensionamientoOrchestrator;
@@ -34,6 +36,7 @@ class App {
         this.rolRoutes.routes(this.app);
         this.sedeRoutes.routes(this.app);
         this.lecturaSensoresLaser.routes(this.app);
+        this.dimensionamientoRoutes.routes(this.app);
         this.connection = DataBaseInterface.getInstance('global');
         this.connection2 = DataBaseInterface.getInstance('evasion');
         this.connection3 = DataBaseInterface.getInstance('dimensionamiento');

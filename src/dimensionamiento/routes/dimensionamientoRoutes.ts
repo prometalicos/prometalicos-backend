@@ -4,16 +4,16 @@ import * as auth from './../../util/auth//services/authService'
 import * as cors from 'cors'
 import { EventoTransitoController } from "./../evento_transito/controller/evento_transitoController";
 
-export class PerifericoRoutes { 
+export class DimensionamientoRoutes { 
     
-    public pventoTransitoController: EventoTransitoController = new EventoTransitoController();
+    public eventoTransitoController: EventoTransitoController = new EventoTransitoController();
 
     public routes(app): void {   
 
         app.use(cors());
 
         app.route('/dimensionamiento_all')
-        .post(this.pventoTransitoController.getEventoTransitoAll)
+        .post(this.eventoTransitoController.getEventoTransitoAll)
 
     }
 }

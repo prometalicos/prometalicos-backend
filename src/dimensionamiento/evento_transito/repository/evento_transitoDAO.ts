@@ -47,6 +47,24 @@ export class EventoTransitoDAO {
         }
     }
 
+    public async getDimensionamientoAll() {
+        try {
+
+            let query = await this.connection.pool.query(`SELECT
+                        evento_transito_id,
+                        tipo,
+                        fecha_hora,
+                        lectura_camara_lpr_id,
+                        lectura_sensores_id,
+                        clase_vehiculo_id
+                        FROM adm.evento_transito;`);
+
+            return query
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
     public async getEventoTransitoById(eventoTransito: EventoTransito) {
         try {
 

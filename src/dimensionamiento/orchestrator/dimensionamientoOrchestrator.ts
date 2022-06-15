@@ -30,7 +30,7 @@ export class DimensionamientoOrchestrator {
             console.log("Iniciando orquestador");
             if (this.queue.length > 0) {
                 this.insertData();
-                console.log("Cerrando orquestador");
+                
             }
             this.queue.push({
                 id: uuid.v4(),
@@ -97,7 +97,8 @@ export class DimensionamientoOrchestrator {
             let evento_transitoDAO = new EventoTransitoDAO();
             //console.log(evento_transito_obj);
             evento_transitoDAO.insertEventoTransito(evento_transito_obj);
-            console.log('Registro vehiculo desde el orquestador', lectura_camara_lpr_obj.placa_identificada );
+            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada );
+            console.log("Cerrando orquestador");
             this.queue.shift();
         } catch (error) {
             console.log('An error occurred in the insertData ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.insertData.name}`);

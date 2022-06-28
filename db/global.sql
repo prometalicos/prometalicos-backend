@@ -251,7 +251,7 @@ INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, d
  VALUES ('1','1','4','Placa supervisora perfilador','Electro Tax','654654','5fs5','12','2424','127.0.0.1','2424242','/home/ftppromet/lpr_15011', 0);
 
 INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
- VALUES ('2','1','2','Laser Principal','Comark','654654','5fs5','12','2424','127.0.0.1','12876','/home/ftppromet/lpr_15011', 0);
+ VALUES ('2','1','2','Laser Principal','Comark','654654','5fs5','12','2424','172.19.150.5','12876','/home/ftppromet/lpr_15011', 0);
 
 INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, tiempo_espera)
  VALUES ('3','1','3','Laser Secundario','Comark','654654','5fs5','12','2424','172.19.150.6','2424242','/home/ftppromet/lpr_15011', 0);

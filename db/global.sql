@@ -188,7 +188,7 @@ ALTER TABLE adm.permiso_rol ADD CONSTRAINT FK_permiso_rol__permiso FOREIGN KEY (
 ALTER TABLE adm.permiso_rol ADD CONSTRAINT FK_permiso_rol FOREIGN KEY (rol_id) REFERENCES adm.rol (rol_id);
 
 INSERT INTO adm.usuario (usuario_id, rol_id, frase, nombre_usuario, nombre_completo, direccion, estado)
-        VALUES ('1', 00, '123', 'adm', 'test', 'test', '1');
+        VALUES ('1', 00, '$2a$12$qYjkbhIHnaJSsebbHmidkuPwQxsnzXstfMm2sB0yyDJIGycO6/qEy', 'adm', 'test', 'test', '1');
 
 INSERT INTO adm.rol(rol_id, nombre) VALUES(00, 'SuperUser');
 INSERT INTO adm.rol(rol_id, nombre) VALUES(11, 'Administrador POS');

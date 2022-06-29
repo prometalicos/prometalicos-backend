@@ -15,6 +15,22 @@ export class FtpWatcher {
 
     private constructor(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         try {
+
+            const getSortedFiles = (files) => {
+                files = files.map(function (fileName) {
+                    return {
+                        name: fileName,
+                        time: fs.statSync(ruta_ftp + '/' + fileName).mtime.getTime()
+                    };
+                })
+                    .sort(function (a, b) {
+                        return a.time - b.time;
+                    })
+                    .map(function (v) {
+                        return v.name;
+                    });
+            }
+
             let watchOptions = {
                 persistent: true,
                 ignoreInitial: true,
@@ -29,27 +45,69 @@ export class FtpWatcher {
             let cont: number;
             cont = -1;
             const countFiles = () => {
-                fs.readdir(ruta_ftp, (err, files) => {
-                    try {
-                        if (files.length > cont) {
-                            console.log(files[files.length - 2], files.length);
-                            cont = files.length;
-    
-                            let data = fs.readFileSync(ruta_ftp + '/' + files[files.length - 2], { encoding: 'utf8', flag: 'r' });
-                            let properties = this.getMetadata(data);
-                            if (sub_sistema_id == '1') {
-                                this.evasion(properties, periferico_id, ruta_ftp + '/' + files[files.length - 2]);
-                            } else if (sub_sistema_id == '2') {
-                                this.dimensionamiento(properties, periferico_id, ruta_ftp + '/' + files[files.length - 2]);
-                            }
-                        }
-                    } catch (error) {
-                        console.log('Recuperando archivos de la camara', error);
+                var files = fs.readdirSync(ruta_ftp)
+                    .map(function (v) {
+                        return {
+                            name: v,
+                            time: fs.statSync(ruta_ftp + '/' + v).mtime.getTime()
+                        };
+                    })
+                    .sort(function (a, b) { return a.time - b.time; })
+                    .map(function (v) { return v.name; });
+                //console.log(files.length);
+                //process.stdout.write(""+files.length+">");
+                if (files.length > cont) {
+                    console.log(files[files.length - 1], files.length);
+                    cont = files.length;
+
+                    let data = fs.readFileSync(ruta_ftp + '/' + files[files.length - 1], { encoding: 'utf8', flag: 'r' });
+                    let properties = this.getMetadata(data);
+                    if (sub_sistema_id == '1') {
+                        this.evasion(properties, periferico_id, ruta_ftp + '/' + files[files.length - 1]);
+                    } else if (sub_sistema_id == '2') {
+                        this.dimensionamiento(properties, periferico_id, ruta_ftp + '/' + files[files.length - 1]);
                     }
-                    
-                });
+                }
             }
-            setInterval(countFiles, 1000);
+            setInterval(countFiles, 500);
+
+            // ----------- Version 1  ------------------
+
+            // fs.readdir(ruta_ftp, (err, files) => {
+            //     try {
+
+            //         files = files.map(function (fileName) {
+            //             return {
+            //                 name: fileName,
+            //                 time: fs.statSync(ruta_ftp + '/' + fileName).mtime.getTime()
+            //             };
+            //         })
+            //             .sort(function (a, b) {
+            //                 return a.time - b.time;
+            //             })
+            //             .map(function (v) {
+            //                 return v.name;
+            //             });
+            //         console.log(files.length);
+            //         if (files.length > cont) {
+            //             console.log(files[files.length - 2], files.length);
+            //             cont = files.length;
+
+            //             let data = fs.readFileSync(ruta_ftp + '/' + files[files.length - 2], { encoding: 'utf8', flag: 'r' });
+            //             let properties = this.getMetadata(data);
+            //             if (sub_sistema_id == '1') {
+            //                 this.evasion(properties, periferico_id, ruta_ftp + '/' + files[files.length - 2]);
+            //             } else if (sub_sistema_id == '2') {
+            //                 this.dimensionamiento(properties, periferico_id, ruta_ftp + '/' + files[files.length - 2]);
+            //             }
+            //         }
+            //     } catch (error) {
+            //         console.log('Recuperando archivos de la camara', error);
+            //     }
+
+            // });
+
+            // -----------------------------------------
 
             // ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
 

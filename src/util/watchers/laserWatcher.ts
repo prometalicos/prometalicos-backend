@@ -42,7 +42,7 @@ export class LaserWatcher {
 								console.log('----------transit_end---------- [', value.transit_end.id, value.transit_end.time_iso, ']');
 								let obj_transit_end = new Transit_end();
 								obj_transit_end = value.transit_end; // Enviar a persistencia
-
+								//console.log(obj_transit_end);
 								if (this.dimensionamientoOrchestrator === undefined) {
 									this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
 									console.log(`\n\nDeserialize undefined: ${obj_transit_end}.`, '\n');

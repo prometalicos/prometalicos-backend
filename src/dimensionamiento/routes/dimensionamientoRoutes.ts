@@ -13,7 +13,10 @@ export class DimensionamientoRoutes {
         app.use(cors());
 
         app.route('/dimensionamiento_all')
-        .post(this.eventoTransitoController.getEventoTransitoAll)
+        .get(this.eventoTransitoController.getEventoTransitoAll);
+
+        app.route('/dimensionamiento_flash')
+        .get(this.eventoTransitoController.getEventoTransitoFlash);
 
     }
 }

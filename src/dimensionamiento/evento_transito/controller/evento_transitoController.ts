@@ -43,6 +43,26 @@ export class EventoTransitoController {
 		}
 	}
 
+	public async getEventoTransitoFlash(req: Request, res: Response, next) {
+		try {
+			let result = await EventoTransito.getDimensionamientoAll();
+			if(result["rowCount"] != 0){
+				res.send(result);
+			} else {
+				res.status(404).send(result);
+			}
+		} catch (error) {
+			let err: ErrorModel = new Error(error);
+			err.status = 404
+			next(err);
+			console.log(
+				"An error occurred while getting users :" +
+				error +
+				`: ${EventoTransitoController.name} -> getEventoTransito`
+			);
+		}
+	}
+
 	public async getEventoTransitoById(req: Request, res: Response, next) {
 		try {
 			let result = (await EventoTransito.getEventoTransitoById(req.body));

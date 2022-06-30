@@ -79,7 +79,6 @@ CREATE TABLE adm.evento_transito(
 	fecha_hora time not null,
         lectura_camara_lpr_id bigint not null,
         lectura_sensores_id bigint not null,
-        clase_vehiculo_id varchar(64) not null,
         CONSTRAINT evento_transito_pk PRIMARY KEY (evento_transito_id)
         )
           WITH (
@@ -156,6 +155,7 @@ CREATE TABLE adm.registro_evasion(
 
 --ALTER TABLE adm.lectura_sensores_laser ADD CONSTRAINT FK_lectura_sensores_laser__periferico FOREIGN KEY (periferico_id) REFERENCES adm.periferico (periferico_id);
 --ALTER TABLE adm.lectura_camara_lpr ADD CONSTRAINT FK_lectura_camara_lpr__periferico FOREIGN KEY (periferico_id) REFERENCES adm.periferico (periferico_id);
+ALTER TABLE adm.lectura_sensores_laser ADD CONSTRAINT FK_lectura_sensores_laser__clase_vehiculo FOREIGN KEY (class_id) REFERENCES adm.clase_vehiculo (clase_vehiculo_id);
 
 ALTER TABLE adm.posibles_infracciones ADD CONSTRAINT FK_infracciones__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
 ALTER TABLE adm.posibles_infracciones ADD CONSTRAINT FK_infracciones__infracciones_adm FOREIGN KEY (infracciones_adm_id) REFERENCES adm.infracciones_adm (infracciones_adm_id);
@@ -165,38 +165,28 @@ ALTER TABLE adm.posibles_infracciones ADD CONSTRAINT FK_infracciones__funcionari
 
 ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__lectura_camara_lpr FOREIGN KEY (lectura_camara_lpr_id) REFERENCES adm.lectura_camara_lpr (lectura_camara_lpr_id);
 ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__lectura_sensores_laser FOREIGN KEY (lectura_sensores_id) REFERENCES adm.lectura_sensores_laser (lectura_sensores_id);
-ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__clase_vehiculo FOREIGN KEY (clase_vehiculo_id) REFERENCES adm.clase_vehiculo (clase_vehiculo_id);
-
 
 ALTER TABLE adm.registro_evasion ADD CONSTRAINT FK_registro_evasion__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
 ALTER TABLE adm.registro_fugas ADD CONSTRAINT FK_registro_fugas__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
 
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('0', 'No clasificado', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('1', 'Peaton', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('2', 'Bibicleta', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('100', 'Motocicleta', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('200', 'Carro', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('220', 'SUV', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('240', 'Pickup', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('250', 'Carro con trailer', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('270', 'SUV con trailer', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('290', 'Pickup con trailer', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('300', 'Van', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('350', 'Van con trailer', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('400', 'Bus', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('401', 'Coach', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('402', 'Bus articulado', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('403', 'Bus dos pisos', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('450', 'Bus trailer', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('451', 'Coach trailer', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('453', 'Bus dos pisos trailer', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('500', 'Camión', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('501', 'Camión trailer', ' ');
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('502', 'Semitruck', ' ');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('0', 'No clasificado', 'cil-image');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('9', 'Peaton', 'cil-walk');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('1', 'Motocicleta', 'cil-motorbike');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('2', 'Carro', 'cil-car-alt');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('3', 'Van', 'cil-car-alt');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('4', 'Bus', 'cil-bus-alt');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('5', 'Coach', 'cil-truck');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('6', 'Camión', 'cil-truck');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('7', 'Camión articuldo', 'cil-truck');
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('8', 'Semitruck', 'cil-truck');
 
 
-INSERT INTO adm.lectura_sensores_laser (periferico_id,id,lane,lane_id,time_iso,speed,height,width,length,refl_pos,gap, headway,occupancy,class_id,position,direction,wrong_way,stop_and,url_file_pds) 
-        VALUES ('1', 1 , 1 , 1 ,'4',1,1,1,1,1,1,1,1,'1','L','I','0','0','1');
+INSERT INTO adm.lectura_sensores_laser (periferico_id, id, lane, lane_id,
+                                        time_iso, speed, height, width,
+                                        length, refl_pos, gap, headway,
+                                        occupancy, class_id, position, direction,
+                                        wrong_way, stop_and, url_file_pds) 
+        VALUES ('1', -1 , -1 , -1 ,'4',-1,-1,-1,-1,-1,-1,-1,-1,'0','L','I','0','0','1');
 
 --delete from  adm.lectura_sensores_laser;
 --\copy adm.lectura_sensores_laser from 'sensor.csv' csv header;

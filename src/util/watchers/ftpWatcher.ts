@@ -14,53 +14,135 @@ export class FtpWatcher {
     private dimensionamientoOrchestrator: DimensionamientoOrchestrator;
 
     private constructor(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
-        let watchOptions = {
-            persistent: true,
-            ignoreInitial: true,
-            awaitWriteFinish: true,
-            //usePolling: false,
-            ignorePermissionErrors: false
-        };
-        this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
-        console.log("Iniciando watcher ",ruta_ftp);
+        try {
 
-        const fs = require('fs');
-        let cont: number;
-        cont = -1;
-        const countFiles = () => {
-            fs.readdir(ruta_ftp, (err, files) => {
-                if (files.length > cont){
-                    console.log(files[files.length-2], files.length);
-                    cont=files.length;
-                                
-                    let data = fs.readFileSync(ruta_ftp+'/'+files[files.length-2], { encoding: 'utf8', flag: 'r' });
-                    let properties = this.getMetadata(data);
-                    if (sub_sistema_id == '1') {
-                        this.evasion(properties, periferico_id, ruta_ftp+'/'+files[files.length-2]);
-                    } else if (sub_sistema_id == '2') {
-                        this.dimensionamiento(properties, periferico_id, ruta_ftp+'/'+files[files.length-2]);
-                    }
+            // const getSortedFiles = (files) => {
+            //     files = files.map(function (fileName) {
+            //         return {
+            //             name: fileName,
+            //             time: fs.statSync(ruta_ftp + '/' + fileName).mtime.getTime()
+            //         };
+            //     })
+            //         .sort(function (a, b) {
+            //             return a.time - b.time;
+            //         })
+            //         .map(function (v) {
+            //             return v.name;
+            //         });
+            // }
+
+            // let watchOptions = {
+            //     persistent: true,
+            //     ignoreInitial: true,
+            //     awaitWriteFinish: true,
+            //     //usePolling: false,
+            //     ignorePermissionErrors: false
+            // };
+            // this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
+            // console.log("Iniciando watcher ", ruta_ftp);
+
+            // const fs = require('fs');
+            // let cont: number;
+            // cont = -1;
+            // const countFiles = () => {
+            //     var files = fs.readdirSync(ruta_ftp)
+            //         .map(function (v) {
+            //             return {
+            //                 name: v,
+            //                 time: fs.statSync(ruta_ftp + '/' + v).mtime.getTime()
+            //             };
+            //         })
+            //         .sort(function (a, b) { return a.time - b.time; })
+            //         .map(function (v) { return v.name; });
+            //     //console.log(files.length);
+            //     //process.stdout.write(""+files.length+">");
+            //     if (files.length > cont) {
+            //         console.log(files[files.length - 1], files.length);
+            //         cont = files.length;
+
+            //         let data = fs.readFileSync(ruta_ftp + '/' + files[files.length - 1], { encoding: 'utf8', flag: 'r' });
+            //         let properties = this.getMetadata(data);
+            //         if (sub_sistema_id == '1') {
+            //             this.evasion(properties, periferico_id, ruta_ftp + '/' + files[files.length - 1]);
+            //         } else if (sub_sistema_id == '2') {
+            //             this.dimensionamiento(properties, periferico_id, ruta_ftp + '/' + files[files.length - 1]);
+            //         }
+            //     }
+            // }
+            // setInterval(countFiles, 1000);
+
+            // ----------- Version 1  ------------------
+
+            // fs.readdir(ruta_ftp, (err, files) => {
+            //     try {
+
+            //         files = files.map(function (fileName) {
+            //             return {
+            //                 name: fileName,
+            //                 time: fs.statSync(ruta_ftp + '/' + fileName).mtime.getTime()
+            //             };
+            //         })
+            //             .sort(function (a, b) {
+            //                 return a.time - b.time;
+            //             })
+            //             .map(function (v) {
+            //                 return v.name;
+            //             });
+            //         console.log(files.length);
+            //         if (files.length > cont) {
+            //             console.log(files[files.length - 2], files.length);
+            //             cont = files.length;
+
+            //             let data = fs.readFileSync(ruta_ftp + '/' + files[files.length - 2], { encoding: 'utf8', flag: 'r' });
+            //             let properties = this.getMetadata(data);
+            //             if (sub_sistema_id == '1') {
+            //                 this.evasion(properties, periferico_id, ruta_ftp + '/' + files[files.length - 2]);
+            //             } else if (sub_sistema_id == '2') {
+            //                 this.dimensionamiento(properties, periferico_id, ruta_ftp + '/' + files[files.length - 2]);
+            //             }
+            //         }
+            //     } catch (error) {
+            //         console.log('Recuperando archivos de la camara', error);
+            //     }
+
+            // });
+
+            // -----------------------------------------
+
+            let watchOptions = {
+                persistent: true,
+                ignoreInitial: true,
+                awaitWriteFinish: true,
+                //usePolling: false,
+                ignorePermissionErrors: false
+            };
+            this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
+            console.log("Iniciando watcher ", ruta_ftp);
+
+            ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
+                console.log('Watch: '+path);
+                let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
+                let properties = this.getMetadata(data);
+                if (sub_sistema_id == '1') {
+                    this.evasion(properties, periferico_id, path);
+                } else if (sub_sistema_id == '2') {
+                    this.dimensionamiento(properties, periferico_id, path);
+                    console.log('Registrando laser');
                 }
-                });
+            });
+        } catch (error) {
+            console.log('An error occurred while the ftp watcher was init ' + error + ` ${FtpWatcher.name} -> constructor`);
         }
-        setInterval(countFiles, 1000);
+        finally {
 
-        // ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
-            
-        //     let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
-        //     let properties = this.getMetadata(data);
-        //     if (sub_sistema_id == '1') {
-        //         this.evasion(properties, periferico_id, path);
-        //     } else if (sub_sistema_id == '2') {
-        //         this.dimensionamiento(properties, periferico_id, path);
-        //     }
-        // });
+        }
+
     }
 
     static start(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         try {
             FtpWatcher.instance = new FtpWatcher(ruta_ftp, sub_sistema_id, periferico_id);
-            console.log('Iniciando watcher periferico: ', {sub_sistema_id: sub_sistema_id, periferico_id: periferico_id });
+            console.log('Iniciando watcher periferico: ', { sub_sistema_id: sub_sistema_id, periferico_id: periferico_id });
         } catch (error) {
             console.log('An error occurred while the ftp watcher was started ' + error + ` ${FtpWatcher.name} -> ${this.start.name}`);
         }
@@ -91,11 +173,11 @@ export class FtpWatcher {
             this.dimensionamientoOrchestrator.eventStart();
             let lectura_camara_lpr_obj: LecturaCamaraLpr = new LecturaCamaraLpr()
             lectura_camara_lpr_obj.periferico_id = periferico_id,
-            lectura_camara_lpr_obj.placa_identificada = properties["Placa"],
-            lectura_camara_lpr_obj.estadistica = properties["Cc0"] + ", " + properties["Cc1"] + ", " + properties["Cc2"] + ", " + properties["Cc3"] + ", " + properties["Cc4"] + ", " + properties["Cc5"],
-            lectura_camara_lpr_obj.url_matricula = "",
-            lectura_camara_lpr_obj.url_foto_ampliada = path,
-            lectura_camara_lpr_obj.fecha_hora = Date()
+                lectura_camara_lpr_obj.placa_identificada = properties["Placa"],
+                lectura_camara_lpr_obj.estadistica = properties["Cc0"] + ", " + properties["Cc1"] + ", " + properties["Cc2"] + ", " + properties["Cc3"] + ", " + properties["Cc4"] + ", " + properties["Cc5"],
+                lectura_camara_lpr_obj.url_matricula = "",
+                lectura_camara_lpr_obj.url_foto_ampliada = path,
+                lectura_camara_lpr_obj.fecha_hora = Date()
             this.dimensionamientoOrchestrator.lpr(lectura_camara_lpr_obj)
         } catch (error) {
             console.log('An error occurred on dimesionamiento' + error + ` ${FtpWatcher.name} -> ${this.dimensionamiento.name}`);

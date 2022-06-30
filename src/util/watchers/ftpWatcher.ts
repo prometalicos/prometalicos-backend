@@ -16,60 +16,60 @@ export class FtpWatcher {
     private constructor(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         try {
 
-            const getSortedFiles = (files) => {
-                files = files.map(function (fileName) {
-                    return {
-                        name: fileName,
-                        time: fs.statSync(ruta_ftp + '/' + fileName).mtime.getTime()
-                    };
-                })
-                    .sort(function (a, b) {
-                        return a.time - b.time;
-                    })
-                    .map(function (v) {
-                        return v.name;
-                    });
-            }
+            // const getSortedFiles = (files) => {
+            //     files = files.map(function (fileName) {
+            //         return {
+            //             name: fileName,
+            //             time: fs.statSync(ruta_ftp + '/' + fileName).mtime.getTime()
+            //         };
+            //     })
+            //         .sort(function (a, b) {
+            //             return a.time - b.time;
+            //         })
+            //         .map(function (v) {
+            //             return v.name;
+            //         });
+            // }
 
-            let watchOptions = {
-                persistent: true,
-                ignoreInitial: true,
-                awaitWriteFinish: true,
-                //usePolling: false,
-                ignorePermissionErrors: false
-            };
-            this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
-            console.log("Iniciando watcher ", ruta_ftp);
+            // let watchOptions = {
+            //     persistent: true,
+            //     ignoreInitial: true,
+            //     awaitWriteFinish: true,
+            //     //usePolling: false,
+            //     ignorePermissionErrors: false
+            // };
+            // this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
+            // console.log("Iniciando watcher ", ruta_ftp);
 
-            const fs = require('fs');
-            let cont: number;
-            cont = -1;
-            const countFiles = () => {
-                var files = fs.readdirSync(ruta_ftp)
-                    .map(function (v) {
-                        return {
-                            name: v,
-                            time: fs.statSync(ruta_ftp + '/' + v).mtime.getTime()
-                        };
-                    })
-                    .sort(function (a, b) { return a.time - b.time; })
-                    .map(function (v) { return v.name; });
-                //console.log(files.length);
-                //process.stdout.write(""+files.length+">");
-                if (files.length > cont) {
-                    console.log(files[files.length - 1], files.length);
-                    cont = files.length;
+            // const fs = require('fs');
+            // let cont: number;
+            // cont = -1;
+            // const countFiles = () => {
+            //     var files = fs.readdirSync(ruta_ftp)
+            //         .map(function (v) {
+            //             return {
+            //                 name: v,
+            //                 time: fs.statSync(ruta_ftp + '/' + v).mtime.getTime()
+            //             };
+            //         })
+            //         .sort(function (a, b) { return a.time - b.time; })
+            //         .map(function (v) { return v.name; });
+            //     //console.log(files.length);
+            //     //process.stdout.write(""+files.length+">");
+            //     if (files.length > cont) {
+            //         console.log(files[files.length - 1], files.length);
+            //         cont = files.length;
 
-                    let data = fs.readFileSync(ruta_ftp + '/' + files[files.length - 1], { encoding: 'utf8', flag: 'r' });
-                    let properties = this.getMetadata(data);
-                    if (sub_sistema_id == '1') {
-                        this.evasion(properties, periferico_id, ruta_ftp + '/' + files[files.length - 1]);
-                    } else if (sub_sistema_id == '2') {
-                        this.dimensionamiento(properties, periferico_id, ruta_ftp + '/' + files[files.length - 1]);
-                    }
-                }
-            }
-            setInterval(countFiles, 500);
+            //         let data = fs.readFileSync(ruta_ftp + '/' + files[files.length - 1], { encoding: 'utf8', flag: 'r' });
+            //         let properties = this.getMetadata(data);
+            //         if (sub_sistema_id == '1') {
+            //             this.evasion(properties, periferico_id, ruta_ftp + '/' + files[files.length - 1]);
+            //         } else if (sub_sistema_id == '2') {
+            //             this.dimensionamiento(properties, periferico_id, ruta_ftp + '/' + files[files.length - 1]);
+            //         }
+            //     }
+            // }
+            // setInterval(countFiles, 1000);
 
             // ----------- Version 1  ------------------
 
@@ -109,16 +109,27 @@ export class FtpWatcher {
 
             // -----------------------------------------
 
-            // ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
+            let watchOptions = {
+                persistent: true,
+                ignoreInitial: true,
+                awaitWriteFinish: true,
+                //usePolling: false,
+                ignorePermissionErrors: false
+            };
+            this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
+            console.log("Iniciando watcher ", ruta_ftp);
 
-            //     let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
-            //     let properties = this.getMetadata(data);
-            //     if (sub_sistema_id == '1') {
-            //         this.evasion(properties, periferico_id, path);
-            //     } else if (sub_sistema_id == '2') {
-            //         this.dimensionamiento(properties, periferico_id, path);
-            //     }
-            // });
+            ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
+                console.log('Watch: '+path);
+                let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
+                let properties = this.getMetadata(data);
+                if (sub_sistema_id == '1') {
+                    this.evasion(properties, periferico_id, path);
+                } else if (sub_sistema_id == '2') {
+                    this.dimensionamiento(properties, periferico_id, path);
+                    console.log('Registrando laser');
+                }
+            });
         } catch (error) {
             console.log('An error occurred while the ftp watcher was init ' + error + ` ${FtpWatcher.name} -> constructor`);
         }

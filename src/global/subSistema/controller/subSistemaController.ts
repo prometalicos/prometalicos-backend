@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
 import { SubSistemaDAO } from "global/subSistema/repository/subSistemaDAO";
+import { ResponseModel } from "util/models/response.model";
 
 let subSistema = new SubSistemaDAO();
 
@@ -9,10 +10,14 @@ export class SubSistemaController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertSubSistema(req: Request, res: Response, next) {
 		try {
-			res.status(201).send(await subSistema.insertSubSistema(req.body));
+			let res_obj = new ResponseModel();
+			res_obj.data = await subSistema.insertSubSistema(req.body)
+			res_obj.message = 'SubSistema inserted'
+			res_obj.status = 201
+			res.status(res_obj.status).send(res_obj);
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 400
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while inserting subSistema :" +
@@ -24,13 +29,20 @@ export class SubSistemaController {
 
 	public async getSubSistema(req: Request, res: Response, next) {
 		try {
-			res.send(await subSistema.getSubSistema());
+			let res_obj = new ResponseModel();
+			res_obj.data = await subSistema.getSubSistema()
+			res_obj.message = 'SubSistemaes obtained'
+			if (res_obj.data["rowCount"] == 0) {
+				res_obj.message = 'No SubSistemaes present'
+			}
+			res_obj.status = 200
+			res.status(res_obj.status).send(res_obj);
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 404
+			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while getting subSistema :" +
+				"An error occurred while getting users :" +
 				error +
 				`: ${SubSistemaController.name} -> getSubSistema`
 			);
@@ -39,15 +51,20 @@ export class SubSistemaController {
 
 	public async getSubSistemaById(req: Request, res: Response, next) {
 		try {
-			let result = (await subSistema.getSubSistemaById(req.body));
-			if(result["rowCount"] != 0){
-				res.send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await subSistema.getSubSistemaById(req.body);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'SubSistema obtained'
+				res_obj.status = 200
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'SubSistema not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 404
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while getting subSistema :" +
@@ -59,15 +76,20 @@ export class SubSistemaController {
 
 	public async updateSubSistema(req: Request, res: Response, next) {
 		try {
-			let result = (await subSistema.updateSubSistema(req.body));
-			if(result["rowCount"] != 0){
-				res.status(204).send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await subSistema.updateSubSistema(req.body);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'SubSistema updated'
+				res_obj.status = 204
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'SubSistema not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 400
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while updating subSistema :" +
@@ -79,11 +101,16 @@ export class SubSistemaController {
 
 	public async deleteSubSistema(req: Request, res: Response, next) {
 		try {
-			let result = (await subSistema.deleteSubSistema(req.body.id));
-			if(result["rowCount"] != 0){
-				res.status(202).send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await subSistema.deleteSubSistema(req.body.sub_sistema_id);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'SubSistema deleted'
+				res_obj.status = 202
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'SubSistema not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
@@ -96,5 +123,6 @@ export class SubSistemaController {
 			);
 		}
 	}
+
 
 }

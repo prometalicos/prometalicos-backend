@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
 import { ConcesionDAO } from "../repository/concesionDAO";
+import { ResponseModel } from "util/models/response.model";
 
 
 let concesion = new ConcesionDAO();
@@ -10,7 +11,11 @@ export class ConcesionController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertConcesion(req: Request, res: Response, next) {
 		try {
-			res.status(201).send(await concesion.insertConcesion(req.body));
+			let res_obj = new ResponseModel();
+			res_obj.data = await concesion.insertConcesion(req.body)
+			res_obj.message = 'Concesion inserted'
+			res_obj.status = 201
+			res.status(res_obj.status).send(res_obj);
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500
@@ -25,7 +30,14 @@ export class ConcesionController {
 
 	public async getConcesion(req: Request, res: Response, next) {
 		try {
-			res.send(await concesion.getConcesion());
+			let res_obj = new ResponseModel();
+			res_obj.data = await concesion.getConcesion()
+			res_obj.message = 'Concesiones obtained'
+			if (res_obj.data["rowCount"] == 0) {
+				res_obj.message = 'No concesiones present'
+			}
+			res_obj.status = 200
+			res.status(res_obj.status).send(res_obj);
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
 			err.status = 500
@@ -40,11 +52,16 @@ export class ConcesionController {
 
 	public async getConcesionById(req: Request, res: Response, next) {
 		try {
-			let result = await concesion.getConcesionById(req.body);
-			if(result["rowCount"] != 0){
-				res.send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await concesion.getConcesionById(req.body);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'Concesion obtained'
+				res_obj.status = 200
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'Concesion not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
@@ -60,11 +77,16 @@ export class ConcesionController {
 
 	public async updateConcesion(req: Request, res: Response, next) {
 		try {
-			let result = await concesion.updateConcesion(req.body);
-			if(result["rowCount"] != 0){
-				res.status(204).send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await concesion.updateConcesion(req.body);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'Concesion updated'
+				res_obj.status = 204
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'Concesion not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
@@ -80,11 +102,16 @@ export class ConcesionController {
 
 	public async deleteConcesion(req: Request, res: Response, next) {
 		try {
-			let result = await concesion.deleteConcesion(req.body.concesion_id);
-			if(result["rowCount"] != 0){
-				res.status(202).send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await concesion.deleteConcesion(req.body.concesion_id);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'Concesion deleted'
+				res_obj.status = 202
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'Concesion not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);

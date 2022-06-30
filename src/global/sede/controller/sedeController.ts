@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
 import { SedeDAO } from "./../repository/sedeDAO";
+import { ResponseModel } from "util/models/response.model";
 
 
 let sede = new SedeDAO();
@@ -10,10 +11,14 @@ export class SedeController {
 	/*-------------------------------- app --------------------------------------------------------*/
 	public async insertSede(req: Request, res: Response, next) {
 		try {
-			res.status(201).send(await sede.insertSede(req.body));
+			let res_obj = new ResponseModel();
+			res_obj.data = await sede.insertSede(req.body)
+			res_obj.message = 'Sede inserted'
+			res_obj.status = 201
+			res.status(res_obj.status).send(res_obj);
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 400
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while inserting sede :" +
@@ -25,13 +30,20 @@ export class SedeController {
 
 	public async getSede(req: Request, res: Response, next) {
 		try {
-			res.send(await sede.getSede());
+			let res_obj = new ResponseModel();
+			res_obj.data = await sede.getSede()
+			res_obj.message = 'Sedees obtained'
+			if (res_obj.data["rowCount"] == 0) {
+				res_obj.message = 'No Sedees present'
+			}
+			res_obj.status = 200
+			res.status(res_obj.status).send(res_obj);
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 404
+			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while getting sede :" +
+				"An error occurred while getting users :" +
 				error +
 				`: ${SedeController.name} -> getSede`
 			);
@@ -40,15 +52,20 @@ export class SedeController {
 
 	public async getSedeById(req: Request, res: Response, next) {
 		try {
-			let result = (await sede.getSedeById(req.body));
-			if(result["rowCount"] != 0){
-				res.send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await sede.getSedeById(req.body);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'Sede obtained'
+				res_obj.status = 200
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'Sede not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 404
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while getting sede :" +
@@ -60,15 +77,20 @@ export class SedeController {
 
 	public async updateSede(req: Request, res: Response, next) {
 		try {
-			let result = (await sede.updateSede(req.body));
-			if(result["rowCount"] != 0){
-				res.status(204).send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await sede.updateSede(req.body);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'Sede updated'
+				res_obj.status = 204
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'Sede not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
-			err.status = 400
+			err.status = 500
 			next(err);
 			console.log(
 				"An error occurred while updating sede :" +
@@ -80,11 +102,16 @@ export class SedeController {
 
 	public async deleteSede(req: Request, res: Response, next) {
 		try {
-			let result = (await sede.deleteSede(req.body.id));
-			if(result["rowCount"] != 0){
-				res.status(202).send(result);
+			let res_obj = new ResponseModel();
+			res_obj.data = await sede.deleteSede(req.body.sede_id);
+			if (res_obj.data["rowCount"] != 0) {
+				res_obj.message = 'Sede deleted'
+				res_obj.status = 202
+				res.status(res_obj.status).send(res_obj);
 			} else {
-				res.status(404).send(result);
+				res_obj.message = 'Sede not found'
+				res_obj.status = 404
+				res.status(res_obj.status).send(res_obj);
 			}
 		} catch (error) {
 			let err: ErrorModel = new Error(error);
@@ -97,5 +124,6 @@ export class SedeController {
 			);
 		}
 	}
+
 
 }

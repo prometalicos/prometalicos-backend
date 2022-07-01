@@ -95,8 +95,9 @@ export class LaserWatcher {
 		const conectar = () => {
 			client.connect({ port: port, host: host }, function () {
 				console.log('Iniciando watcher periferico: ', {
-					port: port, host: host, sub_sistema_id: sub_sistema_id,
-					periferico_id: periferico_id
+					// port: port, host: host, sub_sistema_id: sub_sistema_id,
+					// periferico_id: periferico_id
+					port: port, host: host
 				});
 			});
 		};

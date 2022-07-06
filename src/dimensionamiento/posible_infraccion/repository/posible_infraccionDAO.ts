@@ -17,16 +17,15 @@ export class PosibleInfraccionDAO {
                 funcionario_id,
                 infracciones_adm_id,
                 fecha_hora,
-                estado,
-                fecha_novedad,
-                nota) VALUES ($1, $2, $3, $4, $5, $6, $7);`, [
+                estado) VALUES ($1, $2, $3, to_timestamp($4), $5) RETURNING posibles_infracciones_id;`, [
                 posibles_infracciones.evento_transito_id,
                 posibles_infracciones.funcionario_id,
                 posibles_infracciones.infracciones_adm_id,
                 Date.parse(posibles_infracciones.fecha_hora),
-                posibles_infracciones.estado,
-                Date.parse(posibles_infracciones.fecha_novedad),
-                posibles_infracciones.nota]);
+                posibles_infracciones.estado]);
+                if (query.rows.length > 0) {
+                    posibles_infracciones.posibles_infracciones_id = query.rows[0]["posibles_infracciones_id"]
+                }
 
             return posibles_infracciones
         } catch (error) {

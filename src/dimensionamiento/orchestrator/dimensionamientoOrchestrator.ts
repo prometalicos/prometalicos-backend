@@ -112,6 +112,9 @@ export class DimensionamientoOrchestrator {
                 let posible_infraccion = new PosibleInfraccion()
                 posible_infraccion.evento_transito_id = evento_transito_obj.evento_transito_id
                 posible_infraccion.estado = true
+                posible_infraccion.infracciones_adm_id = "01" // codigo de dimensionamiento
+                posible_infraccion.funcionario_id = "01" // codigo de dimensionamiento
+                posible_infraccion.fecha_hora = lectura_camara_lpr_obj.fecha_hora
                 await posible_infracionDAO.insertPosibleInfraccion(posible_infraccion)
             }
             this.socketService.emit("dimensionamiento-emit",{

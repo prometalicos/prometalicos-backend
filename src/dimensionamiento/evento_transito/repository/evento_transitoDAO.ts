@@ -15,7 +15,7 @@ export class EventoTransitoDAO {
                 tipo,
                 fecha_hora,
                 lectura_camara_lpr_id,
-                lectura_sensores_id) VALUES ($1, to_timestamp($2), $3, $4) RETURNING ;`, [
+                lectura_sensores_id) VALUES ($1, to_timestamp($2), $3, $4) RETURNING evento_transito_id;`, [
                 eventoTransito.tipo,
                 Date.parse(eventoTransito.fecha_hora),
                 eventoTransito.lectura_camara_lpr_id,

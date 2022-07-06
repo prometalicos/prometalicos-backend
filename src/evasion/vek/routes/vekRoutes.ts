@@ -21,9 +21,6 @@ export class VekRoutes {
         app.route('/vek/getById')
         .get(this.vekController.getVekById)
 
-        app.route('/vek/update')
-        .put(this.vekController.updateVek)
-
         app.route('/vek/delete')
         .delete(this.vekController.deleteVek)
     }

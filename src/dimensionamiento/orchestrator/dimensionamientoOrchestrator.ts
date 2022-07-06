@@ -7,6 +7,8 @@ import { LecturaSensoresLaserDAO } from "../../dimensionamiento/lectura_sensor_l
 import { SocketService } from "../../util/sockets/socketService";
 import { ClaseVehiculoDAO } from "../../dimensionamiento/clase_vehiculo/repository/clase_vehiculoDAO";
 import { ClaseVehiculo } from "../../dimensionamiento/clase_vehiculo/models/clase_vehiculo.model";
+import { PosibleInfraccionDAO } from "../../dimensionamiento/posible_infraccion/repository/posible_infraccionDAO";
+import { PosibleInfraccion } from "../../dimensionamiento/posible_infraccion/models/posible_infraccion.model";
 
 export class DimensionamientoOrchestrator {
 
@@ -98,7 +100,7 @@ export class DimensionamientoOrchestrator {
             evento_transito_obj.clase_vehiculo_id = lectura_sensor_laser_obj.clase_vehiculo_id;
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO();
-            evento_transitoDAO.insertEventoTransito(evento_transito_obj);
+            evento_transito_obj = await evento_transitoDAO.insertEventoTransito(evento_transito_obj);
             //Chequea que cumpla con los parametros y
             // emite los datos a traves de sockets
             let clase_vehiculoDAO = new ClaseVehiculoDAO();
@@ -106,6 +108,11 @@ export class DimensionamientoOrchestrator {
             let esAlerta = false
             if(lectura_sensor_laser_obj["height"]> clase_vehiculo.max_height || lectura_sensor_laser_obj["length"] > clase_vehiculo.max_length || lectura_sensor_laser_obj["width"] > clase_vehiculo.max_width){
                 esAlerta = true;
+                let posible_infracionDAO = new PosibleInfraccionDAO()
+                let posible_infraccion = new PosibleInfraccion()
+                posible_infraccion.evento_transito_id = evento_transito_obj.evento_transito_id
+                posible_infraccion.estado = true
+                await posible_infracionDAO.insertPosibleInfraccion(posible_infraccion)
             }
             this.socketService.emit("dimensionamiento-emit",{
                 lectura_sensor_laser_obj,

@@ -127,7 +127,7 @@ export class FtpWatcher {
                     this.evasion(properties, periferico_id, path);
                 } else if (sub_sistema_id == '2') {
                     this.dimensionamiento(properties, periferico_id, path);
-                    console.log('Registrando laser');
+                    //console.log('Registrando laser');
                 }
             });
         } catch (error) {

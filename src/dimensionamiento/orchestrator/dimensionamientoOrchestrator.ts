@@ -18,7 +18,6 @@ export class DimensionamientoOrchestrator {
 
     private constructor() {
         this.queue = [];
-        this.socketService = SocketService.getInstance()
     }
 
     static getInstance() {
@@ -37,7 +36,7 @@ export class DimensionamientoOrchestrator {
             console.log("Iniciando orquestador");
             if (this.queue.length > 0) {
                 this.insertData();
-                
+
             }
             this.queue.push({
                 id: uuid.v4(),
@@ -106,7 +105,7 @@ export class DimensionamientoOrchestrator {
             let clase_vehiculoDAO = new ClaseVehiculoDAO();
             let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.clase_vehiculo_id)
             let esAlerta = false
-            if(lectura_sensor_laser_obj["height"]> clase_vehiculo.max_height || lectura_sensor_laser_obj["length"] > clase_vehiculo.max_length || lectura_sensor_laser_obj["width"] > clase_vehiculo.max_width){
+            if (lectura_sensor_laser_obj["height"] > clase_vehiculo.max_height || lectura_sensor_laser_obj["length"] > clase_vehiculo.max_length || lectura_sensor_laser_obj["width"] > clase_vehiculo.max_width) {
                 esAlerta = true;
                 let posible_infracionDAO = new PosibleInfraccionDAO()
                 let posible_infraccion = new PosibleInfraccion()
@@ -117,12 +116,14 @@ export class DimensionamientoOrchestrator {
                 posible_infraccion.fecha_hora = lectura_camara_lpr_obj.fecha_hora
                 await posible_infracionDAO.insertPosibleInfraccion(posible_infraccion)
             }
-            this.socketService.emit("dimensionamiento-emit",{
+            let socketService = SocketService.getInstance()
+
+            socketService.emit("dimensionamiento-emit", {
                 lectura_sensor_laser_obj,
                 lectura_camara_lpr_obj,
                 esAlerta
             })
-            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada );
+            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada);
             console.log("Cerrando orquestador");
             this.queue.shift();
         } catch (error) {

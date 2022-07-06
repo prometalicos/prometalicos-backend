@@ -11,8 +11,6 @@ export class LecturaSensoresLaserDAO {
 
     public async insertLecturaSensoresLaser(lecturaSensoresLaser: Transit_end, periferico_id: string) {
         try {
-            //let id = uuid.v4();
-            //.id = id;
 
             let query = await this.connection.pool.query(`INSERT INTO adm.lectura_sensores_laser (
                 

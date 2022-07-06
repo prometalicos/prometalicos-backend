@@ -172,16 +172,16 @@ ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__lectura_senso
 ALTER TABLE adm.registro_evasion ADD CONSTRAINT FK_registro_evasion__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
 ALTER TABLE adm.registro_fugas ADD CONSTRAINT FK_registro_fugas__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);
 
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('0', 'No clasificado', 'cil-image', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('9', 'Peaton', 'cil-walk', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('1', 'Motocicleta', 'cil-motorbike', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('2', 'Carro', 'cil-car-alt', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('3', 'Van', 'cil-car-alt', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('4', 'Bus', 'cil-bus-alt', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('5', 'Coach', 'cil-truck', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('6', 'Camión', 'cil-truck', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('7', 'Camión articuldo', 'cil-truck', 2000, 2000, 2000);
-INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture) VALUES ('8', 'Semitruck', 'cil-truck', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('0', 'No clasificado', 'cil-image', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('9', 'Peaton', 'cil-walk', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('1', 'Motocicleta', 'cil-motorbike', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('2', 'Carro', 'cil-car-alt', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('3', 'Van', 'cil-car-alt', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('4', 'Bus', 'cil-bus-alt', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('5', 'Coach', 'cil-truck', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('6', 'Camión', 'cil-truck', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('7', 'Camión articuldo', 'cil-truck', 2000, 2000, 2000);
+INSERT INTO adm.clase_vehiculo (clase_vehiculo_id, descripcion, url_picture, max_height, max_width, max_length) VALUES ('8', 'Semitruck', 'cil-truck', 2000, 2000, 2000);
 
 
 INSERT INTO adm.lectura_sensores_laser (periferico_id, id, lane, lane_id,

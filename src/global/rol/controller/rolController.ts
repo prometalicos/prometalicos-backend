@@ -2,7 +2,7 @@
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
 import { RolDAO } from "../repository/rolDAO";
-import { ResponseModel } from "util/models/response.model";
+import { ResponseModel } from "../../../util/models/response.model";
 
 let rol = new RolDAO();
 

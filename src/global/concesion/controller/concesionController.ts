@@ -2,7 +2,7 @@
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
 import { ConcesionDAO } from "../repository/concesionDAO";
-import { ResponseModel } from "util/models/response.model";
+import { ResponseModel } from "../../../util/models/response.model";
 
 
 let concesion = new ConcesionDAO();

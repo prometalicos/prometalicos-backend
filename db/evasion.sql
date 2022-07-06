@@ -29,6 +29,25 @@ CREATE TABLE adm.lectura_camara_lpr(
              OIDS=FALSE
         );
 
+        CREATE TABLE adm.lectura_vek(
+        lectura_vek_id serial,
+	periferico_id varchar(64) not null, -- El sensor que reporta el dato
+        fecha_hora time not null,
+        loop_status varchar(3) not null,
+        vehicle_class varchar(3) not null,
+        vehicle_length varchar(3) not null,
+        vehicle_speed varchar(3) not null,
+        time_gap varchar(3) not null,
+        busy_time varchar(3) not null,
+        axle_number varchar(3) not null,
+        axle_class varchar(3) not null,
+        CONSTRAINT lectura_vek_pk PRIMARY KEY (lectura_vek_id)
+        )
+          WITH (
+             OIDS=FALSE
+        );
+
+
 -- Se llenará de información con base a la comparación de parámetros al momento de hacer la lectura
 CREATE TABLE adm.posibles_infracciones(
 	posibles_infracciones_id serial not null, -- Llave autonumérica
@@ -48,6 +67,7 @@ CREATE TABLE adm.posibles_infracciones(
 CREATE TABLE adm.evento_transito(
 	evento_transito_id serial, -- Llave autonumérica
 	fecha_hora time not null,
+        lectura_vek bigint not null,
         lectura_camara_lpr_id bigint not null,
         clase_vehiculo_id varchar(64) not null,
         CONSTRAINT evento_transito_pk PRIMARY KEY (evento_transito_id)
@@ -107,6 +127,7 @@ ALTER TABLE adm.posibles_infracciones ADD CONSTRAINT FK_infracciones__funcionari
 -- ALTER TABLE adm.periferico ADD CONSTRAINT FK_periferico__tipo_periferico FOREIGN KEY (tipo_periferico_id) REFERENCES adm.tipo_periferico (tipo_periferico_id);
 
 ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__lectura_camara_lpr FOREIGN KEY (lectura_camara_lpr_id) REFERENCES adm.lectura_camara_lpr (lectura_camara_lpr_id);
+ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__lectura_vek FOREIGN KEY (lectura_vek_id) REFERENCES adm.lectura_vek (lectura_vek_id);
 ALTER TABLE adm.evento_transito ADD CONSTRAINT FK_evento_transito__clase_vehiculo FOREIGN KEY (clase_vehiculo_id) REFERENCES adm.clase_vehiculo (clase_vehiculo_id);
 
 ALTER TABLE adm.registro_evasion ADD CONSTRAINT FK_registro_evasion__evento_transito FOREIGN KEY (evento_transito_id) REFERENCES adm.evento_transito (evento_transito_id);

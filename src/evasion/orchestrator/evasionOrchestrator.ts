@@ -3,11 +3,11 @@ import { LecturaCamaraLPRDAO } from "../../lectura_camara_lpr/repository/lectura
 import { LecturaCamaraLpr } from "../../lectura_camara_lpr/models/lectura_camara_lpr.model";
 import { EventoTransito } from "../evento_transito/models/evento_transito.model";
 import { EventoTransitoDAO } from "../evento_transito/repository/evento_transitoDAO";
-import { LecturaSensoresLaserDAO } from "../../dimensionamiento/lectura_sensor_laser/repository/lectura_sensores_laserDAO";
+import { VekDAO } from "evasion/vek/repository/vekDAO";
 
-export class DimensionamientoOrchestrator {
+export class EvasionOrchestrator {
 
-    private static instance: DimensionamientoOrchestrator;
+    private static instance: EvasionOrchestrator;
     private queue: Array<any>;
 
     private constructor() {
@@ -16,30 +16,30 @@ export class DimensionamientoOrchestrator {
 
     static getInstance() {
         try {
-            if (!DimensionamientoOrchestrator.instance) {
-                DimensionamientoOrchestrator.instance = new DimensionamientoOrchestrator();
+            if (!EvasionOrchestrator.instance) {
+                EvasionOrchestrator.instance = new EvasionOrchestrator();
             }
-            return DimensionamientoOrchestrator.instance;
+            return EvasionOrchestrator.instance;
         } catch (error) {
-            console.log('An error occurred while the watcher was started ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.getInstance.name}`);
+            console.log('An error occurred while the watcher was started ' + error + ` ${EvasionOrchestrator.name} -> ${this.getInstance.name}`);
         }
     }
 
     public eventStart() {
         try {
-            console.log("Iniciando orquestador");
+            console.log("Iniciando evasion orquestador");
             if (this.queue.length > 0) {
                 this.insertData();
                 
             }
             this.queue.push({
                 id: uuid.v4(),
-                laser: null,
+                vek: null,
                 lpr: null
             })
 
         } catch (error) {
-            console.log('An error occurred in the eventStart ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.eventStart.name}`);
+            console.log('An error occurred in the eventStart ' + error + ` ${EvasionOrchestrator.name} -> ${this.eventStart.name}`);
         }
     }
 
@@ -52,20 +52,20 @@ export class DimensionamientoOrchestrator {
                 }
             }
         } catch (error) {
-            console.log('An error occurred in the lpr ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.lpr.name}`);
+            console.log('An error occurred in the lpr ' + error + ` ${EvasionOrchestrator.name} -> ${this.lpr.name}`);
         }
     }
 
-    public laser(laser_data) {
+    public vek(vek_data) {
         try {
             for (let index = 0; index < this.queue.length; index++) {
-                if (this.queue[index]["laser"] == null) {
-                    this.queue[index]["laser"] = laser_data
+                if (this.queue[index]["vek"] == null) {
+                    this.queue[index]["vek"] = vek_data
                     break
                 }
             }
         } catch (error) {
-            console.log('An error occurred in the laser ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.laser.name}`);
+            console.log('An error occurred in the vek ' + error + ` ${EvasionOrchestrator.name} -> ${this.vek.name}`);
         }
     }
 
@@ -73,33 +73,35 @@ export class DimensionamientoOrchestrator {
         try {
             let lectura_camara_lpr_obj = this.queue[0]["lpr"];
             let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
-            lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
+            lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'evasion');
 
-            let lectura_sensor_laser_obj = {
+            let vek_obj = {
                 id: 1,
                 clase_vehiculo_id: "0"
             }
 
-            if (this.queue[0]['laser'] != null) {
-                let lectura_sensor_laser_obj = this.queue[0]["laser"]
-                let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
-                lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
+            if (this.queue[0]['vek'] != null) {
+                //let obj = new VekDAO();
+				//obj.insertVek(obj_transit_end, '2');
+                let vek_obj = this.queue[0]["vek"]
+                let lectura_sensor_laserDAO = new VekDAO();
+                vek_obj = await lectura_sensor_laserDAO.insertVek(vek_obj, '2'); // Obtener ID
             }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
             evento_transito_obj.fecha_hora = Date();
             evento_transito_obj.lectura_camara_lpr_id = lectura_camara_lpr_obj.lectura_camara_lpr_id;
-            evento_transito_obj.lectura_sensores_id = lectura_sensor_laser_obj.id;
-            evento_transito_obj.clase_vehiculo_id = lectura_sensor_laser_obj.clase_vehiculo_id;
+            evento_transito_obj.lectura_sensores_id = vek_obj.id;
+            evento_transito_obj.clase_vehiculo_id = vek_obj.clase_vehiculo_id;
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO();
+            //console.log(evento_transito_obj);
             evento_transitoDAO.insertEventoTransito(evento_transito_obj);
-            // Emitir datos de dimensionamiento
             console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada );
-            console.log("Cerrando orquestador");
+            console.log("Cerrando evasion orquestador");
             this.queue.shift();
         } catch (error) {
-            console.log('An error occurred in the insertData ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.insertData.name}`);
+            console.log('An error occurred in the insertData ' + error + ` ${EvasionOrchestrator.name} -> ${this.insertData.name}`);
         }
     }
 

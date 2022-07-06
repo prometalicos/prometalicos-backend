@@ -10,6 +10,8 @@ import { DataBaseInterface } from "./util/db_connection/services/databaseInterfa
 import { LecturaSensoresLaserRoutes } from "./dimensionamiento/lectura_sensor_laser/routes/lectura_sensores_laserRoutes";
 import { DimensionamientoOrchestrator } from "./dimensionamiento/orchestrator/dimensionamientoOrchestrator";
 import { SedeRoutes } from "./global/sede/routes/sedeRoutes";
+import { VekRoutes } from "./evasion/vek/routes/vekRoutes";
+import { EvasionOrchestrator } from "./evasion/orchestrator/evasionOrchestrator";
 
 class App {
 
@@ -20,9 +22,11 @@ class App {
     public sedeRoutes: SedeRoutes = new SedeRoutes();
     public rolRoutes: RolRoutes = new RolRoutes();
     public dimensionamientoRoutes: DimensionamientoRoutes = new DimensionamientoRoutes();
+    public vekRoutes: VekRoutes = new VekRoutes();
     public lecturaSensoresLaser: LecturaSensoresLaserRoutes = new LecturaSensoresLaserRoutes()
     private watcher;
     private dimensionamientoOrchestrator;
+    private evasionOrchestrator;
     private connection;
     private connection2;
     private connection3;
@@ -37,11 +41,13 @@ class App {
         this.sedeRoutes.routes(this.app);
         this.lecturaSensoresLaser.routes(this.app);
         this.dimensionamientoRoutes.routes(this.app);
+        this.vekRoutes.routes(this.app);
         this.connection = DataBaseInterface.getInstance('global');
         this.connection2 = DataBaseInterface.getInstance('evasion');
         this.connection3 = DataBaseInterface.getInstance('dimensionamiento');
         this.watcher = Watcher.getInstance();
         this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
+        //this.evasionOrchestrator = EvasionOrchestrator.getInstance();
     }
 
     private config(): void {

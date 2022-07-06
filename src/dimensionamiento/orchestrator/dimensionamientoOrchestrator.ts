@@ -81,8 +81,6 @@ export class DimensionamientoOrchestrator {
             }
 
             if (this.queue[0]['laser'] != null) {
-                //let obj = new LecturaSensoresLaserDAO();
-				//obj.insertLecturaSensoresLaser(obj_transit_end, '2');
                 let lectura_sensor_laser_obj = this.queue[0]["laser"]
                 let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
                 lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
@@ -95,8 +93,8 @@ export class DimensionamientoOrchestrator {
             evento_transito_obj.clase_vehiculo_id = lectura_sensor_laser_obj.clase_vehiculo_id;
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO();
-            //console.log(evento_transito_obj);
             evento_transitoDAO.insertEventoTransito(evento_transito_obj);
+            // Emitir datos de dimensionamiento
             console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada );
             console.log("Cerrando orquestador");
             this.queue.shift();

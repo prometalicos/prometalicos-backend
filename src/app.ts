@@ -13,6 +13,7 @@ import { SedeRoutes } from "./global/sede/routes/sedeRoutes";
 import { VekRoutes } from "./evasion/vek/routes/vekRoutes";
 import { EvasionOrchestrator } from "./evasion/orchestrator/evasionOrchestrator";
 import { ClaseVehiculoRoutes } from "./dimensionamiento/clase_vehiculo/routes/clase_vehiculoRoutes";
+import { PosibleInfraccionRoutes } from "./dimensionamiento/posible_infraccion/routes/posible_infraccionRoutes";
 
 class App {
 
@@ -26,6 +27,7 @@ class App {
     public vekRoutes: VekRoutes = new VekRoutes();
     public clasVehiculoRoutes: ClaseVehiculoRoutes = new ClaseVehiculoRoutes();
     public lecturaSensoresLaser: LecturaSensoresLaserRoutes = new LecturaSensoresLaserRoutes()
+    public posibleInfraccion: PosibleInfraccionRoutes = new PosibleInfraccionRoutes()
     private watcher;
     private dimensionamientoOrchestrator;
     private evasionOrchestrator;
@@ -41,6 +43,7 @@ class App {
         this.concesionRoutes.routes(this.app);
         this.rolRoutes.routes(this.app);
         this.sedeRoutes.routes(this.app);
+        this.posibleInfraccion.routes(this.app);
         this.lecturaSensoresLaser.routes(this.app);
         this.dimensionamientoRoutes.routes(this.app);
         this.clasVehiculoRoutes.routes(this.app);

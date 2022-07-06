@@ -15,11 +15,14 @@ export class EventoTransitoDAO {
                 tipo,
                 fecha_hora,
                 lectura_camara_lpr_id,
-                lectura_sensores_id) VALUES ($1, to_timestamp($2), $3, $4);`, [
-                    eventoTransito.tipo,
-	                Date.parse(eventoTransito.fecha_hora),
-                    eventoTransito.lectura_camara_lpr_id,
-                    eventoTransito.lectura_sensores_id]);
+                lectura_sensores_id) VALUES ($1, to_timestamp($2), $3, $4) RETURNING ;`, [
+                eventoTransito.tipo,
+                Date.parse(eventoTransito.fecha_hora),
+                eventoTransito.lectura_camara_lpr_id,
+                eventoTransito.lectura_sensores_id]);
+            if (query.rows.length > 0) {
+                eventoTransito.evento_transito_id = query.rows[0]["evento_transito_id"]
+            }
 
             return eventoTransito
         } catch (error) {
@@ -102,11 +105,11 @@ export class EventoTransitoDAO {
                 lectura_camara_lpr_id = $3,
                 lectura_sensores_id = $4,
                 WHERE evento_transito_id = $5;`,
-                    [   eventoTransito.tipo,
-	                    Date.parse(eventoTransito.fecha_hora),
-                        eventoTransito.lectura_camara_lpr_id,
-                        eventoTransito.lectura_sensores_id,
-                        eventoTransito.evento_transito_id]);
+                [eventoTransito.tipo,
+                Date.parse(eventoTransito.fecha_hora),
+                eventoTransito.lectura_camara_lpr_id,
+                eventoTransito.lectura_sensores_id,
+                eventoTransito.evento_transito_id]);
 
             return query
         } catch (error) {

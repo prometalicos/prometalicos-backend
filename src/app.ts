@@ -12,6 +12,7 @@ import { DimensionamientoOrchestrator } from "./dimensionamiento/orchestrator/di
 import { SedeRoutes } from "./global/sede/routes/sedeRoutes";
 import { VekRoutes } from "./evasion/vek/routes/vekRoutes";
 import { EvasionOrchestrator } from "./evasion/orchestrator/evasionOrchestrator";
+import { ClaseVehiculoRoutes } from "./dimensionamiento/clase_vehiculo/routes/clase_vehiculoRoutes";
 
 class App {
 
@@ -23,6 +24,7 @@ class App {
     public rolRoutes: RolRoutes = new RolRoutes();
     public dimensionamientoRoutes: DimensionamientoRoutes = new DimensionamientoRoutes();
     public vekRoutes: VekRoutes = new VekRoutes();
+    public clasVehiculoRoutes: ClaseVehiculoRoutes = new ClaseVehiculoRoutes();
     public lecturaSensoresLaser: LecturaSensoresLaserRoutes = new LecturaSensoresLaserRoutes()
     private watcher;
     private dimensionamientoOrchestrator;
@@ -41,6 +43,7 @@ class App {
         this.sedeRoutes.routes(this.app);
         this.lecturaSensoresLaser.routes(this.app);
         this.dimensionamientoRoutes.routes(this.app);
+        this.clasVehiculoRoutes.routes(this.app);
         this.vekRoutes.routes(this.app);
         this.connection = DataBaseInterface.getInstance('global');
         this.connection2 = DataBaseInterface.getInstance('evasion');

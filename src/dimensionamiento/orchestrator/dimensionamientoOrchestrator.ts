@@ -4,9 +4,9 @@ import { LecturaCamaraLpr } from "../../lectura_camara_lpr/models/lectura_camara
 import { EventoTransito } from "../evento_transito/models/evento_transito.model";
 import { EventoTransitoDAO } from "../evento_transito/repository/evento_transitoDAO";
 import { LecturaSensoresLaserDAO } from "../../dimensionamiento/lectura_sensor_laser/repository/lectura_sensores_laserDAO";
-import { SocketService } from "util/sockets/socketService";
-import { ClaseVehiculoDAO } from "dimensionamiento/clase_vehiculo/repository/clase_vehiculoDAO";
-import { ClaseVehiculo } from "dimensionamiento/clase_vehiculo/models/clase_vehiculo.model";
+import { SocketService } from "../../util/sockets/socketService";
+import { ClaseVehiculoDAO } from "../../dimensionamiento/clase_vehiculo/repository/clase_vehiculoDAO";
+import { ClaseVehiculo } from "../../dimensionamiento/clase_vehiculo/models/clase_vehiculo.model";
 
 export class DimensionamientoOrchestrator {
 
@@ -99,15 +99,19 @@ export class DimensionamientoOrchestrator {
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO();
             evento_transitoDAO.insertEventoTransito(evento_transito_obj);
+            //Chequea que cumpla con los parametros y
+            // emite los datos a traves de sockets
             let clase_vehiculoDAO = new ClaseVehiculoDAO();
             let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.clase_vehiculo_id)
-            //if(lectura_sensor_laser_obj.)
+            let esAlerta = false
+            if(lectura_sensor_laser_obj["height"]> clase_vehiculo.max_height || lectura_sensor_laser_obj["length"] > clase_vehiculo.max_length || lectura_sensor_laser_obj["width"] > clase_vehiculo.max_width){
+                esAlerta = true;
+            }
             this.socketService.emit("dimensionamiento-emit",{
                 lectura_sensor_laser_obj,
                 lectura_camara_lpr_obj,
-
+                esAlerta
             })
-            // Emitir datos de dimensionamiento
             console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada );
             console.log("Cerrando orquestador");
             this.queue.shift();

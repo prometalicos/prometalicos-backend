@@ -4,14 +4,19 @@ import { LecturaCamaraLpr } from "../../lectura_camara_lpr/models/lectura_camara
 import { EventoTransito } from "../evento_transito/models/evento_transito.model";
 import { EventoTransitoDAO } from "../evento_transito/repository/evento_transitoDAO";
 import { LecturaSensoresLaserDAO } from "../../dimensionamiento/lectura_sensor_laser/repository/lectura_sensores_laserDAO";
+import { SocketService } from "util/sockets/socketService";
+import { ClaseVehiculoDAO } from "dimensionamiento/clase_vehiculo/repository/clase_vehiculoDAO";
+import { ClaseVehiculo } from "dimensionamiento/clase_vehiculo/models/clase_vehiculo.model";
 
 export class DimensionamientoOrchestrator {
 
     private static instance: DimensionamientoOrchestrator;
     private queue: Array<any>;
+    private socketService: SocketService
 
     private constructor() {
         this.queue = [];
+        this.socketService = SocketService.getInstance()
     }
 
     static getInstance() {
@@ -94,6 +99,14 @@ export class DimensionamientoOrchestrator {
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO();
             evento_transitoDAO.insertEventoTransito(evento_transito_obj);
+            let clase_vehiculoDAO = new ClaseVehiculoDAO();
+            let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.clase_vehiculo_id)
+            //if(lectura_sensor_laser_obj.)
+            this.socketService.emit("dimensionamiento-emit",{
+                lectura_sensor_laser_obj,
+                lectura_camara_lpr_obj,
+
+            })
             // Emitir datos de dimensionamiento
             console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada );
             console.log("Cerrando orquestador");

@@ -92,9 +92,9 @@ CREATE TABLE adm.posibles_infracciones(
         funcionario_id varchar(16) not null, -- Funcionario responsable
         infracciones_adm_id varchar(64) not null, -- Código de la infracción
         fecha_hora time not null,
-        estado bit not null,
-        fecha_novedad time not null, -- ?
-        nota text not null,
+        fecha_novedad time, -- ?
+        nota text,
+        estado bool not null
         CONSTRAINT posibles_infracciones_pk PRIMARY KEY (posibles_infracciones_id)
         )
           WITH (
@@ -193,3 +193,6 @@ INSERT INTO adm.lectura_sensores_laser (periferico_id, id, lane, lane_id,
 
 --delete from  adm.lectura_sensores_laser;
 --\copy adm.lectura_sensores_laser from 'sensor.csv' csv header;
+
+INSERT INTO adm.funcionario (funcionario_id,nombre_completo,documento_identificacion) VALUES ('01', 'Sistema', '01');
+INSERT INTO adm.infracciones_adm (infracciones_adm_id,descripcion) VALUES ('01', 'Dimensionamiento');

@@ -94,7 +94,7 @@ CREATE TABLE adm.posibles_infracciones(
         fecha_hora time not null,
         fecha_novedad time, -- ?
         nota text,
-        estado bool not null
+        estado bool not null,
         CONSTRAINT posibles_infracciones_pk PRIMARY KEY (posibles_infracciones_id)
         )
           WITH (

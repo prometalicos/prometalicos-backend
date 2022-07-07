@@ -113,6 +113,7 @@ export class LaserWatcher {
 		}
 
 		client.on('data', function (data) {
+			client.write(data);
 			let obj = deserialize(data.toString());
 		});
 

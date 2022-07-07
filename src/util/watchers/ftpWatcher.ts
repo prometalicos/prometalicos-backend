@@ -118,11 +118,13 @@ export class FtpWatcher {
             };
             this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
             console.log("Iniciando watcher ", ruta_ftp);
-
+            let cont = 1;
             ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
-                console.log('Watch: '+path);
                 let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
+                const { birthtime } = fs.statSync(path);
                 let properties = this.getMetadata(data);
+                console.log(cont+' Watch: '+path+' '+birthtime);
+                cont++;
                 if (sub_sistema_id == '1') {
                     this.evasion(properties, periferico_id, path);
                 } else if (sub_sistema_id == '2') {

@@ -5,7 +5,6 @@ import { LecturaCamaraLpr } from '../../lectura_camara_lpr/models/lectura_camara
 import { EventoTransitoDAO } from '../../dimensionamiento/evento_transito/repository/evento_transitoDAO';
 import { EventoTransito } from '../../dimensionamiento/evento_transito/models/evento_transito.model';
 import { DimensionamientoOrchestrator } from '../../dimensionamiento/orchestrator/dimensionamientoOrchestrator';
-import { timeStamp } from 'console';
 
 
 
@@ -117,8 +116,11 @@ export class FtpWatcher {
                 //usePolling: false,
                 ignorePermissionErrors: false
             };
+            const date = new Date();
+            const [month, day, year]       = [date.getMonth(), date.getDate(), date.getFullYear()];
+            const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
             this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
-            console.log("Iniciando watcher ", ruta_ftp);
+            console.log("Iniciando watcher ", ruta_ftp, [month+'/'+day+'/'+year+'-'+hour+':'+minutes+':'+seconds]);
             let cont = 1;
             ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
                 let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
@@ -145,9 +147,10 @@ export class FtpWatcher {
     static start(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         try {
             FtpWatcher.instance = new FtpWatcher(ruta_ftp, sub_sistema_id, periferico_id);
-            let now = new timeStamp();
-            console.log('La fecha actual es', now.toDateString());
-            console.log('Iniciando watcher periferico: ', now, { sub_sistema_id: sub_sistema_id, periferico_id: periferico_id });
+            const date = new Date();
+            const [month, day, year]       = [date.getMonth(), date.getDate(), date.getFullYear()];
+            const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+            console.log('Iniciando watcher periferico: ',[month+'/'+day+'/'+year+'-'+hour+':'+minutes+':'+seconds], { sub_sistema_id: sub_sistema_id, periferico_id: periferico_id });
         } catch (error) {
             console.log('An error occurred while the ftp watcher was started ' + error + ` ${FtpWatcher.name} -> ${this.start.name}`);
         }

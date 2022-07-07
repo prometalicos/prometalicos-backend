@@ -144,7 +144,9 @@ export class FtpWatcher {
     static start(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         try {
             FtpWatcher.instance = new FtpWatcher(ruta_ftp, sub_sistema_id, periferico_id);
-            console.log('Iniciando watcher periferico: ', { sub_sistema_id: sub_sistema_id, periferico_id: periferico_id });
+            let now= new Date();
+            console.log('La fecha actual es',now);
+            console.log('Iniciando watcher periferico: ', now, { sub_sistema_id: sub_sistema_id, periferico_id: periferico_id });
         } catch (error) {
             console.log('An error occurred while the ftp watcher was started ' + error + ` ${FtpWatcher.name} -> ${this.start.name}`);
         }

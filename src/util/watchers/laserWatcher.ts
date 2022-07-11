@@ -38,7 +38,7 @@ export class LaserWatcher {
 					Object.entries(obj_json).forEach(([key, sensor]) => {
 						
 						Object.entries(sensor).forEach(([key2, value]) => {
-							console.log('\n', value.transit_end.id, value.transit_end.time_iso);
+							console.log('\n', value);
 							if (value.transit_end !== undefined) {
 								console.log('----------transit_end---------- [', value.transit_end.id, value.transit_end.time_iso, ']');
 								let obj_transit_end = new Transit_end();

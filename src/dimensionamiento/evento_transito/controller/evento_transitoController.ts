@@ -24,8 +24,10 @@ export class EventoTransitoController {
 	}
 
 	public async getEventoTransitoAll(req: Request, res: Response, next) {
+		console.log("hola");
 		try {
 			let result = await EventoTransito.getDimensionamientoAll();
+			console.log(result)
 			if(result["rowCount"] != 0){
 				res.send(result);
 			} else {

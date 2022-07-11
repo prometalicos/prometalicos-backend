@@ -113,6 +113,7 @@ export class LaserWatcher {
 		}
 
 		client.on('data', function (data) {
+			console.log("Datos recibidos del sensor ");
 			client.write(data);
 			let obj = deserialize(data.toString());
 		});

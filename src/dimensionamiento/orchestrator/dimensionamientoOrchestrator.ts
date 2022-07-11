@@ -65,7 +65,7 @@ export class DimensionamientoOrchestrator {
     public laser(laser_data) {
         try {
             for (let index = 0; index < this.queue.length; index++) {
-                if (this.queue[index]["laser"] == null) {
+                if (this.queue[index]["laser"] == null || this.queue[index]["laser"] == undefined) {
                     this.queue[index]["laser"] = laser_data
                     break
                 }

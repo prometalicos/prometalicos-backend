@@ -31,7 +31,7 @@ export class LaserWatcher {
 				var json = XMLMapping.load(xml__);
 				var xml = XMLMapping.dump(json);
 
-				//console.log('\n\n Lo recibido', json);
+				console.log('\n\n Lo recibido', json);
 				//console.log('\n\n Los atributos',);
 
 				Object.entries(json).forEach(obj_json => {

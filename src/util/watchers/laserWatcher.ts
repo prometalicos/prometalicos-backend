@@ -38,7 +38,7 @@ export class LaserWatcher {
 					Object.entries(obj_json).forEach(([key, sensor]) => {
 						
 						Object.entries(sensor).forEach(([key2, value]) => {
-							console.log('\n', value);
+							console.log('\n transit_end--> ', value.transit_end);
 							if (value.transit_end !== undefined) {
 								console.log('----------transit_end---------- [', value.transit_end.id, value.transit_end.time_iso, ']');
 								let obj_transit_end = new Transit_end();
@@ -52,16 +52,17 @@ export class LaserWatcher {
 
 								//let obj = new LecturaSensoresLaserDAO();
 								//obj.insertLecturaSensoresLaser(obj_transit_end, '2');
-								Object.entries(value.transit_end).forEach(([key3, transit_end]) => {
+
+								//Object.entries(value.transit_end).forEach(([key3, transit_end]) => {
 									//console.log(`${key3} ${transit_end}`);
-								});
+								//});
 							} else if (value.sensor_status !== undefined) {
 								console.log('----------sensor_status---------- [', value.sensor_status.status, ']');
 								let obj_sensor_status = new Sensor_status();
 								obj_sensor_status = value.sensor_status; // Validar si no es 8 de ready
-								Object.entries(value.sensor_status).forEach(([key3, sensor_status]) => {
+								//Object.entries(value.sensor_status).forEach(([key3, sensor_status]) => {
 									//console.log(`${key3} ${sensor_status}`);
-								});
+								//});
 							}
 							//console.log(`${key2} ${value.transit_end}`);
 						});

@@ -49,9 +49,9 @@ export class LaserWatcher {
 				else{
 					if (obj.sensor.length !== undefined && obj.sensor.length > 0){
 						if (obj.sensor[0].transit_end !== undefined){
-							console.log('(2) ----------transit_end---------- [', obj.sensor.transit_end.id, obj.sensor.transit_end.time_iso, ']');
+							console.log('('+obj.sensor.length+')  ----------transit_end---------- [', obj.sensor[0].transit_end.id, obj.sensor[0].transit_end.time_iso, ']');
 						} else if (obj.sensor[0].sensor_status !== undefined){
-							console.log('(2) ----------sensor_status---------- [', obj.sensor[0].sensor_status.status, ']');
+							console.log('('+obj.sensor.length+') ----------sensor_status---------- [', obj.sensor[0].sensor_status.status, ']');
 						}
 						
 					}
@@ -148,7 +148,6 @@ export class LaserWatcher {
 		}
 
 		client.on('data', function (data) {
-			console.log("Datos recibidos del sensor ");
 			client.write(data);
 			let obj = deserialize(data.toString());
 		});

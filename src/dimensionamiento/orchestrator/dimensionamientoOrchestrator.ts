@@ -77,6 +77,7 @@ export class DimensionamientoOrchestrator {
 
     private async insertData() {
         try {
+            let registro_laser = false;
             let lectura_camara_lpr_obj = this.queue[0]["lpr"];
             let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
             lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
@@ -90,6 +91,7 @@ export class DimensionamientoOrchestrator {
                 let lectura_sensor_laser_obj = this.queue[0]["laser"]
                 let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
                 lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
+                registro_laser = true;
             }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
@@ -123,7 +125,7 @@ export class DimensionamientoOrchestrator {
                 lectura_camara_lpr_obj,
                 esAlerta
             })
-            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada);
+            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada + ' ( ' + (registro_laser===true?"con lectura de laser":"sin lectura de laser") + ' )');
             console.log("Cerrando orquestador");
             this.queue.shift();
         } catch (error) {

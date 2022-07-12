@@ -109,11 +109,11 @@ export class LaserWatcher {
 		//const xml__ = '<sensor id="1" type="LaserStereoMaster"><transit_end id="16" lane="1" lane_id="15" time_iso="2022-06-04T22:56:55" speed="0" height="3900" width="2930" length="18500" refl_pos="100" gap="164969" headway="168914" occupancy="6476" class_id="7" position="C" direction="I" wrong_way="0" stop_and_go="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:54:47" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:55:17" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:55:47" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:56:17" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-06-04T22:56:47" tailgate_mode="0" photocell_status="0"/></sensor>';
 		
 		
-		const xml__ = '<sensor id="1" type="LaserStereoMaster"><transit_end id="55" lane="1" lane_id="31" time_iso="2022-07-11T22:59:15" speed="5" height="3280" width="2830" length="11000" refl_pos="100" gap="87926" headway="94271" occupancy="1980" class_id="4" position="C" direction="I" wrong_way="0" stop_and_go="0"/></sensor>';
+		//const xml__ = '<sensor id="1" type="LaserStereoMaster"><transit_end id="55" lane="1" lane_id="31" time_iso="2022-07-11T22:59:15" speed="5" height="3280" width="2830" length="11000" refl_pos="100" gap="87926" headway="94271" occupancy="1980" class_id="4" position="C" direction="I" wrong_way="0" stop_and_go="0"/></sensor>';
 		//const xml__ = '<sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-07-11T22:59:10" tailgate_mode="0" photocell_status="0"/></sensor>';
 		//const xml__ = '<sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-07-11T23:36:13" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-07-11T23:36:43" tailgate_mode="0" photocell_status="0"/></sensor><sensor id="1" type="LaserStereoMaster"><sensor_status status="8" time_iso="2022-07-11T23:37:13" tailgate_mode="0" photocell_status="0"/></sensor>';
 
-		deserialize(xml__);
+		//deserialize(xml__);
 
 		const net = require('net');
 		const client = new net.Socket();

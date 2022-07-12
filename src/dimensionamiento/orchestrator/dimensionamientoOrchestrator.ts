@@ -66,10 +66,12 @@ export class DimensionamientoOrchestrator {
     }
 
     public laser(laser_data) {
+        console.log("LASER ");
         try {
             for (let index = 0; index < this.queue.length; index++) {
                 if (this.queue[index]["laser"] == null ) {
                     this.queue[index]["laser"] = laser_data
+                    console.log("Integrando laser al orquestador ");
                     break
                 }
             }

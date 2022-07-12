@@ -66,7 +66,6 @@ export class DimensionamientoOrchestrator {
     }
 
     public laser(laser_data) {
-        console.log("LASER ");
         try {
             for (let index = 0; index < this.queue.length; index++) {
                 if (this.queue[index]["laser"] == null ) {
@@ -130,7 +129,7 @@ export class DimensionamientoOrchestrator {
                 lectura_camara_lpr_obj,
                 esAlerta
             })
-            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada + ' ( ' + (registro_laser == true  ?  "con lectura de laser" : "sin lectura de laser" ) + ' )');
+            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada + ' ( ' + (registro_laser === true  ?  "con lectura de laser" : "sin lectura de laser" ) + ' )');
             console.log("--------------------");
             console.log("Cerrando orquestador");
             console.log("--------------------");

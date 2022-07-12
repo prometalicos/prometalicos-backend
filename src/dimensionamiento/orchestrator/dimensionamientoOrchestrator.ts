@@ -33,6 +33,8 @@ export class DimensionamientoOrchestrator {
 
     public eventStart() {
         try {
+            console.log("=====================");
+            console.log("=====================");
             console.log("Iniciando orquestador");
             if (this.queue.length > 0) {
                 this.insertData();
@@ -65,7 +67,7 @@ export class DimensionamientoOrchestrator {
     public laser(laser_data) {
         try {
             for (let index = 0; index < this.queue.length; index++) {
-                if (this.queue[index]["laser"] == null || this.queue[index]["laser"] == undefined) {
+                if (this.queue[index]["laser"] == null ) {
                     this.queue[index]["laser"] = laser_data
                     break
                 }
@@ -127,6 +129,7 @@ export class DimensionamientoOrchestrator {
             })
             console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada + ' ( ' + (registro_laser===true?"con lectura de laser":"sin lectura de laser") + ' )');
             console.log("Cerrando orquestador");
+            console.log("=====================");
             this.queue.shift();
         } catch (error) {
             console.log('An error occurred in the insertData ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.insertData.name}`);

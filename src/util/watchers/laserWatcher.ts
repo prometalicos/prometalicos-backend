@@ -31,34 +31,25 @@ export class LaserWatcher {
 				var json = XMLMapping.load(xml__);
 				var xml = XMLMapping.dump(json);
 
-				console.log('\n\n Lo recibido', json);
+				console.log("---------[Abre]-----------");
+				console.log("--------------------------");
+
+				console.log('\n\n Lo recibido JSON ', json);
+				console.log('\n\n Lo recibido XML ', xml__);
 				//console.log('\n\n Los atributos',);
 
-				Object.entries(json).forEach(obj_json => {
-					Object.entries(obj_json).forEach(([key, sensor]) => {
-						console.log("-------------[Abre]----------------");
-						console.log("-----------------------------------");
-						console.log("-----------------------------------");
-						console.log("-----------------------------------");
-						console.log('\n >>>> sensor --> ', sensor);
+				console.log("----------[Cierra]--------");
+				console.log("--------------------------");
 
-						if (sensor["transit_end"] !== undefined) {
-							console.log("El hijo de puta trae datos");
-						} else if (sensor["sensor_status"] !== undefined || sensor[0]["sensor_status"] !== undefined) {
-							console.log("El hijo de puta trae ujn estado");
-							console.log('----------sensor_status---------- [', sensor["sensor_status"].status, ']');
-						}
-						else{
-							console.log("Se fue por el elsa, no reconoce ni end ni statud");
-						}
-						console.log("-------------[Cierra]--------------");
-						console.log("-----------------------------------");
-						console.log("-----------------------------------");
-						console.log("-----------------------------------");
+
+				Object.entries(json).forEach(obj_json => {
+
+					Object.entries(obj_json).forEach(([key, sensor]) => {
+
 						Object.entries(sensor).forEach(([key2, value]) => {
-							console.log('\n >>>> item por item de value --> ', value);
+							//console.log('\n >>>> item por item de value --> ', value);
 							if (value.transit_end !== undefined) {
-								console.log('----------transit_end---------- [', value.transit_end.id, value.transit_end.time_iso, ']');
+								//console.log('----------transit_end---------- [', value.transit_end.id, value.transit_end.time_iso, ']');
 								let obj_transit_end = new Transit_end();
 								obj_transit_end = value.transit_end; // Enviar a persistencia
 								//console.log(obj_transit_end);
@@ -75,7 +66,7 @@ export class LaserWatcher {
 									//console.log(`${key3} ${transit_end}`);
 								//});
 							} else if (value.sensor_status !== undefined) {
-								console.log('----------sensor_status---------- [', value.sensor_status.status, ']');
+								//console.log('----------sensor_status---------- [', value.sensor_status.status, ']');
 								let obj_sensor_status = new Sensor_status();
 								obj_sensor_status = value.sensor_status; // Validar si no es 8 de ready
 								//Object.entries(value.sensor_status).forEach(([key3, sensor_status]) => {

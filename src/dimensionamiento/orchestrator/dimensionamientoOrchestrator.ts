@@ -117,7 +117,7 @@ export class DimensionamientoOrchestrator {
                 await posible_infracionDAO.insertPosibleInfraccion(posible_infraccion)
             }
             let socketService = SocketService.getInstance()
-
+            
             socketService.emit("dimensionamiento-emit", {
                 lectura_sensor_laser_obj,
                 lectura_camara_lpr_obj,

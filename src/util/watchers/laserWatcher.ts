@@ -36,7 +36,7 @@ export class LaserWatcher {
 
 				Object.entries(json).forEach(obj_json => {
 					Object.entries(obj_json).forEach(([key, sensor]) => {
-						console.log("-----------------------------------");
+						console.log("-------------[Abre]----------------");
 						console.log("-----------------------------------");
 						console.log("-----------------------------------");
 						console.log("-----------------------------------");
@@ -44,14 +44,14 @@ export class LaserWatcher {
 
 						if (sensor["transit_end"] !== undefined) {
 							console.log("El hijo de puta trae datos");
-						} else if (sensor["sensor_status"] !== undefined) {
+						} else if (sensor["sensor_status"] !== undefined || sensor[0]["sensor_status"] !== undefined) {
 							console.log("El hijo de puta trae ujn estado");
 							console.log('----------sensor_status---------- [', sensor["sensor_status"].status, ']');
 						}
 						else{
 							console.log("Se fue por el elsa, no reconoce ni end ni statud");
 						}
-						console.log("-----------------------------------");
+						console.log("-------------[Cierra]--------------");
 						console.log("-----------------------------------");
 						console.log("-----------------------------------");
 						console.log("-----------------------------------");

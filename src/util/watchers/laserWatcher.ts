@@ -51,7 +51,7 @@ export class LaserWatcher {
 						if (obj.sensor[0].transit_end !== undefined){
 							console.log('('+obj.sensor.length+')  ----------transit_end---------- [', obj.sensor[0].transit_end.id, obj.sensor[0].transit_end.time_iso, ']');
 						} else if (obj.sensor[0].sensor_status !== undefined){
-							console.log('('+obj.sensor.length+') ----------sensor_status---------- [', obj.sensor[0].sensor_status.status, obj.sensor.sensor_status.time_iso, ']');
+							console.log('('+obj.sensor.length+') ----------sensor_status---------- [', obj.sensor[0].sensor_status.status, obj.sensor[0].sensor_status.time_iso, ']');
 						}
 						
 					}

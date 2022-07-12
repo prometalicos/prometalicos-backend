@@ -33,7 +33,10 @@ export class DimensionamientoOrchestrator {
 
     public eventStart() {
         try {
+            
+            console.log("=====================");
             console.log("Iniciando orquestador");
+            console.log("=====================");
             if (this.queue.length > 0) {
                 this.insertData();
 
@@ -65,8 +68,9 @@ export class DimensionamientoOrchestrator {
     public laser(laser_data) {
         try {
             for (let index = 0; index < this.queue.length; index++) {
-                if (this.queue[index]["laser"] == null) {
+                if (this.queue[index]["laser"] == null ) {
                     this.queue[index]["laser"] = laser_data
+                    console.log("Integrando laser al orquestador ");
                     break
                 }
             }
@@ -86,10 +90,12 @@ export class DimensionamientoOrchestrator {
                 clase_vehiculo_id: "0"
             }
 
+            let msg = '( sin lectura de laser )';
             if (this.queue[0]['laser'] != null) {
                 let lectura_sensor_laser_obj = this.queue[0]["laser"]
                 let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
                 lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
+                let msg = '( con lectura de laser ' + lectura_sensor_laser_obj.id + ' )';
             }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
@@ -123,8 +129,10 @@ export class DimensionamientoOrchestrator {
                 lectura_camara_lpr_obj,
                 esAlerta
             })
-            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada);
+            console.log('Registro vehiculo placa: ', lectura_camara_lpr_obj.placa_identificada + ' ( ' + msg + ' )');
+            console.log("--------------------");
             console.log("Cerrando orquestador");
+            console.log("--------------------");
             this.queue.shift();
         } catch (error) {
             console.log('An error occurred in the insertData ' + error + ` ${DimensionamientoOrchestrator.name} -> ${this.insertData.name}`);

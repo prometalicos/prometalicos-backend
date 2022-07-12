@@ -116,13 +116,18 @@ export class FtpWatcher {
                 //usePolling: false,
                 ignorePermissionErrors: false
             };
+            const date = new Date();
+            const [month, day, year]       = [date.getMonth(), date.getDate(), date.getFullYear()];
+            const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
             this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
-            console.log("Iniciando watcher ", ruta_ftp);
-
+            console.log("Iniciando watcher ", ruta_ftp, [month+'/'+day+'/'+year+'-'+hour+':'+minutes+':'+seconds]);
+            let cont = 1;
             ch.watch(ruta_ftp, watchOptions).on('add', (path) => {
-                console.log('Watch: '+path);
                 let data = fs.readFileSync(path, { encoding: 'utf8', flag: 'r' });
+                const { birthtime } = fs.statSync(path);
                 let properties = this.getMetadata(data);
+                console.log(cont+' Watch: '+path+' '+birthtime);
+                cont++;
                 if (sub_sistema_id == '1') {
                     this.evasion(properties, periferico_id, path);
                 } else if (sub_sistema_id == '2') {
@@ -142,7 +147,10 @@ export class FtpWatcher {
     static start(ruta_ftp: string, sub_sistema_id: string, periferico_id: string) {
         try {
             FtpWatcher.instance = new FtpWatcher(ruta_ftp, sub_sistema_id, periferico_id);
-            console.log('Iniciando watcher periferico: ', { sub_sistema_id: sub_sistema_id, periferico_id: periferico_id });
+            const date = new Date();
+            const [month, day, year]       = [date.getMonth(), date.getDate(), date.getFullYear()];
+            const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+            console.log('Iniciando watcher periferico: ',[month+'/'+day+'/'+year+'-'+hour+':'+minutes+':'+seconds], { sub_sistema_id: sub_sistema_id, periferico_id: periferico_id });
         } catch (error) {
             console.log('An error occurred while the ftp watcher was started ' + error + ` ${FtpWatcher.name} -> ${this.start.name}`);
         }

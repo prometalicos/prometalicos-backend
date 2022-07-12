@@ -38,6 +38,8 @@ export class LaserWatcher {
 					Object.entries(obj_json).forEach(([key, sensor]) => {
 						console.log("-----------------------------------");
 						console.log("-----------------------------------");
+						console.log("-----------------------------------");
+						console.log("-----------------------------------");
 						console.log('\n >>>> sensor --> ', sensor);
 
 						if (sensor["transit_end"] !== undefined) {
@@ -49,6 +51,8 @@ export class LaserWatcher {
 						else{
 							console.log("Se fue por el elsa, no reconoce ni end ni statud");
 						}
+						console.log("-----------------------------------");
+						console.log("-----------------------------------");
 						console.log("-----------------------------------");
 						console.log("-----------------------------------");
 						Object.entries(sensor).forEach(([key2, value]) => {

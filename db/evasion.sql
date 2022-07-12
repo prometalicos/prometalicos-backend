@@ -18,7 +18,7 @@ CREATE SCHEMA log;
 CREATE TABLE adm.lectura_camara_lpr(
         lectura_camara_lpr_id serial not null, -- Llave autonumérica
 	periferico_id varchar(64) not null, -- El sensor que reporta el dato
-        fecha_hora time not null,
+        fecha_hora timestamp not null,
         placa_identificada varchar(12) not null,
         estadistica varchar (256),
         url_matricula varchar(256) not null,
@@ -32,7 +32,7 @@ CREATE TABLE adm.lectura_camara_lpr(
         CREATE TABLE adm.lectura_vek(
         lectura_vek_id serial,
 	periferico_id varchar(64) not null, -- El sensor que reporta el dato
-        fecha_hora time not null,
+        fecha_hora timestamp not null,
         loop_status varchar(3) not null,
         vehicle_class varchar(3) not null,
         vehicle_length varchar(3) not null,
@@ -54,8 +54,8 @@ CREATE TABLE adm.posibles_infracciones(
         evento_transito_id int not null, -- Contiene el dato de la cámara y el sensor
         funcionario_id varchar(16) not null, -- Funcionario responsable
         infracciones_adm_id varchar(64) not null, -- Código de la infracción
-        fecha_hora time not null,
-        fecha_novedad time, -- ?
+        fecha_hora timestamp not null,
+        fecha_novedad timestamp, -- ?
         nota text,
         estado bit not null,
         CONSTRAINT posibles_infracciones_pk PRIMARY KEY (posibles_infracciones_id)
@@ -66,7 +66,7 @@ CREATE TABLE adm.posibles_infracciones(
 
 CREATE TABLE adm.evento_transito(
 	evento_transito_id serial, -- Llave autonumérica
-	fecha_hora time not null,
+	fecha_hora timestamp not null,
         lectura_vek bigint not null,
         lectura_camara_lpr_id bigint not null,
         clase_vehiculo_id varchar(64) not null,
@@ -110,7 +110,7 @@ CREATE TABLE adm.clase_vehiculo(
 CREATE TABLE adm.registro_evasion(
         registro_evasion_id serial,
 	evento_transito_id integer not null, -- Llave foránea
-	fecha_hora time not null,
+	fecha_hora timestamp not null,
         CONSTRAINT registro_evasion_pk PRIMARY KEY (registro_evasion_id)
         )
           WITH (

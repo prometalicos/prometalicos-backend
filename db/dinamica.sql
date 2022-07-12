@@ -165,7 +165,7 @@ CREATE TABLE adm.tipoejes (
 CREATE TABLE adm.registro_fugas(
     registro_fugas_id serial,
 	evento_transito_id integer not null, -- Llave foránea
-	fecha_hora time not null,
+	fecha_hora timestamp not null,
         CONSTRAINT registro_fugas_pk PRIMARY KEY (registro_fugas_id)
         )
           WITH (
@@ -175,7 +175,7 @@ CREATE TABLE adm.registro_fugas(
 CREATE TABLE adm.registro_evasion(
         registro_evasion_id serial,
 	evento_transito_id integer not null, -- Llave foránea
-	fecha_hora time not null,
+	fecha_hora timestamp not null,
         CONSTRAINT registro_evasion_pk PRIMARY KEY (registro_evasion_id)
         )
           WITH (

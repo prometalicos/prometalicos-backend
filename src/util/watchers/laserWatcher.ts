@@ -36,7 +36,7 @@ export class LaserWatcher {
 					console.log('---------- [transit_end] ---------- [', obj.sensor.transit_end.id, obj.sensor.transit_end.time_iso, ']');
 					let obj_transit_end = new Transit_end();
 					obj_transit_end = obj.sensor.transit_end; // Enviar a persistencia
-					console.log(obj_transit_end);
+					//console.log(obj_transit_end);
 					if (this.dimensionamientoOrchestrator === undefined) {
 						this.dimensionamientoOrchestrator = DimensionamientoOrchestrator.getInstance();
 						console.log(`\n\ Orquestador de Laser sin instancia (se recupera) : ${obj_transit_end}.`, '\n');

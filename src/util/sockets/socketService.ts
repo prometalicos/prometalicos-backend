@@ -20,7 +20,8 @@ export class SocketService {
         this.io.origins('*:*')
 
         this.io.on('connection', (socket) => {
-
+            console.log(`se conecta socket`)
+            
             this.connections.push({ socket, user: null, type: null })
             socket.on('authUser', async (token) => {
                 try {
@@ -68,7 +69,9 @@ export class SocketService {
 
     public emit(eventName: string, data: any, usersId = [], toAdm = false) {
         try {
+            console.log(`se comienza a emitir ${data}`)
             if (usersId.length === 0) {
+                console.log(`se emite el evento ${eventName} con data ${data}`)
                 this.io.emit(eventName, data)
             } else {
                 for (let index = 0; index < usersId.length; index++) {

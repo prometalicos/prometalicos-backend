@@ -30,7 +30,7 @@ export class ClientSocketService {
 								let obj_transit_end = new Transit_end();
 								obj_transit_end = value.transit_end; // Enviar a persistencia
 								let obj = new LecturaSensoresLaserDAO();
-								obj.insertLecturaSensoresLaser(obj_transit_end, '2');
+								//obj.insertLecturaSensoresLaser(obj_transit_end, '2');
 								Object.entries(value.transit_end).forEach(([key3, transit_end]) => {
 									console.log(`${key3} ${transit_end}`);
 								});

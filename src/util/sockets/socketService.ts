@@ -15,40 +15,44 @@ export class SocketService {
     }[]
 
     private constructor(server: any) {
-        this.connections = []
-        this.io = socketio(server)
-        this.io.origins('*:*')
+        try {
+            this.connections = []
+            this.io = socketio(server)
+            this.io.origins('*:*')
 
-        this.io.on('connection', (socket) => {
-            console.log(`se conecta socket`)
-            
-            this.connections.push({ socket, user: null, type: null })
-            socket.on('authUser', async (token) => {
-                try {
-                    let user = await utils.isAuth(token)
-                    if (user !== null && user !== undefined) {
-                        let userConnection = this.connections.findIndex(connection => connection.socket.id === socket.id)
-                        this.connections[userConnection].user = user.id
-                        this.connections[userConnection].type = user.tipo
+            this.io.on('connection', (socket) => {
+                console.log(`se conecta socket`)
+
+                this.connections.push({ socket, user: null, type: null })
+                socket.on('authUser', async (token) => {
+                    try {
+                        let user = await utils.isAuth(token)
+                        if (user !== null && user !== undefined) {
+                            let userConnection = this.connections.findIndex(connection => connection.socket.id === socket.id)
+                            this.connections[userConnection].user = user.id
+                            this.connections[userConnection].type = user.tipo
+                        }
+                    } catch (error) {
+                        console.log('An error occurred while the socket auth ' + error + ` socketOnAuthUser -> ${error}`);
+
                     }
-                } catch (error) {
-                    console.log('An error occurred while the socket auth ' + error + ` socketOnAuthUser -> ${error}`);
+                });
 
-                }
+                socket.on('disconnect', () => {
+                    try {
+                        console.log(`se DESconecta socket`)
+
+                        let index = this.connections.findIndex(item => item.socket.id === socket.id)
+                        this.connections.splice(index, 1)
+                    } catch (error) {
+                        console.log('An error occurred while the socket disconnect ' + error + ` socketOnDisconnect -> ${error}`);
+                    }
+                });
+
             });
-
-            socket.on('disconnect', () => {
-                try {
-            console.log(`se DESconecta socket`)
-
-                    let index = this.connections.findIndex(item => item.socket.id === socket.id)
-                    this.connections.splice(index, 1)
-                } catch (error) {
-                    console.log('An error occurred while the socket disconnect ' + error + ` socketOnDisconnect -> ${error}`);
-                }
-            });
-
-        });
+        } catch (error) {
+            console.log('An error ocurred in the socket constructor ', error)
+        }
 
         //this.log = new LogModel()
     }

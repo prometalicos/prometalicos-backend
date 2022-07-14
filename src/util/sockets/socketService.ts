@@ -39,6 +39,8 @@ export class SocketService {
 
             socket.on('disconnect', () => {
                 try {
+            console.log(`se DESconecta socket`)
+
                     let index = this.connections.findIndex(item => item.socket.id === socket.id)
                     this.connections.splice(index, 1)
                 } catch (error) {
@@ -71,7 +73,7 @@ export class SocketService {
         try {
             console.log(`se comienza a emitir ${data}`)
             if (usersId.length === 0) {
-                console.log(`se emite el evento ${eventName} con data ${data}`)
+                console.log(`se emite el evento ${eventName} con data ${data.esAlerta}`)
                 this.io.emit(eventName, data)
             } else {
                 for (let index = 0; index < usersId.length; index++) {

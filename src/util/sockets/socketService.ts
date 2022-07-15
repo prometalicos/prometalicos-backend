@@ -21,27 +21,23 @@ export class SocketService {
             this.io.origins('*:*')
 
             this.io.on('connection', (socket) => {
-                console.log(`se conecta socket`)
-
                 this.connections.push({ socket, user: null, type: null })
-                socket.on('authUser', async (token) => {
-                    try {
-                        let user = await utils.isAuth(token)
-                        if (user !== null && user !== undefined) {
-                            let userConnection = this.connections.findIndex(connection => connection.socket.id === socket.id)
-                            this.connections[userConnection].user = user.id
-                            this.connections[userConnection].type = user.tipo
-                        }
-                    } catch (error) {
-                        console.log('An error occurred while the socket auth ' + error + ` socketOnAuthUser -> ${error}`);
+                // socket.on('authUser', async (token) => {
+                //     try {
+                //         let user = await utils.isAuth(token)
+                //         if (user !== null && user !== undefined) {
+                //             let userConnection = this.connections.findIndex(connection => connection.socket.id === socket.id)
+                //             this.connections[userConnection].user = user.id
+                //             this.connections[userConnection].type = user.tipo
+                //         }
+                //     } catch (error) {
+                //         console.log('An error occurred while the socket auth ' + error + ` socketOnAuthUser -> ${error}`);
 
-                    }
-                });
+                //     }
+                // });
 
                 socket.on('disconnect', () => {
                     try {
-                        console.log(`se DESconecta socket`)
-
                         let index = this.connections.findIndex(item => item.socket.id === socket.id)
                         this.connections.splice(index, 1)
                     } catch (error) {
@@ -75,9 +71,9 @@ export class SocketService {
 
     public emit(eventName: string, data: any, usersId = [], toAdm = false) {
         try {
-            console.log(`se comienza a emitir ${data}`)
+            console.log(`Se comienza a emitir ${data}`)
             if (usersId.length === 0) {
-                console.log(`se emite el evento ${eventName} con data ${data.esAlerta}`)
+                console.log(`Se emite el evento ${eventName} con data ${data.esAlerta}`)
                 this.io.emit(eventName, data)
             } else {
                 for (let index = 0; index < usersId.length; index++) {

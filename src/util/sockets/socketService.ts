@@ -71,7 +71,7 @@ export class SocketService {
 
     public emit(eventName: string, data: any, usersId = [], toAdm = false) {
         try {
-            console.log(`Se comienza a emitir ${data}`)
+            console.log(`Se comienza a emitir: ${data}`)
             if (usersId.length === 0) {
                 console.log(`Se emite el evento ${eventName} con data ${data.esAlerta}`)
                 this.io.emit(eventName, data)

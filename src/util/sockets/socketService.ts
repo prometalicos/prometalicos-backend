@@ -22,19 +22,19 @@ export class SocketService {
 
             this.io.on('connection', (socket) => {
                 this.connections.push({ socket, user: null, type: null })
-                // socket.on('authUser', async (token) => {
-                //     try {
-                //         let user = await utils.isAuth(token)
-                //         if (user !== null && user !== undefined) {
-                //             let userConnection = this.connections.findIndex(connection => connection.socket.id === socket.id)
-                //             this.connections[userConnection].user = user.id
-                //             this.connections[userConnection].type = user.tipo
-                //         }
-                //     } catch (error) {
-                //         console.log('An error occurred while the socket auth ' + error + ` socketOnAuthUser -> ${error}`);
+                socket.on('authUser', async (token) => {
+                    try {
+                        let user = await utils.isAuth(token)
+                        if (user !== null && user !== undefined) {
+                            let userConnection = this.connections.findIndex(connection => connection.socket.id === socket.id)
+                            this.connections[userConnection].user = user.id
+                            this.connections[userConnection].type = user.tipo
+                        }
+                    } catch (error) {
+                        console.log('An error occurred while the socket auth ' + error + ` socketOnAuthUser -> ${error}`);
 
-                //     }
-                // });
+                    }
+                });
 
                 socket.on('disconnect', () => {
                     try {

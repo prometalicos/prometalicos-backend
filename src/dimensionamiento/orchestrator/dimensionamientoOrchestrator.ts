@@ -107,6 +107,7 @@ export class DimensionamientoOrchestrator {
             evento_transito_obj.tipo = 1;
             let evento_transitoDAO = new EventoTransitoDAO();
             evento_transito_obj = await evento_transitoDAO.insertEventoTransito(evento_transito_obj);
+            
             //Chequea que cumpla con los parametros y
             // emite los datos a traves de sockets
             let clase_vehiculoDAO = new ClaseVehiculoDAO();

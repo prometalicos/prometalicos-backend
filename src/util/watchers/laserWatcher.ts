@@ -3,8 +3,7 @@ import { Transit_end } from '../drivers/comark/models/transit_end';
 import { Sensor_status } from '../drivers/comark/models/sensor_status';
 import { LecturaSensoresLaserDAO } from '../../dimensionamiento/lectura_sensor_laser/repository/lectura_sensores_laserDAO';
 import { DimensionamientoOrchestrator } from '../../dimensionamiento/orchestrator/dimensionamientoOrchestrator';
-
-
+import { SocketServiceBasic } from '../../util/sockets/socketServiceBasic';
 
 export class LaserWatcher {
 
@@ -31,6 +30,7 @@ export class LaserWatcher {
 				var xml = XMLMapping.dump(json);
 
 				const obj = JSON.parse(JSON.stringify(json));
+				// El laser envia un registro o varios (aleatoriamente), es neceario evaluar la cantidad de registro recibidos
 				if (obj.sensor.transit_end !== undefined) {
 					console.log('---------- [transit_end] ---------- [', obj.sensor.transit_end.id, obj.sensor.transit_end.time_iso, ']');
 					let obj_transit_end = new Transit_end();
@@ -43,7 +43,9 @@ export class LaserWatcher {
 					this.dimensionamientoOrchestrator.laser(obj_transit_end);
 				}
 				else if(obj.sensor.sensor_status !== undefined){
-					console.log('---------- [sensor_status] ---------- [', obj.sensor.sensor_status.status,  obj.sensor.sensor_status.time_iso, ']');
+					console.log('---------- [sensor_status] ---------- [', obj.sensor.sensor_status.status, obj.sensor.sensor_status.time_iso, ']');
+					let socketService = SocketServiceBasic.getInstance()
+					socketService.emit("sensor_status", { "estado" : obj.sensor.sensor_status.status, "fecha" : obj.sensor.sensor_status.time_iso});
 				}
 				else{
 					if (obj.sensor.length !== undefined && obj.sensor.length > 0){
@@ -51,6 +53,8 @@ export class LaserWatcher {
 							console.log('('+obj.sensor.length+')  ----------transit_end---------- [', obj.sensor[0].transit_end.id, obj.sensor[0].transit_end.time_iso, ']');
 						} else if (obj.sensor[0].sensor_status !== undefined){
 							console.log('('+obj.sensor.length+') ----------sensor_status---------- [', obj.sensor[0].sensor_status.status, obj.sensor[0].sensor_status.time_iso, ']');
+							let socketService = SocketServiceBasic.getInstance()
+							socketService.emit("sensor_status", { "estado" : obj.sensor.sensor_status.status, "fecha" : obj.sensor.sensor_status.time_iso});
 						}
 						
 					}

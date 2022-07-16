@@ -54,7 +54,7 @@ export class LaserWatcher {
 						} else if (obj.sensor[0].sensor_status !== undefined){
 							console.log('('+obj.sensor.length+') ----------sensor_status---------- [', obj.sensor[0].sensor_status.status, obj.sensor[0].sensor_status.time_iso, ']');
 							let socketService = SocketServiceBasic.getInstance()
-							socketService.emit("sensor_status", { "estado" : obj.sensor.sensor_status.status, "fecha" : obj.sensor.sensor_status.time_iso});
+							socketService.emit("sensor_status", { "estado" : obj.sensor[0].sensor_status.status, "fecha" : obj.sensor[0].sensor_status.time_iso});
 						}
 						
 					}

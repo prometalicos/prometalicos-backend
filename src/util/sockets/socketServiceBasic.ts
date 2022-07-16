@@ -45,7 +45,7 @@ export class SocketServiceBasic {
     public emit(eventName: string, data: any, usersId = [], toAdm = false) {
         try {
             this.io.emit(eventName, data);
-            console.log(`Se emite: ${data.lectura_camara_lpr_obj.placa_identificada}`);
+            console.log(`Se emite: ${data}`);
         } catch (error) {
             console.log('An error occurred while the socket service was emitted ' + error + ` ${this.emit.name} -> ${error}`);
 

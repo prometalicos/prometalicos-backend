@@ -1,10 +1,10 @@
 
 
-import { ClientSocketService } from "../../../util/sockets/dimensionamiento/clientSocketService";
 import * as uuid from "uuid";
 import { DataBaseService } from "../../../util/db_connection/services/dataBaseService";
 import { Rol } from "../models/rol";
 import { DataBaseInterface } from "../../../util/db_connection/services/databaseInterface";
+import { SocketServiceBasic } from "./../../../util/sockets/socketServiceBasic";
 
 export class RolDAO {
 
@@ -37,6 +37,9 @@ export class RolDAO {
                         nombre
                         FROM adm.rol;`);
 
+            let socketService = SocketServiceBasic.getInstance()
+
+            socketService.emit("dimensionamiento-emit", { data: "message" });
             return query
 
         } catch (error) {

@@ -9,6 +9,7 @@ import { ClaseVehiculoDAO } from "../../dimensionamiento/clase_vehiculo/reposito
 import { ClaseVehiculo } from "../../dimensionamiento/clase_vehiculo/models/clase_vehiculo.model";
 import { PosibleInfraccionDAO } from "../../dimensionamiento/posible_infraccion/repository/posible_infraccionDAO";
 import { PosibleInfraccion } from "../../dimensionamiento/posible_infraccion/models/posible_infraccion.model";
+import { SocketServiceBasic } from "../../util/sockets/socketServiceBasic";
 
 export class DimensionamientoOrchestrator {
 
@@ -122,7 +123,7 @@ export class DimensionamientoOrchestrator {
                 posible_infraccion.fecha_hora = lectura_camara_lpr_obj.fecha_hora
                 await posible_infracionDAO.insertPosibleInfraccion(posible_infraccion)
             }
-            let socketService = SocketService.getInstance()
+            let socketService = SocketServiceBasic.getInstance()
             
             socketService.emit("dimensionamiento-emit", {
                 lectura_sensor_laser_obj,

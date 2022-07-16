@@ -17,11 +17,10 @@ export class SocketService {
     private constructor(server: any) {
         try {
             this.connections = []
-            this.io = socketio(server)
+            //this.io = socketio(server)
             this.io.origins('*:*')
 
             this.io.on('connection', (socket) => {
-
                 this.connections.push({ socket, user: null, type: null })
                 socket.on('authUser', async (token) => {
                     try {
@@ -65,7 +64,6 @@ export class SocketService {
     static start(server) {
         try {
             SocketService.instance = new SocketService(server);
-            console.log("Servidor de conexiones sockets iniciado correctamente ");
         } catch (error) {
             console.log('An error occurred while the socket service was started ' + error + ` ${SocketService.name} -> ${this.start.name}`);
         }

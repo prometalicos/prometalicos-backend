@@ -1,5 +1,5 @@
 export class ResponseModel{
     status: number;
-    message: string; 
+    message: string;
     data: any;
 }

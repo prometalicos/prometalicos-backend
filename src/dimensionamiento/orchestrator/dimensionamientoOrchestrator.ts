@@ -10,6 +10,7 @@ import { ClaseVehiculo } from "../../dimensionamiento/clase_vehiculo/models/clas
 import { PosibleInfraccionDAO } from "../../dimensionamiento/posible_infraccion/repository/posible_infraccionDAO";
 import { PosibleInfraccion } from "../../dimensionamiento/posible_infraccion/models/posible_infraccion.model";
 import { SocketServiceBasic } from "../../util/sockets/socketServiceBasic";
+import { Transit_end } from "../../util/drivers/comark/models/transit_end";
 
 export class DimensionamientoOrchestrator {
 
@@ -86,10 +87,12 @@ export class DimensionamientoOrchestrator {
             let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
             lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
 
-            let lectura_sensor_laser_obj = {
-                id: 1,
-                clase_vehiculo_id: "0"
-            }
+            // let lectura_sensor_laser_obj = {
+            //     id: 1,
+            //     clase_vehiculo_id: "0"
+            // }
+
+            let lectura_sensor_laser_obj = new Transit_end();
 
             let msg = '( sin lectura de laser )';
             if (this.queue[0]['laser'] != null) {
@@ -98,22 +101,24 @@ export class DimensionamientoOrchestrator {
                 lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
                 msg = '( con lectura de laser ' + lectura_sensor_laser_obj.id + ' )';
             }
+            else{
+                
+            }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
             evento_transito_obj.fecha_hora = Date();
             evento_transito_obj.lectura_camara_lpr_id = lectura_camara_lpr_obj.lectura_camara_lpr_id;
             evento_transito_obj.lectura_sensores_id = lectura_sensor_laser_obj.id;
-            evento_transito_obj.clase_vehiculo_id = lectura_sensor_laser_obj.clase_vehiculo_id;
-            evento_transito_obj.tipo = 1;
+            evento_transito_obj.tipo = 1; // 1: lectura normal 2: Lectura por dispositivos de fugados
             let evento_transitoDAO = new EventoTransitoDAO();
             evento_transito_obj = await evento_transitoDAO.insertEventoTransito(evento_transito_obj);
             
             //Chequea que cumpla con los parametros y
             // emite los datos a traves de sockets
             let clase_vehiculoDAO = new ClaseVehiculoDAO();
-            let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.clase_vehiculo_id)
+            let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.class_id)
             let esAlerta = false
-            if (lectura_sensor_laser_obj["height"] > clase_vehiculo.max_height || lectura_sensor_laser_obj["length"] > clase_vehiculo.max_length || lectura_sensor_laser_obj["width"] > clase_vehiculo.max_width) {
+            if (lectura_sensor_laser_obj.height > clase_vehiculo.max_height || lectura_sensor_laser_obj.length > clase_vehiculo.max_length || lectura_sensor_laser_obj.width > clase_vehiculo.max_width) {
                 esAlerta = true;
                 let posible_infracionDAO = new PosibleInfraccionDAO()
                 let posible_infraccion = new PosibleInfraccion()
@@ -129,6 +134,7 @@ export class DimensionamientoOrchestrator {
             socketService.emit("dimensionamiento-emit", {
                 lectura_sensor_laser_obj,
                 lectura_camara_lpr_obj,
+                clase_vehiculo,
                 esAlerta
             });
 

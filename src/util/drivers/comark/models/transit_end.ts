@@ -1,12 +1,12 @@
 export class Transit_end {
-    public id: string;
+    public id: number;
     public lane: string;
     public lane_id: string;
     public time_iso: string;
-    public speed: string;
-    public height: string;
-    public width: string;
-    public length: string;
+    public speed: number;
+    public height: number;
+    public width: number;
+    public length: number;
     public refl_pos: string;
     public gap: string;
     public headway: string;

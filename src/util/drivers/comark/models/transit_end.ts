@@ -18,7 +18,7 @@ export class Transit_end {
     public stop_and: string;
 
     public init() {
-        this.id = 0;
+        this.id = 1;
         this.lane = "0";
         this.lane_id = "0";
         this.time_iso = "0";

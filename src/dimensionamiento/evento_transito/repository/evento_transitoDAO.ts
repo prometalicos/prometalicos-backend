@@ -52,9 +52,9 @@ export class EventoTransitoDAO {
 
             let query = await this.connection.pool.query(`SELECT evt.tipo, evt.fecha_hora, cv.descripcion, cv.url_picture, lsl.height, lsl.width, lsl.length, lcl.placa_identificada, lcl.url_foto_ampliada 
             FROM adm.evento_transito evt 
-            inner join lectura_sensores_laser lsl on lsl.lectura_sensores_id = evt .lectura_sensores_id
-            inner join lectura_camara_lpr lcl on lcl.lectura_camara_lpr_id = evt.lectura_camara_lpr_id 
-            inner join clase_vehiculo cv on lsl.class_id = cv.clase_vehiculo_id;`);
+            inner join adm.lectura_sensores_laser lsl on lsl.lectura_sensores_id = evt .lectura_sensores_id
+            inner join adm.lectura_camara_lpr lcl on lcl.lectura_camara_lpr_id = evt.lectura_camara_lpr_id 
+            inner join adm.clase_vehiculo cv on lsl.class_id = cv.clase_vehiculo_id;`);
 
             return query
         } catch (error) {

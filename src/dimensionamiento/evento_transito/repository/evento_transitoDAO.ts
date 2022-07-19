@@ -50,13 +50,11 @@ export class EventoTransitoDAO {
     public async getDimensionamientoAll() {
         try {
 
-            let query = await this.connection.pool.query(`SELECT
-                        evento_transito_id,
-                        tipo,
-                        fecha_hora,
-                        lectura_camara_lpr_id,
-                        lectura_sensores_id
-                        FROM adm.evento_transito;`);
+            let query = await this.connection.pool.query(`SELECT evt.tipo, evt.fecha_hora, cv.descripcion, cv.url_picture, lsl.height, lsl.width, lsl.length, lcl.placa_identificada, lcl.url_foto_ampliada 
+            FROM adm.evento_transito evt 
+            inner join lectura_sensores_laser lsl on lsl.lectura_sensores_id = evt .lectura_sensores_id
+            inner join lectura_camara_lpr lcl on lcl.lectura_camara_lpr_id = evt.lectura_camara_lpr_id 
+            inner join clase_vehiculo cv on lsl.class_id = cv.clase_vehiculo_id;`);
 
             return query
         } catch (error) {

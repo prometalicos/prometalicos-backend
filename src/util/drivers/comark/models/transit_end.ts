@@ -16,4 +16,24 @@ export class Transit_end {
     public direction: string;
     public wrong_way: string;
     public stop_and: string;
+
+    public init() {
+        this.id = 0;
+        this.lane = "0";
+        this.lane_id = "0";
+        this.time_iso = "0";
+        this.speed = 0;
+        this.height = 0;
+        this.width = 0;
+        this.length = 0;
+        this.refl_pos = "0";
+        this.gap =  "0";
+        this.headway = "0";
+        this.occupancy = "0";
+        this.class_id = "0";
+        this.position = "0";
+        this.direction = "0";
+        this.wrong_way =  "0";
+        this.stop_and = "0";
+}
 }

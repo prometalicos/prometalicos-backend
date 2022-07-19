@@ -102,7 +102,7 @@ export class DimensionamientoOrchestrator {
                 msg = '( con lectura de laser ' + lectura_sensor_laser_obj.id + ' )';
             }
             else{
-                
+                lectura_sensor_laser_obj.id = 1;
             }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();

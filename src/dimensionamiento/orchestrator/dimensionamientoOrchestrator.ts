@@ -131,10 +131,18 @@ export class DimensionamientoOrchestrator {
             }
             let socketService = SocketServiceBasic.getInstance()
             
+            let clase_vehiculo_send = {
+                descripcion: clase_vehiculo.descripcion,
+                url_picture: clase_vehiculo.url_picture,
+                max_height: clase_vehiculo.max_height,
+                max_width: clase_vehiculo.max_width,
+                max_length: clase_vehiculo.max_length
+            }
+
             socketService.emit("dimensionamiento-emit", {
                 lectura_sensor_laser_obj,
                 lectura_camara_lpr_obj,
-                clase_vehiculo,
+                clase_vehiculo_send,
                 esAlerta
             });
 

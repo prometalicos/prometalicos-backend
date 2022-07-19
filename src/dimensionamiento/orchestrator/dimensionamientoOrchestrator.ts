@@ -118,7 +118,7 @@ export class DimensionamientoOrchestrator {
             let clase_vehiculoDAO = new ClaseVehiculoDAO();
             console.log("Obteniendo la clase de vehiculo: ", lectura_sensor_laser_obj.class_id);
             let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.class_id);
-            console.log("Regreso: ", clase_vehiculo.descripcion);
+            console.log("Regreso: ", clase_vehiculo);
             let clase_vehiculo_send = {
                 descripcion: clase_vehiculo.descripcion,
                 url_picture: clase_vehiculo.url_picture,

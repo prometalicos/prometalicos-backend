@@ -116,7 +116,15 @@ export class DimensionamientoOrchestrator {
             //Chequea que cumpla con los parametros y
             // emite los datos a traves de sockets
             let clase_vehiculoDAO = new ClaseVehiculoDAO();
-            let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.class_id)
+            console.log("Obteniendo la clase de vehiculo: ", lectura_sensor_laser_obj.class_id);
+            let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.class_id);
+            let clase_vehiculo_send = {
+                descripcion: clase_vehiculo.descripcion,
+                url_picture: clase_vehiculo.url_picture,
+                max_height: clase_vehiculo.max_height,
+                max_width: clase_vehiculo.max_width,
+                max_length: clase_vehiculo.max_length
+            }
             let esAlerta = false
             if (lectura_sensor_laser_obj.height > clase_vehiculo.max_height || lectura_sensor_laser_obj.length > clase_vehiculo.max_length || lectura_sensor_laser_obj.width > clase_vehiculo.max_width) {
                 esAlerta = true;
@@ -130,14 +138,6 @@ export class DimensionamientoOrchestrator {
                 await posible_infracionDAO.insertPosibleInfraccion(posible_infraccion)
             }
             let socketService = SocketServiceBasic.getInstance()
-            
-            let clase_vehiculo_send = {
-                descripcion: clase_vehiculo.descripcion,
-                url_picture: clase_vehiculo.url_picture,
-                max_height: clase_vehiculo.max_height,
-                max_width: clase_vehiculo.max_width,
-                max_length: clase_vehiculo.max_length
-            }
 
             socketService.emit("dimensionamiento-emit", {
                 lectura_sensor_laser_obj,

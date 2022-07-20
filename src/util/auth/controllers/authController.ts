@@ -29,7 +29,6 @@ export class AuthController {
 				var tokenReturn = jwt.sign(token, process.env.SECRET, {
 					expiresIn: 60 * 60 * 24 // expires in 24 hours
 				});
-				console.log('Aqui');
 				res.send({
 					user: result[0],
 					tokenReturn

@@ -79,7 +79,6 @@ export class ConcesionController {
 		try {
 			let res_obj = new ResponseModel();
 			res_obj.data = await concesion.updateConcesion(req.body);
-			console.log('Resùesta',res_obj.data.length)
 			if (res_obj.data.length == 0) {
 				res_obj.message = 'Concesion updated'
 				res_obj.status = 204

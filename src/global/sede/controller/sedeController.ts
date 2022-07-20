@@ -43,7 +43,7 @@ export class SedeController {
 			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while getting users :" +
+				"An error occurred while getting sedes :" +
 				error +
 				`: ${SedeController.name} -> getSede`
 			);

@@ -29,7 +29,7 @@ export class SedeDAO {
             let query = await this.connection.pool.query(`INSERT INTO adm.sede (
                 sede_id,
                 concesion_id,
-                nombre,
+                nombre_sede,
                 estado) VALUES ($1,$2,$3,$4);`, [sede.sede_id, 
                     sede.concesion_id,
                     sede.nombre,
@@ -45,8 +45,8 @@ export class SedeDAO {
         try {
             let query = await this.connection.pool.query(`select sede_id,
             s.concesion_id,
-            c.nombre concesion_nombre,
-            s.nombre,
+            c.nombre_concesion concesion_nombre,
+            s.nombre_sede,
             s.estado
             FROM adm.sede s inner join adm.concesion c ON s.concesion_id = c.concesion_id;`);
             return query.rows
@@ -61,7 +61,7 @@ export class SedeDAO {
             let query = await this.connection.pool.query(`SELECT
                         sede_id,
                         concesion_id,
-                        nombre,
+                        nombre_sede,
                         estado
                         FROM adm.sede
                         WHERE sede_id = $1;`, [sedeId.sede_id]);
@@ -77,7 +77,7 @@ export class SedeDAO {
 
             let query = await this.connection.pool.query(`UPDATE adm.sede SET
                 concesion_id = $1,
-                nombre = $2,
+                nombre_sede = $2,
                 estado = $3
                 WHERE sede_id = $4;`,
                     [sede.concesion_id,

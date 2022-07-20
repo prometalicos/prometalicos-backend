@@ -4,4 +4,5 @@ export class EventoTransito{
 	fecha_hora: string;
     lectura_camara_lpr_id: number;
     lectura_sensores_id: number;
+    es_alerta: boolean
 }

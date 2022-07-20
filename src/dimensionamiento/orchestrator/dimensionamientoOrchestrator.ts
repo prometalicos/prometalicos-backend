@@ -83,6 +83,8 @@ export class DimensionamientoOrchestrator {
 
     private async insertData() {
         try {
+
+            // Inserta en la tabla lectura_camara_lpr que inició el orquestador
             let lectura_camara_lpr_obj = this.queue[0]["lpr"];
             let lectura_camara_lprDAO = new LecturaCamaraLPRDAO();
             lectura_camara_lpr_obj = await lectura_camara_lprDAO.insertLecturaCamaraLPR(lectura_camara_lpr_obj, 'dimensionamiento');
@@ -95,6 +97,9 @@ export class DimensionamientoOrchestrator {
             let lectura_sensor_laser_obj = new Transit_end();
             lectura_sensor_laser_obj.init();
 
+            let evento_transito_obj: EventoTransito = new EventoTransito();
+
+            // En caso de recibir información del laser se inserta la información en la tabla lectura_sensores_laser
             let msg = '( sin lectura de laser )';
             if (this.queue[0]['laser'] != null) {
                 let lectura_sensor_laser_obj = this.queue[0]["laser"]
@@ -103,17 +108,6 @@ export class DimensionamientoOrchestrator {
                 msg = '( con lectura de laser ' + lectura_sensor_laser_obj.lectura_sensores_id + ' )';
             }
 
-            let evento_transito_obj: EventoTransito = new EventoTransito();
-            evento_transito_obj.fecha_hora = Date();
-            evento_transito_obj.lectura_camara_lpr_id = lectura_camara_lpr_obj.lectura_camara_lpr_id;
-            evento_transito_obj.lectura_sensores_id = lectura_sensor_laser_obj.lectura_sensores_id;
-            evento_transito_obj.tipo = 1; // 1: lectura normal 2: Lectura por dispositivos de fugados
-            let evento_transitoDAO = new EventoTransitoDAO();
-            evento_transito_obj = await evento_transitoDAO.insertEventoTransito(evento_transito_obj);
-            console.log('evento_transito_obj luego de insertar: ',evento_transito_obj);
-            
-            //Chequea que cumpla con los parametros y
-            // emite los datos a traves de sockets
             let clase_vehiculoDAO = new ClaseVehiculoDAO();
             console.log("Obteniendo la clase de vehiculo: ", lectura_sensor_laser_obj.class_id);
             let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.class_id);
@@ -130,6 +124,18 @@ export class DimensionamientoOrchestrator {
                 posible_infraccion.fecha_hora = lectura_camara_lpr_obj.fecha_hora
                 await posible_infracionDAO.insertPosibleInfraccion(posible_infraccion)
             }
+
+            // Luego de guardar respectivamente en lectura_sensores_laser y lectura_camara_lpr respectivamente se guarda el evento tránsito
+            evento_transito_obj.fecha_hora = Date();
+            evento_transito_obj.lectura_camara_lpr_id = lectura_camara_lpr_obj.lectura_camara_lpr_id;
+            evento_transito_obj.lectura_sensores_id = lectura_sensor_laser_obj.lectura_sensores_id;
+            evento_transito_obj.tipo = 1; // 1: lectura normal 2: Lectura por dispositivos de fugados
+            evento_transito_obj.es_alerta = esAlerta;
+            let evento_transitoDAO = new EventoTransitoDAO();
+            evento_transito_obj = await evento_transitoDAO.insertEventoTransito(evento_transito_obj);
+            console.log('evento_transito_obj luego de insertar: ',evento_transito_obj);
+
+            // Se envia la información vía socket a los clientes de frontEnd conectador 
             let socketService = SocketServiceBasic.getInstance()
 
             socketService.emit("dimensionamiento-emit", {

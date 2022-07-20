@@ -79,6 +79,7 @@ CREATE TABLE adm.evento_transito(
 	fecha_hora timestamp not null,
         lectura_camara_lpr_id bigint not null,
         lectura_sensores_id bigint not null,
+        es_alerta bool not null,
         CONSTRAINT evento_transito_pk PRIMARY KEY (evento_transito_id)
         )
           WITH (

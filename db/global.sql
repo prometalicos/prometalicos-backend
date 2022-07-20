@@ -39,7 +39,7 @@ CREATE TABLE adm.sede(
 CREATE TABLE adm.sub_sistema(
 	sub_sistema_id varchar(64) not null,
         sede_id varchar(64) not null,
-        descripcion varchar(256) not null,
+        nombre varchar(256) not null,
         estado bit not null,
         CONSTRAINT sub_sistema_pk PRIMARY KEY (sub_sistema_id)
         )

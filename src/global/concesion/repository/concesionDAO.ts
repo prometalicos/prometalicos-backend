@@ -26,7 +26,7 @@ export class ConcesionDAO {
                 telefono_contacto,
                 correo_e,
                 url) VALUES ($1,$2,$3,$4,$5,$6,$7);`, [concesion.concesion_id, 
-                    concesion.nombre, 
+                    concesion.nombre_concesion, 
                     concesion.direccion, 
                     concesion.estado, 
                     concesion.telefono_contacto,
@@ -80,7 +80,7 @@ export class ConcesionDAO {
         try {
 
             let query = await this.connection.pool.query(`UPDATE adm.concesion SET
-            nombre_concesion = $1,
+                nombre_concesion = $1,
                 direccion = $2,
                 estado = $3,
                 telefono_contacto = $4,
@@ -88,7 +88,7 @@ export class ConcesionDAO {
                 url = $6
                 WHERE concesion_id = $7;`,
                     [
-                    concesion.nombre, 
+                    concesion.nombre_concesion, 
                     concesion.direccion, 
                     concesion.estado, 
                     concesion.telefono_contacto,

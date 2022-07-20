@@ -49,7 +49,7 @@ export class SedeDAO {
             s.nombre,
             s.estado
             FROM adm.sede s inner join adm.concesion c ON s.concesion_id = c.concesion_id;`);
-            return query
+            return query.rows
         } catch (error) {
             throw new Error(error)
         }
@@ -66,7 +66,7 @@ export class SedeDAO {
                         FROM adm.sede
                         WHERE sede_id = $1;`, [sedeId.sede_id]);
 
-            return query;
+            return query.rows
         } catch (error) {
             return new Error(error);
         }
@@ -85,7 +85,7 @@ export class SedeDAO {
                     sede.estado,
                     sede.sede_id]);
 
-            return query
+            return query.rows
         } catch (error) {
             throw new Error(error)
         }
@@ -97,7 +97,7 @@ export class SedeDAO {
             let query = await this.connection.pool.query(`DELETE FROM adm.sede 
                         WHERE sede_id = $1;`, [sedeId]);
 
-            return query
+            return query.rows
         } catch (error) {
             throw new Error(error)
         }

@@ -32,7 +32,7 @@ export class SedeDAO {
                 nombre_sede,
                 estado) VALUES ($1,$2,$3,$4);`, [sede.sede_id, 
                     sede.concesion_id,
-                    sede.nombre,
+                    sede.nombre_sede,
                     sede.estado]);
 
             return sede
@@ -81,7 +81,7 @@ export class SedeDAO {
                 estado = $3
                 WHERE sede_id = $4;`,
                     [sede.concesion_id,
-                    sede.nombre,
+                    sede.nombre_sede,
                     sede.estado,
                     sede.sede_id]);
 

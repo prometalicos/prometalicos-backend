@@ -117,16 +117,9 @@ export class DimensionamientoOrchestrator {
             let clase_vehiculoDAO = new ClaseVehiculoDAO();
             console.log("Obteniendo la clase de vehiculo: ", lectura_sensor_laser_obj.class_id);
             let clase_vehiculo: ClaseVehiculo = await clase_vehiculoDAO.getClaseVehiculoById(lectura_sensor_laser_obj.class_id);
-            console.log("Regreso: ", clase_vehiculo);
-            let clase_vehiculo_send = {
-                descripcion: clase_vehiculo.descripcion,
-                url_picture: clase_vehiculo.url_picture,
-                max_height: clase_vehiculo.max_height,
-                max_width: clase_vehiculo.max_width,
-                max_length: clase_vehiculo.max_length
-            }
             let esAlerta = false
             if (lectura_sensor_laser_obj.height > clase_vehiculo.max_height || lectura_sensor_laser_obj.length > clase_vehiculo.max_length || lectura_sensor_laser_obj.width > clase_vehiculo.max_width) {
+                console.log("Detección de posible infracción: ", lectura_sensor_laser_obj.id);
                 esAlerta = true;
                 let posible_infracionDAO = new PosibleInfraccionDAO()
                 let posible_infraccion = new PosibleInfraccion()
@@ -142,7 +135,7 @@ export class DimensionamientoOrchestrator {
             socketService.emit("dimensionamiento-emit", {
                 lectura_sensor_laser_obj,
                 lectura_camara_lpr_obj,
-                clase_vehiculo_send,
+                clase_vehiculo,
                 esAlerta
             });
 

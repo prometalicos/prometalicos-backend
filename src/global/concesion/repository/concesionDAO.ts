@@ -20,7 +20,7 @@ export class ConcesionDAO {
 
             let query = await this.connection.pool.query(`INSERT INTO adm.concesion (
                 concesion_id,
-                nombre,
+                nombre_consesion,
                 direccion,
                 estado,
                 telefono_contacto,
@@ -44,7 +44,7 @@ export class ConcesionDAO {
 
             let query = await this.connection.pool.query(`SELECT
                         concesion_id,
-                        nombre,
+                        nombre_consesion,
                         direccion,
                         estado,
                         telefono_contacto,
@@ -62,7 +62,7 @@ export class ConcesionDAO {
 
             let query = await this.connection.pool.query(`SELECT
                         concesion_id,
-                        nombre,
+                        nombre_consesion,
                         direccion,
                         estado,
                         telefono_contacto,
@@ -80,7 +80,7 @@ export class ConcesionDAO {
         try {
 
             let query = await this.connection.pool.query(`UPDATE adm.concesion SET
-                nombre = $1,
+                nombre_consesion = $1,
                 direccion = $2,
                 estado = $3,
                 telefono_contacto = $4,

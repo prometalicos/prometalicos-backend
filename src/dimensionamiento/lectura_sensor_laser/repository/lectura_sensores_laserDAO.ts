@@ -53,6 +53,13 @@ export class LecturaSensoresLaserDAO {
                     lecturaSensoresLaser.stop_and,
                     lecturaSensoresLaser.stop_and]);
 
+                    if(query.rows.length > 0){
+                        lecturaSensoresLaser.id = query.rows[0]["lectura_sensores_id"]
+                    }
+                    else{
+                        lecturaSensoresLaser.id = 0; // Prueba -- Genera un error por no estar en la base de datos la lectura 0
+                    }
+
             return lecturaSensoresLaser
         } catch (error) {
             throw new Error(error)

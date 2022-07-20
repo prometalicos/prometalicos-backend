@@ -11,7 +11,6 @@ export class LecturaSensoresLaserDAO {
 
     public async insertLecturaSensoresLaser(lecturaSensoresLaser: Transit_end, periferico_id: string) {
         try {
-
             let query = await this.connection.pool.query(`INSERT INTO adm.lectura_sensores_laser (
                 periferico_id,
                 id,
@@ -53,7 +52,7 @@ export class LecturaSensoresLaserDAO {
                     lecturaSensoresLaser.stop_and]);
 
                     console.log("Lo regresado luego de insertar en el sensor laser ", query.rows.length, query.rows);
-                    if(query.rows.length == 0){
+                    if(query.rows.length > 0){
                         lecturaSensoresLaser.lectura_sensores_id = query.rows[0]["lectura_sensores_id"]
                     }
 

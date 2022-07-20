@@ -93,6 +93,7 @@ export class DimensionamientoOrchestrator {
             // }
 
             let lectura_sensor_laser_obj = new Transit_end();
+            lectura_sensor_laser_obj.init();
 
             let msg = '( sin lectura de laser )';
             if (this.queue[0]['laser'] != null) {
@@ -100,9 +101,6 @@ export class DimensionamientoOrchestrator {
                 let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
                 lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
                 msg = '( con lectura de laser ' + lectura_sensor_laser_obj.id + ' )';
-            }
-            else{
-                lectura_sensor_laser_obj.init();
             }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
@@ -112,6 +110,7 @@ export class DimensionamientoOrchestrator {
             evento_transito_obj.tipo = 1; // 1: lectura normal 2: Lectura por dispositivos de fugados
             let evento_transitoDAO = new EventoTransitoDAO();
             evento_transito_obj = await evento_transitoDAO.insertEventoTransito(evento_transito_obj);
+            console.log('evento_transito_obj luego de insertar: ',evento_transito_obj);
             
             //Chequea que cumpla con los parametros y
             // emite los datos a traves de sockets

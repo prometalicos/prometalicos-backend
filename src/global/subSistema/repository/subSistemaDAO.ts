@@ -21,11 +21,11 @@ export class SubSistemaDAO {
             let query = await this.connection.pool.query(`INSERT INTO adm.subSistema (
                 sub_sistema_id,
                 sede_id,
-                descripcion,
+                nombre_sub_sistema,
                 estado) VALUES ($1,$2,$3,$4);`, [
                     subSistema.sub_sistema_id,
                     subSistema.sede_id,
-                    subSistema.descripcion,
+                    subSistema.nombre_sub_sistema,
                     subSistema.estado]);
 
             return subSistema
@@ -37,14 +37,16 @@ export class SubSistemaDAO {
     public async getSubSistema() {
         try {
 
-            let query = await this.connection.pool.query(`SELECT
-                        sub_sistema_id,
-                        sede_id,
-                        descripcion,
-                        estado
-                        FROM adm.subSistema;`);
+            let query = await this.connection.pool.query(`select
+                        ss.sub_sistema_id,
+                        ss.sede_id,
+                        s.nombre_sede sede_nombre,
+                        ss.nombre_sub_sistema,
+                        ss.estado
+                        from adm.sub_sistema ss
+                        inner join adm.sede s on ss.sede_id = s.sede_id `);
 
-            return query
+            return query.rows
         } catch (error) {
             throw new Error(error)
         }
@@ -55,12 +57,12 @@ export class SubSistemaDAO {
 
             let query = await this.connection.pool.query(`SELECT
                         sede_id,
-                        descripcion,
+                        nombre_sub_sistema,
                         estado
                         FROM adm.subSistema
                         WHERE sub_sistema_id = $1;`, [sub_sistemaId.sub_sistema_id]);
 
-            return query;
+            return query.rows
         } catch (error) {
             return new Error(error);
         }
@@ -71,16 +73,16 @@ export class SubSistemaDAO {
 
             let query = await this.connection.pool.query(`UPDATE adm.subSistema SET
                 sede_id = $1,
-                descripcion = $2,
+                nombre_sub_sistema = $2,
                 estado = $3
                 WHERE sub_sistema_id = $4;`,
                     [
                      subSistema.sede_id,
-                     subSistema.descripcion,
+                     subSistema.nombre_sub_sistema,
                      subSistema.estado,
                      subSistema.sub_sistema_id]);
 
-            return query
+            return query.rows
         } catch (error) {
             throw new Error(error)
         }
@@ -92,7 +94,7 @@ export class SubSistemaDAO {
             let query = await this.connection.pool.query(`DELETE FROM adm.subSistema 
                         WHERE sub_sistema_id = $1;`, [sub_sistemaId]);
 
-            return query
+            return query.rows
         } catch (error) {
             throw new Error(error)
         }

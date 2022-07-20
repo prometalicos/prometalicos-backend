@@ -32,7 +32,7 @@ export class SubSistemaController {
 			let res_obj = new ResponseModel();
 			res_obj.data = await subSistema.getSubSistema()
 			res_obj.message = 'SubSistemaes obtained'
-			if (res_obj.data["rowCount"] == 0) {
+			if (res_obj.data.length == 0) {
 				res_obj.message = 'No SubSistemaes present'
 			}
 			res_obj.status = 200
@@ -53,7 +53,7 @@ export class SubSistemaController {
 		try {
 			let res_obj = new ResponseModel();
 			res_obj.data = await subSistema.getSubSistemaById(req.body);
-			if (res_obj.data["rowCount"] != 0) {
+			if (res_obj.data.length != 0) {
 				res_obj.message = 'SubSistema obtained'
 				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
@@ -78,7 +78,7 @@ export class SubSistemaController {
 		try {
 			let res_obj = new ResponseModel();
 			res_obj.data = await subSistema.updateSubSistema(req.body);
-			if (res_obj.data["rowCount"] != 0) {
+			if (res_obj.data.length == 0) {
 				res_obj.message = 'SubSistema updated'
 				res_obj.status = 204
 				res.status(res_obj.status).send(res_obj);
@@ -103,7 +103,7 @@ export class SubSistemaController {
 		try {
 			let res_obj = new ResponseModel();
 			res_obj.data = await subSistema.deleteSubSistema(req.body.sub_sistema_id);
-			if (res_obj.data["rowCount"] != 0) {
+			if (res_obj.data.length != 0) {
 				res_obj.message = 'SubSistema deleted'
 				res_obj.status = 202
 				res.status(res_obj.status).send(res_obj);

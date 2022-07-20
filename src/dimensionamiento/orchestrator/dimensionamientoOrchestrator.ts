@@ -100,13 +100,13 @@ export class DimensionamientoOrchestrator {
                 let lectura_sensor_laser_obj = this.queue[0]["laser"]
                 let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
                 lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
-                msg = '( con lectura de laser ' + lectura_sensor_laser_obj.id + ' )';
+                msg = '( con lectura de laser ' + lectura_sensor_laser_obj.lectura_sensores_id + ' )';
             }
 
             let evento_transito_obj: EventoTransito = new EventoTransito();
             evento_transito_obj.fecha_hora = Date();
             evento_transito_obj.lectura_camara_lpr_id = lectura_camara_lpr_obj.lectura_camara_lpr_id;
-            evento_transito_obj.lectura_sensores_id = lectura_sensor_laser_obj.id;
+            evento_transito_obj.lectura_sensores_id = lectura_sensor_laser_obj.lectura_sensores_id;
             evento_transito_obj.tipo = 1; // 1: lectura normal 2: Lectura por dispositivos de fugados
             let evento_transitoDAO = new EventoTransitoDAO();
             evento_transito_obj = await evento_transitoDAO.insertEventoTransito(evento_transito_obj);

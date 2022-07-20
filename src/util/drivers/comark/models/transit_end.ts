@@ -1,4 +1,5 @@
 export class Transit_end {
+    public lectura_sensores_id: number; // El que devuelve la basse de datos al insertar un registro (es serial)
     public id: number;
     public lane: string;
     public lane_id: string;
@@ -18,6 +19,7 @@ export class Transit_end {
     public stop_and: string;
 
     public init() {
+        this.lectura_sensores_id = 1;
         this.id = 1;
         this.lane = "0";
         this.lane_id = "0";

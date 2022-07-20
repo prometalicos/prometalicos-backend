@@ -103,6 +103,7 @@ export class DimensionamientoOrchestrator {
             let msg = '( sin lectura de laser )';
             if (this.queue[0]['laser'] != null) {
                 let lectura_sensor_laser_obj = this.queue[0]["laser"]
+                console.log("--- Esto es lo que trae la cola respecto al laser ", this.queue[0]['laser']);
                 let lectura_sensor_laserDAO = new LecturaSensoresLaserDAO();
                 lectura_sensor_laser_obj = await lectura_sensor_laserDAO.insertLecturaSensoresLaser(lectura_sensor_laser_obj, '2'); // Obtener ID
                 msg = '( con lectura de laser ' + lectura_sensor_laser_obj.lectura_sensores_id + ' )';

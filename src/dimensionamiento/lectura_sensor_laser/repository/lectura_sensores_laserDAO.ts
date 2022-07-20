@@ -57,7 +57,7 @@ export class LecturaSensoresLaserDAO {
                         lecturaSensoresLaser.lectura_sensores_id = query.rows[0]["lectura_sensores_id"]
                     }
                     else{
-                        lecturaSensoresLaser.lectura_sensores_id = 0; // Prueba -- Genera un error por no estar en la base de datos la lectura 0
+                        lecturaSensoresLaser.lectura_sensores_id = query.rows[0]["lectura_sensores_id"]; // Prueba -- Genera un error por no estar en la base de datos la lectura 0
                     }
 
             return lecturaSensoresLaser

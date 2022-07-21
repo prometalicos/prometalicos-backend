@@ -16,16 +16,16 @@ export class SubSistemaRoutes {
         .post(this.subSistemaController.insertSubSistema)
 
         app.route('/sub_sistema/get')
-        .post(auth,this.subSistemaController.getSubSistema)
+        .get(auth,this.subSistemaController.getSubSistema)
 
         app.route('/sub_sistema/getById')
-        .post(auth,this.subSistemaController.getSubSistemaById)
+        .get(auth,this.subSistemaController.getSubSistemaById)
 
         app.route('/sub_sistema/update')
-        .post(auth,this.subSistemaController.updateSubSistema)
+        .put(auth,this.subSistemaController.updateSubSistema)
 
         app.route('/sub_sistema/delete')
-        .post(auth,this.subSistemaController.deleteSubSistema)
+        .delete(auth,this.subSistemaController.deleteSubSistema)
 
     }
 }

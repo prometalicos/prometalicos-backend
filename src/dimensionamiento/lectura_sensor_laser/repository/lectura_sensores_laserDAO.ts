@@ -51,7 +51,7 @@ export class LecturaSensoresLaserDAO {
                     lecturaSensoresLaser.stop_and,
                     lecturaSensoresLaser.stop_and]);
 
-                    console.log("Lo regresado luego de insertar en el sensor laser ", query.rows.length, query.rows);
+                    console.log("Lo regresado luego de insertar en el sensor laser ", query.rows.length, query.rows), query.rows[0]["lectura_sensores_id"];
                     if(query.rows.length > 0){
                         lecturaSensoresLaser.lectura_sensores_id = query.rows[0]["lectura_sensores_id"]
                     }

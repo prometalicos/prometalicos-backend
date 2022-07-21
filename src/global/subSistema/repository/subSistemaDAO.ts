@@ -18,7 +18,7 @@ export class SubSistemaDAO {
             let id = uuid.v4();
             subSistema.sub_sistema_id = id;
 
-            let query = await this.connection.pool.query(`INSERT INTO adm.subSistema (
+            let query = await this.connection.pool.query(`INSERT INTO adm.sub_sistema (
                 sub_sistema_id,
                 sede_id,
                 nombre_sub_sistema,
@@ -59,7 +59,7 @@ export class SubSistemaDAO {
                         sede_id,
                         nombre_sub_sistema,
                         estado
-                        FROM adm.subSistema
+                        FROM adm.sub_sistema
                         WHERE sub_sistema_id = $1;`, [sub_sistemaId.sub_sistema_id]);
 
             return query.rows
@@ -71,7 +71,7 @@ export class SubSistemaDAO {
     public async updateSubSistema(subSistema: SubSistema) {
         try {
 
-            let query = await this.connection.pool.query(`UPDATE adm.subSistema SET
+            let query = await this.connection.pool.query(`UPDATE adm.sub_sistema SET
                 sede_id = $1,
                 nombre_sub_sistema = $2,
                 estado = $3
@@ -91,7 +91,7 @@ export class SubSistemaDAO {
     public async deleteSubSistema(sub_sistemaId: string) {
         try {
 
-            let query = await this.connection.pool.query(`DELETE FROM adm.subSistema 
+            let query = await this.connection.pool.query(`DELETE FROM adm.sub_sistema 
                         WHERE sub_sistema_id = $1;`, [sub_sistemaId]);
 
             return query.rows

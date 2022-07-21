@@ -1,8 +1,8 @@
 
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
-import { SubSistemaDAO } from "global/subSistema/repository/subSistemaDAO";
-import { ResponseModel } from "util/models/response.model";
+import { SubSistemaDAO } from "../repository/subSistemaDAO";
+import { ResponseModel } from "../../../util/models/response.model";
 
 let subSistema = new SubSistemaDAO();
 

@@ -64,7 +64,7 @@ export class ClaseVehiculoDAO {
                         max_length
                         FROM adm.clase_vehiculo
                         WHERE clase_vehiculo_id = $1;`, [clase_vehiculo_id]);
-            return query.rows;
+            return query.rows[0];
         } catch (error) {
             return new Error(error);
         }

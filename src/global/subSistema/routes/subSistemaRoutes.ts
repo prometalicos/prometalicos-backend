@@ -21,10 +21,10 @@ export class SubSistemaRoutes {
         app.route('/sub_sistema/getById')
         .get(this.subSistemaController.getSubSistemaById)
 
-        app.route('/sub_sistema/update')
+        app.route('/sub_sistema')
         .put(this.subSistemaController.updateSubSistema)
 
-        app.route('/sub_sistema/delete')
+        app.route('/sub_sistema')
         .delete(this.subSistemaController.deleteSubSistema)
 
     }

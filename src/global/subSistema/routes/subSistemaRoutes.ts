@@ -4,7 +4,7 @@ import * as auth from '../../../util/auth/services/authService'
 import * as cors from 'cors'
 import { SubSistemaController } from "global/subSistema/controller/subSistemaController";
 
-export class RolRoutes { 
+export class SubSistemaRoutes { 
     
     public subSistemaController: SubSistemaController = new SubSistemaController();
 
@@ -12,19 +12,19 @@ export class RolRoutes {
 
         app.use(cors());
 
-        app.route('/subSistema')
+        app.route('/sub_sistema')
         .post(this.subSistemaController.insertSubSistema)
 
-        app.route('/subSistema/get')
+        app.route('/sub_sistema/get')
         .post(auth,this.subSistemaController.getSubSistema)
 
-        app.route('/subSistema/getById')
+        app.route('/sub_sistema/getById')
         .post(auth,this.subSistemaController.getSubSistemaById)
 
-        app.route('/subSistema/update')
+        app.route('/sub_sistema/update')
         .post(auth,this.subSistemaController.updateSubSistema)
 
-        app.route('/subSistema/delete')
+        app.route('/sub_sistema/delete')
         .post(auth,this.subSistemaController.deleteSubSistema)
 
     }

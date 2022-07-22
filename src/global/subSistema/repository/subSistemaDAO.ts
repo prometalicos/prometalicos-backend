@@ -81,7 +81,6 @@ export class SubSistemaDAO {
                      subSistema.nombre_sub_sistema,
                      subSistema.estado,
                      subSistema.sub_sistema_id]);
-
             return query.rows
         } catch (error) {
             throw new Error(error)

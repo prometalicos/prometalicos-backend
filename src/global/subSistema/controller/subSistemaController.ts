@@ -80,7 +80,7 @@ export class SubSistemaController {
 			res_obj.data = await subSistema.updateSubSistema(req.body);
 			if (res_obj.data.length == 0) {
 				res_obj.message = 'SubSistema updated'
-				res_obj.status = 204
+				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
 			} else {
 				res_obj.message = 'SubSistema not found'
@@ -103,9 +103,9 @@ export class SubSistemaController {
 		try {
 			let res_obj = new ResponseModel();
 			res_obj.data = await subSistema.deleteSubSistema(req.body.sub_sistema_id);
-			if (res_obj.data.length != 0) {
+			if (res_obj.data.length == 0) {
 				res_obj.message = 'SubSistema deleted'
-				res_obj.status = 202
+				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
 			} else {
 				res_obj.message = 'SubSistema not found'

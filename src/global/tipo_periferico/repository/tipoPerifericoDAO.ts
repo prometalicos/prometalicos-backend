@@ -5,7 +5,7 @@ import { DataBaseService } from "../../../util/db_connection/services/dataBaseSe
 import { tipoPeriferico } from "../models/tipoPeriferico";
 import { DataBaseInterface } from "../../../util/db_connection/services/databaseInterface";
 
-export class tipoPerifericoDAO {
+export class TipoPerifericoDAO {
 
     private log
     private connection;
@@ -13,16 +13,15 @@ export class tipoPerifericoDAO {
         this.connection = DataBaseInterface.getInstance('global')
     }
 
-    public async inserttipoPeriferico(tipoPeriferico: tipoPeriferico) {
+    public async insertTipoPeriferico(tipoPeriferico: tipoPeriferico) {
         try {
             let id = uuid.v4();
             tipoPeriferico.tipo_periferico_id = id;
 
-            let query = await this.connection.pool.query(`INSERT INTO adm.sub_sistema (
+            let query = await this.connection.pool.query(`INSERT INTO adm.tipo_periferico (
                 tipo_periferico_id,
-                sede_id,
                 nombre_tipo_periferico,
-                estado) VALUES ($1,$2,$3,$4);`, [
+                estado) VALUES ($1,$2,$3);`, [
                     tipoPeriferico.tipo_periferico_id,
                     tipoPeriferico.nombre_tipo_periferico,
                     tipoPeriferico.estado]);
@@ -33,29 +32,28 @@ export class tipoPerifericoDAO {
         }
     }
 
-    public async gettipoPeriferico() {
+    public async getTipoPeriferico() {
         try {
 
             let query = await this.connection.pool.query(`select
                         tipo_periferico_id,
                         nombre_tipo_periferico,
                         estado
-                        from adm.sub_sistema`);
-
+                        from adm.tipo_periferico`);
             return query.rows
         } catch (error) {
             throw new Error(error)
         }
     }
 
-    public async gettipoPerifericoById(sub_sistemaId: tipoPeriferico) {
+    public async getTipoPerifericoById(tipo_perifericoId: tipoPeriferico) {
         try {
 
             let query = await this.connection.pool.query(`SELECT
                         nombre_tipo_periferico,
                         estado
-                        FROM adm.sub_sistema
-                        WHERE tipo_periferico_id = $1;`, [sub_sistemaId.tipo_periferico_id]);
+                        FROM adm.tipo_periferico
+                        WHERE tipo_periferico_id = $1;`, [tipo_perifericoId.tipo_periferico_id]);
 
             return query.rows
         } catch (error) {
@@ -63,11 +61,10 @@ export class tipoPerifericoDAO {
         }
     }
 
-    public async updatetipoPeriferico(tipoPeriferico: tipoPeriferico) {
+    public async updateTipoPeriferico(tipoPeriferico: tipoPeriferico) {
         try {
 
-            let query = await this.connection.pool.query(`UPDATE adm.sub_sistema SET
-                sede_id = $1,
+            let query = await this.connection.pool.query(`UPDATE adm.tipo_periferico SET
                 nombre_tipo_periferico = $2,
                 estado = $3
                 WHERE tipo_periferico_id = $4;`,
@@ -81,11 +78,11 @@ export class tipoPerifericoDAO {
         }
     }
 
-    public async deletetipoPeriferico(sub_sistemaId: string) {
+    public async deleteTipoPeriferico(tipo_perifericoId: string) {
         try {
 
-            let query = await this.connection.pool.query(`DELETE FROM adm.sub_sistema 
-                        WHERE tipo_periferico_id = $1;`, [sub_sistemaId]);
+            let query = await this.connection.pool.query(`DELETE FROM adm.tipo_periferico 
+                        WHERE tipo_periferico_id = $1;`, [tipo_perifericoId]);
 
             return query.rows
         } catch (error) {

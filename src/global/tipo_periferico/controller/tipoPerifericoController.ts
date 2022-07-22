@@ -1,18 +1,18 @@
 
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
-import { SubSistemaDAO } from "../repository/tipoPerifericoDAO";
+import { TipoPerifericoDAO } from "../repository/tipoPerifericoDAO";
 import { ResponseModel } from "../../../util/models/response.model";
 
-let subSistema = new SubSistemaDAO();
+let tipoPeriferico = new TipoPerifericoDAO();
 
-export class SubSistemaController {
+export class TipoPerifericoController {
 	/*-------------------------------- app --------------------------------------------------------*/
-	public async insertSubSistema(req: Request, res: Response, next) {
+	public async insertTipoPeriferico(req: Request, res: Response, next) {
 		try {
 			let res_obj = new ResponseModel();
-			res_obj.data = await subSistema.insertSubSistema(req.body)
-			res_obj.message = 'SubSistema inserted'
+			res_obj.data = await tipoPeriferico.insertTipoPeriferico(req.body)
+			res_obj.message = 'TipoPeriferico inserted'
 			res_obj.status = 201
 			res.status(res_obj.status).send(res_obj);
 		} catch (error) {
@@ -20,20 +20,20 @@ export class SubSistemaController {
 			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while inserting subSistema :" +
+				"An error occurred while inserting TipoPeriferico :" +
 				error +
-				`: ${SubSistemaController.name} -> insertSubSistema`
+				`: ${TipoPerifericoController.name} -> insertTipoPeriferico`
 			);
 		}
 	}
 
-	public async getSubSistema(req: Request, res: Response, next) {
+	public async getTipoPeriferico(req: Request, res: Response, next) {
 		try {
 			let res_obj = new ResponseModel();
-			res_obj.data = await subSistema.getSubSistema()
-			res_obj.message = 'SubSistemaes obtained'
+			res_obj.data = await tipoPeriferico.getTipoPeriferico()
+			res_obj.message = 'TipoPerifericoes obtained'
 			if (res_obj.data.length == 0) {
-				res_obj.message = 'No SubSistemaes present'
+				res_obj.message = 'No TipoPerifericoes present'
 			}
 			res_obj.status = 200
 			res.status(res_obj.status).send(res_obj);
@@ -44,21 +44,21 @@ export class SubSistemaController {
 			console.log(
 				"An error occurred while getting users :" +
 				error +
-				`: ${SubSistemaController.name} -> getSubSistema`
+				`: ${TipoPerifericoController.name} -> getTipoPeriferico`
 			);
 		}
 	}
 
-	public async getSubSistemaById(req: Request, res: Response, next) {
+	public async getTipoPerifericoById(req: Request, res: Response, next) {
 		try {
 			let res_obj = new ResponseModel();
-			res_obj.data = await subSistema.getSubSistemaById(req.body);
+			res_obj.data = await tipoPeriferico.getTipoPerifericoById(req.body);
 			if (res_obj.data.length != 0) {
-				res_obj.message = 'SubSistema obtained'
+				res_obj.message = 'TipoPeriferico obtained'
 				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
 			} else {
-				res_obj.message = 'SubSistema not found'
+				res_obj.message = 'TipoPeriferico not found'
 				res_obj.status = 404
 				res.status(res_obj.status).send(res_obj);
 			}
@@ -67,23 +67,23 @@ export class SubSistemaController {
 			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while getting subSistema :" +
+				"An error occurred while getting TipoPeriferico :" +
 				error +
-				`: ${SubSistemaController.name} -> getSubSistemaById`
+				`: ${TipoPerifericoController.name} -> getTipoPerifericoById`
 			);
 		}
 	}
 
-	public async updateSubSistema(req: Request, res: Response, next) {
+	public async updateTipoPeriferico(req: Request, res: Response, next) {
 		try {
 			let res_obj = new ResponseModel();
-			res_obj.data = await subSistema.updateSubSistema(req.body);
+			res_obj.data = await tipoPeriferico.updateTipoPeriferico(req.body);
 			if (res_obj.data.length == 0) {
-				res_obj.message = 'SubSistema updated'
+				res_obj.message = 'TipoPeriferico updated'
 				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
 			} else {
-				res_obj.message = 'SubSistema not found'
+				res_obj.message = 'TipoPeriferico not found'
 				res_obj.status = 404
 				res.status(res_obj.status).send(res_obj);
 			}
@@ -92,23 +92,23 @@ export class SubSistemaController {
 			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while updating subSistema :" +
+				"An error occurred while updating TipoPeriferico :" +
 				error +
-				`: ${SubSistemaController.name} -> updateSubSistema`
+				`: ${TipoPerifericoController.name} -> updateTipoPeriferico`
 			);
 		}
 	}
 
-	public async deleteSubSistema(req: Request, res: Response, next) {
+	public async deleteTipoPeriferico(req: Request, res: Response, next) {
 		try {
 			let res_obj = new ResponseModel();
-			res_obj.data = await subSistema.deleteSubSistema(req.body.sub_sistema_id);
+			res_obj.data = await tipoPeriferico.deleteTipoPeriferico(req.body.sub_sistema_id);
 			if (res_obj.data.length == 0) {
-				res_obj.message = 'SubSistema deleted'
+				res_obj.message = 'TipoPeriferico deleted'
 				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
 			} else {
-				res_obj.message = 'SubSistema not found'
+				res_obj.message = 'TipoPeriferico not found'
 				res_obj.status = 404
 				res.status(res_obj.status).send(res_obj);
 			}
@@ -117,9 +117,9 @@ export class SubSistemaController {
 			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while deleting subSistema :" +
+				"An error occurred while deleting TipoPeriferico :" +
 				error +
-				`: ${SubSistemaController.name} -> deleteSubSistema`
+				`: ${TipoPerifericoController.name} -> deleteTipoPeriferico`
 			);
 		}
 	}

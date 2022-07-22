@@ -70,7 +70,7 @@ export class SubSistemaDAO {
 
     public async updateSubSistema(subSistema: SubSistema) {
         try {
-            console.log("Modificando");
+            console.log("Modificando ", subSistema);
             let query = await this.connection.pool.query(`UPDATE adm.sub_sistema SET
                 sede_id = $1,
                 nombre_sub_sistema = $2,

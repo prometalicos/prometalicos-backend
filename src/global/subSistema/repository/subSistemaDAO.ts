@@ -70,7 +70,6 @@ export class SubSistemaDAO {
 
     public async updateSubSistema(subSistema: SubSistema) {
         try {
-            console.log("Modificando ", subSistema);
             let query = await this.connection.pool.query(`UPDATE adm.sub_sistema SET
                 sede_id = $1,
                 nombre_sub_sistema = $2,
@@ -89,7 +88,7 @@ export class SubSistemaDAO {
 
     public async deleteSubSistema(sub_sistemaId: string) {
         try {
-
+            console.log("Modificando ", sub_sistemaId);
             let query = await this.connection.pool.query(`DELETE FROM adm.sub_sistema 
                         WHERE sub_sistema_id = $1;`, [sub_sistemaId]);
 

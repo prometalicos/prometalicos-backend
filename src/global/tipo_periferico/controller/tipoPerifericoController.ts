@@ -102,7 +102,7 @@ export class TipoPerifericoController {
 	public async deleteTipoPeriferico(req: Request, res: Response, next) {
 		try {
 			let res_obj = new ResponseModel();
-			res_obj.data = await tipoPeriferico.deleteTipoPeriferico(req.body.sub_sistema_id);
+			res_obj.data = await tipoPeriferico.deleteTipoPeriferico(req.body.tipo_periferico_id);
 			if (res_obj.data.length == 0) {
 				res_obj.message = 'TipoPeriferico deleted'
 				res_obj.status = 200

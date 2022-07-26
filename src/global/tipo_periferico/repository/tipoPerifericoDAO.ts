@@ -65,9 +65,9 @@ export class TipoPerifericoDAO {
         try {
 
             let query = await this.connection.pool.query(`UPDATE adm.tipo_periferico SET
-                nombre_tipo_periferico = $2,
-                estado = $3
-                WHERE tipo_periferico_id = $4;`,
+                nombre_tipo_periferico = $1,
+                estado = $2
+                WHERE tipo_periferico_id = $3;`,
                     [
                      tipoPeriferico.nombre_tipo_periferico,
                      tipoPeriferico.estado,
@@ -78,11 +78,11 @@ export class TipoPerifericoDAO {
         }
     }
 
-    public async deleteTipoPeriferico(tipo_perifericoId: string) {
+    public async deleteTipoPeriferico(tipo_periferico_id: string) {
         try {
 
             let query = await this.connection.pool.query(`DELETE FROM adm.tipo_periferico 
-                        WHERE tipo_periferico_id = $1;`, [tipo_perifericoId]);
+                        WHERE tipo_periferico_id = $1;`, [tipo_periferico_id]);
 
             return query.rows
         } catch (error) {

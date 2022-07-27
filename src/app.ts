@@ -19,6 +19,7 @@ import { ClaseVehiculoRoutes } from "./dimensionamiento/clase_vehiculo/routes/cl
 import { PosibleInfraccionRoutes } from "./dimensionamiento/posible_infraccion/routes/posible_infraccionRoutes";
 import { TipoPerifericoRoutes } from './global/tipo_periferico/routes/tipoPerifericoRoutes';
 import { PerifericoRoutes } from './global/periferico/routes/perifericoRoutes';
+import { TarjetaPuertosRoutes } from './global/tarjeta_puertos/routes/tarjetaPuertosRoutes';
 
 class App {
     public app: express.Application;
@@ -32,6 +33,7 @@ class App {
     public dimensionamientoRoutes: DimensionamientoRoutes = new DimensionamientoRoutes();
     public tipoPerifericoRoutes: TipoPerifericoRoutes = new TipoPerifericoRoutes();
     public perifericoRoutes: PerifericoRoutes = new PerifericoRoutes();
+    public tarjetaPuertosRoutes: TarjetaPuertosRoutes = new TarjetaPuertosRoutes();
 
     public vekRoutes: VekRoutes = new VekRoutes();
     public clasVehiculoRoutes: ClaseVehiculoRoutes = new ClaseVehiculoRoutes();
@@ -62,6 +64,7 @@ class App {
         this.clasVehiculoRoutes.routes(this.app);
         this.vekRoutes.routes(this.app);
         this.perifericoRoutes.routes(this.app);
+        this.tarjetaPuertosRoutes.routes(this.app);
 
         this.connection = DataBaseInterface.getInstance('global');
         this.connection2 = DataBaseInterface.getInstance('evasion');

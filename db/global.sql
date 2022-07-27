@@ -116,7 +116,7 @@ CREATE TABLE adm.tipo_periferico(
 
 -- Tabla de configuración de hardware, van los puertos, cambiar toda la tabla, OJO va para las otras base de datos
 CREATE TABLE adm.tarjeta_puertos (
-    tarjeta_puertos_id int not null, -- Por cada tarjeta PK
+    tarjeta_puertos_id varchar(64) not null, -- Por cada tarjeta PK
     puerto varchar(64) not null, -- una tarjeta tiene varios puertos PK,
     periferico_id varchar(64),
     ip varchar(64) not null, -- de la tarjeta

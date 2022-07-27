@@ -4,7 +4,7 @@ import * as auth from '../../../util/auth/services/authService'
 import * as cors from 'cors'
 import { TarjetaPuertosController } from "../controller/tarjetaPuertosController";
 
-export class PuertosRoutes { 
+export class TarjetaPuertosRoutes { 
     
     public tarjetaPuertosController: TarjetaPuertosController = new TarjetaPuertosController();
 

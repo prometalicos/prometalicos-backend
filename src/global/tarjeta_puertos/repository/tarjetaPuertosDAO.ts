@@ -23,8 +23,7 @@ export class TarjetaPuertosDAO {
                 ip,
                 nombre_tarjeta_puertos,
                 tipo,
-                estado,
-                url) VALUES ($1,$2,$3,$4,$5,$6,$7);`, [
+                estado) VALUES ($1,$2,$3,$4,$5,$6,$7);`, [
                     tarjetaPuertos.tarjeta_puertos_id,
                     tarjetaPuertos.puerto,
                     tarjetaPuertos.periferico_id,
@@ -107,7 +106,7 @@ export class TarjetaPuertosDAO {
         try {
 
             let query = await this.connection.pool.query(`DELETE FROM adm.tarjeta_puertos WHERE tarjeta_puertos_id = $1;`, [tarjeta_puertos_id]);
-            return query
+            return query.rows
         } catch (error) {
             throw new Error(error)
         }

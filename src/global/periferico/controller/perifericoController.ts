@@ -2,7 +2,7 @@
 import { Request, Response } from "express";
 import { ErrorModel } from "../../../util/error_handling/models/error";
 import { PerifericoDAO } from "../repository/perifericoDAO";
-import { ResponseModel } from "util/models/response.model";
+import { ResponseModel } from "../../../util/models/response.model";
 
 
 let periferico = new PerifericoDAO();

@@ -16,16 +16,16 @@ export class PerifericoRoutes {
         .post(this.perifericoController.insertPeriferico)
 
         app.route('/periferico/get')
-        .post(auth,this.perifericoController.getPeriferico)
+        .get(this.perifericoController.getPeriferico)
 
         app.route('/periferico/getById')
-        .post(auth,this.perifericoController.getPerifericoById)
+        .get(this.perifericoController.getPerifericoById)
 
-        app.route('/periferico/update')
-        .post(auth,this.perifericoController.updatePeriferico)
+        app.route('/periferico')
+        .put(this.perifericoController.updatePeriferico)
 
-        app.route('/periferico/delete')
-        .post(auth,this.perifericoController.deletePeriferico)
+        app.route('/periferico')
+        .delete(this.perifericoController.deletePeriferico)
 
     }
 }

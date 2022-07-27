@@ -86,7 +86,7 @@ CREATE TABLE adm.periferico(
 	periferico_id varchar(64) not null,
         sub_sistema_id varchar(64) not null,
         tipo_periferico_id varchar(64) not null,
-        descripcion varchar(256) not null,
+        nombre_periferico varchar(256) not null,
         marca varchar(256) not null,
         serial varchar(256) not null,
         modelo varchar(256) not null,
@@ -97,6 +97,7 @@ CREATE TABLE adm.periferico(
         ruta_ftp varchar(128),
         ruta_ftp_http varchar(128),
         tiempo_espera int,
+        estado bool not null,
         CONSTRAINT periferico_pk PRIMARY KEY (periferico_id)
         )
           WITH (
@@ -248,38 +249,38 @@ INSERT INTO adm.tipo_periferico (tipo_periferico_id, nombre_tipo_periferico, est
 INSERT INTO adm.tipo_periferico (tipo_periferico_id, nombre_tipo_periferico, estado) VALUES('5', 'Placa', true);
 INSERT INTO adm.tipo_periferico (tipo_periferico_id, nombre_tipo_periferico, estado) VALUES('6', 'Panel', true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('1','1','4','Placa supervisora perfilador','Electro Tax','654654','5fs5','12','2424','127.0.0.1','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('1','1','4','Placa supervisora perfilador','Electro Tax','654654','5fs5','12','2424','127.0.0.1','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('2','1','2','Laser Principal','Comark','654654','5fs5','12','2424','172.19.150.5','12876', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('2','1','2','Laser Principal','Comark','654654','5fs5','12','2424','172.19.150.5','12876', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('3','1','3','Laser Secundario','Comark','654654','5fs5','12','2424','172.19.150.6','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('3','1','3','Laser Secundario','Comark','654654','5fs5','12','2424','172.19.150.6','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('4','1','3','Laser Frontal','Comark','654654','5fs5','12','2424','172.19.150.7','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('4','1','3','Laser Frontal','Comark','654654','5fs5','12','2424','172.19.150.7','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('5','1','4','CCTV Perfilador','Comark','654654','5fs5','12','2424','172.19.150.8','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('5','1','4','CCTV Perfilador','Comark','654654','5fs5','12','2424','172.19.150.8','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('6','1','0','CPU','Comark','654654','5fs5','12','2424','172.19.150.9','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('6','1','0','CPU','Comark','654654','5fs5','12','2424','172.19.150.9','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('7','2','1','LPR Dimensionamiento','Pumatronic','654654','5fs5','12','2424','172.19.150.9','21', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 1800);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('7','2','1','LPR Dimensionamiento','Pumatronic','654654','5fs5','12','2424','172.19.150.9','21', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 1800, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('8','1','5','Placa supervisora FUGA','Comark','654654','5fs5','12','2424','172.19.150.20','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('8','1','5','Placa supervisora FUGA','Comark','654654','5fs5','12','2424','172.19.150.20','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('9','1','6','LPR FUGA','Comark','654654','5fs5','12','2424','172.19.150.21','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('9','1','6','LPR FUGA','Comark','654654','5fs5','12','2424','172.19.150.21','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('10','1','6','PAN FUGA','Comark','654654','5fs5','12','2424','172.19.150.22','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('10','1','6','PAN FUGA','Comark','654654','5fs5','12','2424','172.19.150.22','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, descripcion, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera)
- VALUES ('11','1','4','CCTV FUGA','Comark','654654','5fs5','12','2424','172.19.150.23','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0);
+INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
+ VALUES ('11','1','4','CCTV FUGA','Comark','654654','5fs5','12','2424','172.19.150.23','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
 INSERT INTO adm.tarjeta_puertos(tarjeta_id,puerto,periferico_id,ip,descripcion_puerto, estado,tipo) VALUES (1,'561','1','127.0.0.1','pureba',CAST(1 AS bit),CAST(1 AS bit));
 

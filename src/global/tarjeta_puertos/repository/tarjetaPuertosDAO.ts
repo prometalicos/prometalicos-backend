@@ -43,14 +43,16 @@ export class TarjetaPuertosDAO {
         try {
 
             let query = await this.connection.pool.query(`SELECT
-                    tarjeta_puertos_id,
-                    puerto,
-                    periferico_id,
-                    ip,
-                    nombre_tarjeta_puertos,
-                    tipo,
-                    estado
-                FROM adm.tarjeta_puertos;`);
+                    tp.tarjeta_puertos_id,
+                    tp.puerto,
+                    tp.periferico_id,
+                    p.nombre_periferico,
+                    tp.ip,
+                    tp.nombre_tarjeta_puertos,
+                    tp.tipo,
+                    tp.estado
+                FROM adm.tarjeta_puertos tp
+                inner join adm.periferico p on tp.periferico_id = p.periferico_id;`);
             return query.rows
         } catch (error) {
             throw new Error(error)
@@ -61,14 +63,16 @@ export class TarjetaPuertosDAO {
         try {
 
             let query = await this.connection.pool.query(`SELECT
-                    tarjeta_puertos_id,
-                    puerto,
-                    periferico_id,
-                    ip,
-                    nombre_tarjeta_puertos,
-                    tipo,
-                    estado
-                FROM adm.tarjeta_puertos
+                    tp.tarjeta_puertos_id,
+                    tp.puerto,
+                    tp.periferico_id,
+                    p.nombre_periferico,
+                    tp.ip,
+                    tp.nombre_tarjeta_puertos,
+                    tp.tipo,
+                    tp.estado
+                FROM adm.tarjeta_puertos tp
+                inner join adm.periferico p on tp.periferico_id = p.periferico_id
                 WHERE tarjeta_puertos_id = $1;`, [tarjetaPuertos.tarjeta_puertos_id]);
             return query.rows;
         } catch (error) {

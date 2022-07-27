@@ -22,8 +22,8 @@ export class Watcher {
         try {
             this.perifericosDAO = new PerifericoDAO();
             let perifericos = await this.perifericosDAO.getPeriferico();
-            if ((perifericos != null || perifericos != undefined) && perifericos.rows.length > 0) {
-                perifericos.rows.forEach(periferico => {
+            if ((perifericos != null || perifericos != undefined) && perifericos.length > 0) {
+                perifericos.forEach(periferico => {
                     if(periferico['tipo_periferico_id'] == 1){
                         this.watcherList.push(FtpWatcher.start(periferico['ruta_ftp'], periferico['sub_sistema_id'], periferico['periferico_id']));
                     }

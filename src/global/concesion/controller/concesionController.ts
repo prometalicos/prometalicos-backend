@@ -43,7 +43,7 @@ export class ConcesionController {
 			err.status = 500
 			next(err);
 			console.log(
-				"An error occurred while getting users :" +
+				"An error occurred while getting concesion :" +
 				error +
 				`: ${ConcesionController.name} -> getConcesion`
 			);

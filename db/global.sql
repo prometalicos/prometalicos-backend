@@ -116,14 +116,14 @@ CREATE TABLE adm.tipo_periferico(
 
 -- Tabla de configuración de hardware, van los puertos, cambiar toda la tabla, OJO va para las otras base de datos
 CREATE TABLE adm.tarjeta_puertos (
-    tarjeta_id int not null, -- Por cada tarjeta PK
-    puerto varchar(64), -- una tarjeta tiene varios puertos PK,
-    periferico_id varchar(64) not null,
-    ip varchar(64), -- de la tarjeta
-    descripcion_puerto varchar(128), -- por cada puerto
-    estado bit not null, -- Activa, inactiva
-    tipo bit not null, -- Entrada / Salida
-    CONSTRAINT tarjeta_puertos_pk PRIMARY KEY (tarjeta_id, puerto)
+    tarjeta_puertos_id int not null, -- Por cada tarjeta PK
+    puerto varchar(64) not null, -- una tarjeta tiene varios puertos PK,
+    periferico_id varchar(64),
+    ip varchar(64) not null, -- de la tarjeta
+    nombre_tarjeta_puertos varchar(128) not null, -- por cada puerto
+    tipo char(1) not null, -- Entrada / Salida
+    estado bool not null, -- Activa, inactiva
+    CONSTRAINT tarjeta_puertos_pk PRIMARY KEY (tarjeta_puertos_id, puerto)
 );
 
 -- Es un log, que hizo un usuario en el sistema, va en global
@@ -282,5 +282,5 @@ INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, n
 INSERT INTO adm.periferico (periferico_id, sub_sistema_id, tipo_periferico_id, nombre_periferico, marca, serial, modelo, voltaje, numero_puertos, ip, puerto, ruta_ftp, ruta_ftp_http, tiempo_espera, estado)
  VALUES ('11','1','4','CCTV FUGA','Comark','654654','5fs5','12','2424','172.19.150.23','2424242', '/home/ftppromet/lpr_15011', 'ftp://172.19.150.9//lpr_15011', 0, true);
 
-INSERT INTO adm.tarjeta_puertos(tarjeta_id,puerto,periferico_id,ip,descripcion_puerto, estado,tipo) VALUES (1,'561','1','127.0.0.1','pureba',CAST(1 AS bit),CAST(1 AS bit));
+INSERT INTO adm.tarjeta_puertos(tarjeta_puertos_id,puerto,periferico_id,ip,nombre_tarjeta_puertos, tipo, estado) VALUES (1,'561','1','127.0.0.1','pureba', 'E', true);
 

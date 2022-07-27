@@ -80,7 +80,7 @@ export class TipoPerifericoDAO {
 
     public async deleteTipoPeriferico(tipo_periferico_id: string) {
         try {
-
+            
             let query = await this.connection.pool.query(`DELETE FROM adm.tipo_periferico 
                         WHERE tipo_periferico_id = $1;`, [tipo_periferico_id]);
 

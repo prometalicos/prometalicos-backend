@@ -82,7 +82,7 @@ export class PerifericoController {
 			res_obj.data = await periferico.updatePeriferico(req.body)
 			if (res_obj.data["rowCount"] != 0) {
 				res_obj.message = 'Periferico updated'
-				res_obj.status = 204
+				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
 			} else {
 				res_obj.message = 'Periferico not found'
@@ -104,10 +104,10 @@ export class PerifericoController {
 	public async deletePeriferico(req: Request, res: Response, next) {
 		try {
 			let res_obj = new ResponseModel();
-			res_obj.data = await periferico.deletePeriferico(req.body.id)
+			res_obj.data = await periferico.deletePeriferico(req.body.periferico_id)
 			if (res_obj.data["rowCount"] != 0) {
 				res_obj.message = 'Periferico deleted'
-				res_obj.status = 202
+				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
 			} else {
 				res_obj.message = 'Periferico not found'

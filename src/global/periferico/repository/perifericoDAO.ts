@@ -33,7 +33,7 @@ export class PerifericoDAO {
                 ruta_ftp,
                 ruta_ftp_http,
                 tiempo_espera,
-                estado bool
+                estado
                 ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15);`, [
                     periferico.periferico_id, 
                     periferico.sub_sistema_id,
@@ -49,8 +49,7 @@ export class PerifericoDAO {
                     periferico.ruta_ftp,
                     periferico.ruta_ftp_http,
                     periferico.tiempo_espera,
-                    periferico.estado,
-                    periferico.ruta_ftp
+                    periferico.estado
                 ]);
 
             return periferico
@@ -115,7 +114,6 @@ export class PerifericoDAO {
 
     public async updatePeriferico(periferico: Periferico) {
         try {
-
             let query = await this.connection.pool.query(`UPDATE adm.periferico SET
                 sub_sistema_id = $1,
                 tipo_periferico_id = $2,
@@ -132,7 +130,6 @@ export class PerifericoDAO {
                 tiempo_espera = $13,
                 estado = $14
                 WHERE periferico_id = $15;`, [
-                    periferico.periferico_id, 
                     periferico.sub_sistema_id,
                     periferico.tipo_periferico_id,
                     periferico.nombre_periferico,
@@ -147,7 +144,7 @@ export class PerifericoDAO {
                     periferico.ruta_ftp_http,
                     periferico.tiempo_espera,
                     periferico.estado,
-                    periferico.ruta_ftp
+                    periferico.periferico_id
                 ]);
 
             return query.rows;

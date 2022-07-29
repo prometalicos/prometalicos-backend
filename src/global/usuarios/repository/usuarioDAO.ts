@@ -158,7 +158,7 @@ export class UsuariosDAO {
         let row: NavData;
         let query_permiso_menu = await this.connection.pool.query(`SELECT
                         permiso_id, padre,
-                        nombre, url, icono,
+                        nombre_permiso, url, icono,
                         nivel
                         FROM adm.permiso
                         WHERE padre = $1;`, [query_permiso['permiso_id']]);
@@ -178,17 +178,17 @@ export class UsuariosDAO {
                             children.push(children_son[0]);
                         }
                         else {
-                            row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre'], url: query_permiso_menu.rows[index_permiso_menu]['url'], iconComponent: { name: query_permiso_menu.rows[index_permiso_menu]['icono']} };
+                            row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre_permiso'], url: query_permiso_menu.rows[index_permiso_menu]['url'], iconComponent: { name: query_permiso_menu.rows[index_permiso_menu]['icono']} };
                             children.push(row_children);
                         }
                     }
                     else {
-                        row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre'], url: query_permiso_menu.rows[index_permiso_menu]['url'], iconComponent: { name: query_permiso_menu.rows[index_permiso_menu]['icono']} };
+                        row_children = <NavData>{ name: query_permiso_menu.rows[index_permiso_menu]['nombre_permiso'], url: query_permiso_menu.rows[index_permiso_menu]['url'], iconComponent: { name: query_permiso_menu.rows[index_permiso_menu]['icono']} };
                         children.push(row_children);
                     }
                 }
             }
-            row = <NavData>{ name: query_permiso['nombre'], iconComponent: { name: query_permiso['icono'] }, url: query_permiso['url'], children: children }
+            row = <NavData>{ name: query_permiso['nombre_permiso'], iconComponent: { name: query_permiso['icono'] }, url: query_permiso['url'], children: children }
             sub_menu.push(row);
         }
         return sub_menu;
@@ -216,7 +216,7 @@ export class UsuariosDAO {
                         for (let index_permiso_rol = 0; index_permiso_rol < query_permiso_rol.rows.length; index_permiso_rol++) {
                             let query_permiso = await this.connection.pool.query(`SELECT
                                 permiso_id,
-                                nombre,
+                                nombre_permiso,
                                 icono
                                 FROM adm.permiso
                                 WHERE permiso_id = $1 and padre = -1;`, [query_permiso_rol.rows[index_permiso_rol]['permiso_id']]);
@@ -240,7 +240,7 @@ export class UsuariosDAO {
         try {
             let query_permiso = await this.connection.pool.query(`SELECT
                                 permiso_id,
-                                nombre,
+                                nombre_permiso,
                                 icono,
                                 url
                                 FROM adm.permiso

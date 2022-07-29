@@ -158,7 +158,7 @@ CREATE TABLE adm.permiso (
     permiso_id varchar(64) not null,
     padre varchar(64) not null NOT NULL,
     nivel int NOT NULL,
-    nombre character varying(64),
+    nombre_permiso character varying(64),
     icono character varying(64),
     url character varying(128),
     CONSTRAINT permiso_pk PRIMARY KEY (permiso_id)
@@ -202,27 +202,27 @@ INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(23, 'Invitado Parking');
 INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(31, 'Contador');
 INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(34, 'Auxiliar Contable');
 
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(1, -1, 0, 'Dashboard', 'cil-speedometer', '-');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(2, -1, 0, 'Administrar', 'cil-settings', '-');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(3, -1, 0, 'Subsistemas', 'cil-square', '-');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(4, -1, 0, 'Estadísticas', 'cil-puzzle', '-');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(1, -1, 0, 'Dashboard', 'cil-speedometer', '-');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(2, -1, 0, 'Administrar', 'cil-settings', '-');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(3, -1, 0, 'Subsistemas', 'cil-square', '-');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(4, -1, 0, 'Estadísticas', 'cil-puzzle', '-');
 
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(6, 2, 1, 'Concesión', 'icono-arrow-right', '/manage/concession');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(7, 2, 1, 'Sede', 'icono-rocket ', '/manage/campus');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(8, 2, 1, 'Subsistema', 'icono-book-open', '/manage/subsystem');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(9, 2, 1, 'Usuarios', 'icono-settings', '/manage/users');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(6, 2, 1, 'Concesión', 'icono-arrow-right', '/manage/concession');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(7, 2, 1, 'Sede', 'icono-rocket ', '/manage/campus');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(8, 2, 1, 'Subsistema', 'icono-book-open', '/manage/subsystem');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(9, 2, 1, 'Usuarios', 'icono-settings', '/manage/users');
 
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(11, 3, 1, 'Dimensionamiento', 'cil-puzzle', '/subsystems/sizing');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(12, 3, 1, 'Evasión', 'cil-bell-exclamation', '/manage');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(13, 3, 1, 'Fuga', 'cil-warning', '/manage');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(14, 3, 1, 'Estática', 'cil-square', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(11, 3, 1, 'Dimensionamiento', 'cil-puzzle', '/subsystems/sizing');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(12, 3, 1, 'Evasión', 'cil-bell-exclamation', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(13, 3, 1, 'Fuga', 'cil-warning', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(14, 3, 1, 'Estática', 'cil-square', '/manage');
 
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(16, 4, 1, 'Vista global', 'cil-settings', '/manage');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(17, 4, 1, 'Estática', 'cil-settings', '/manage');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(18, 4, 1, 'Dinámica', 'cil-settings', '/manage');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(19, 4, 1, 'Infractores', 'cil-settings', '/manage');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(20, 4, 1, 'Periféricos', 'cil-settings', '/manage');
-INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(21, 4, 1, 'Soporte', 'cil-settings', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(16, 4, 1, 'Vista global', 'cil-settings', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(17, 4, 1, 'Estática', 'cil-settings', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(18, 4, 1, 'Dinámica', 'cil-settings', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(19, 4, 1, 'Infractores', 'cil-settings', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(20, 4, 1, 'Periféricos', 'cil-settings', '/manage');
+INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre_permiso, icono, url) VALUES(21, 4, 1, 'Soporte', 'cil-settings', '/manage');
 
 INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(1, 00);
 INSERT INTO adm.permiso_rol (permiso_id, rol_id) VALUES(2, 00);

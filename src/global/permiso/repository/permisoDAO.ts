@@ -29,14 +29,14 @@ export class PermisoDAO {
                 permiso_id, 
                 padre,
                 nivel,
-                nombre,
+                nombre_permiso,
                 icono,
                 url
                 ) VALUES ($1,$2,$3,$4,$5,$6);`, [
                     permiso.permiso_id, 
                     permiso.padre,
                     permiso.nivel,
-                    permiso.nombre,
+                    permiso.nombre_permiso,
                     permiso.icono,
                     permiso.url
                 ]);
@@ -54,7 +54,7 @@ export class PermisoDAO {
                         permiso_id,
                         padre,
                         nivel,
-                        nombre,
+                        nombre_permiso,
                         icono,
                         url
                         FROM adm.permiso;`);
@@ -71,7 +71,7 @@ export class PermisoDAO {
             let query = await this.connection.pool.query(`SELECT
                         padre
                         nivel
-                        nombre
+                        nombre_permiso
                         icono
                         url
                         FROM adm.permiso
@@ -88,13 +88,13 @@ export class PermisoDAO {
             let query = await this.connection.pool.query(`UPDATE adm.permiso SET
                 padre = $1,
                 nivel = $2,
-                nombre = $3,
+                nombre_permiso = $3,
                 icono = $4,
                 url = $5
                 WHERE permiso_id = $6;`,
                     [permiso.padre,
                     permiso.nivel,
-                    permiso.nombre,
+                    permiso.nombre_permiso,
                     permiso.icono,
                     permiso.url,
                     permiso.permiso_id]);

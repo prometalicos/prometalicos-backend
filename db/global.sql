@@ -155,8 +155,8 @@ ALTER TABLE adm.periferico ADD CONSTRAINT FK_periferico__sub_sistema FOREIGN KEY
 ALTER TABLE adm.eventos_usuario ADD CONSTRAINT FK_eventos_usuario__usuario FOREIGN KEY (usuario_id) REFERENCES adm.usuario (usuario_id);
 
 CREATE TABLE adm.permiso (
-    permiso_id int NOT NULL,
-    padre int NOT NULL,
+    permiso_id varchar(64) not null,
+    padre varchar(64) not null NOT NULL,
     nivel int NOT NULL,
     nombre character varying(64),
     icono character varying(64),
@@ -165,14 +165,14 @@ CREATE TABLE adm.permiso (
 );
 
 CREATE TABLE adm.rol (
-    rol_id int NOT NULL,
+    rol_id varchar(64) not null,
     nombre_rol character varying(64),
     CONSTRAINT rol_pk PRIMARY KEY (rol_id)
 );
 
 CREATE TABLE adm.usuario_rol (
     usuario_id varchar(64) not null,
-    rol_id int NOT NULL,
+    rol_id varchar(64) not null,
     CONSTRAINT usuario_rol_pk PRIMARY KEY (usuario_id, rol_id)
 );
 
@@ -181,8 +181,8 @@ ALTER TABLE adm.usuario_rol ADD CONSTRAINT FK_usuario_rol__usuario FOREIGN KEY (
 ALTER TABLE adm.usuario_rol ADD CONSTRAINT FK_usuario_rol__rol FOREIGN KEY (rol_id) REFERENCES adm.rol (rol_id);
 
 CREATE TABLE adm.permiso_rol (
-    permiso_id int NOT NULL,
-    rol_id int NOT NULL,
+    permiso_id varchar(64) not null,
+    rol_id varchar(64) not null,
     CONSTRAINT permiso_rol_pk PRIMARY KEY (permiso_id, rol_id)
 );
 

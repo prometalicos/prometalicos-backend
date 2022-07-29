@@ -78,9 +78,9 @@ export class RolController {
 		try {
 			let res_obj = new ResponseModel();
 			res_obj.data = await rol.updateRol(req.body);
-			if (res_obj.data["rowCount"] != 0) {
+			if (res_obj.data.length == 0) {
 				res_obj.message = 'Rol updated'
-				res_obj.status = 204
+				res_obj.status = 200
 				res.status(res_obj.status).send(res_obj);
 			} else {
 				res_obj.message = 'Rol not found'

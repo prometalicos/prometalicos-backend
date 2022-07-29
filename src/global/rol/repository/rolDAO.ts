@@ -21,10 +21,10 @@ export class RolDAO {
 
             let query = await this.connection.pool.query(`INSERT INTO adm.rol (
                 rol_id,
-                nombre) VALUES ($1,$2);`, [rol.rol_id,
-            rol.nombre]);
+                nombre_rol) VALUES ($1,$2);`, [rol.rol_id,
+            rol.nombre_rol]);
+            return rol;
 
-            return rol
         } catch (error) {
             throw new Error(error)
         }
@@ -34,13 +34,11 @@ export class RolDAO {
         try {
             let query = await this.connection.pool.query(`SELECT
                         rol_id,
-                        nombre
+                        nombre_rol
                         FROM adm.rol;`);
 
             let socketService = SocketServiceBasic.getInstance()
-
-            socketService.emit("dimensionamiento-emit", { data: "message" });
-            return query
+            return query.rows;
 
         } catch (error) {
             throw new Error(error)
@@ -52,11 +50,11 @@ export class RolDAO {
 
             let query = await this.connection.pool.query(`SELECT
                         rol_id,
-                        nombre
+                        nombre_rol
                         FROM adm.rol
                         WHERE rol_id = $1;`, [rolId.rol_id]);
+            return query.rows;
 
-            return query;
         } catch (error) {
             return new Error(error);
         }
@@ -66,12 +64,14 @@ export class RolDAO {
         try {
 
             let query = await this.connection.pool.query(`UPDATE adm.rol SET
-                nombre = $1
-                WHERE rol_id = $82;`,
-                [rol.nombre,
-                rol.rol_id]);
+                nombre_rol = $1
+                WHERE rol_id = $2;`,
+                [
+                    rol.nombre_rol,
+                    rol.rol_id
+                ]);
 
-            return query
+            return query.rows;
         } catch (error) {
             throw new Error(error)
         }
@@ -83,7 +83,7 @@ export class RolDAO {
             let query = await this.connection.pool.query(`DELETE FROM adm.rol 
                         WHERE rol_id = $1;`, [rolId]);
 
-            return query
+            return query.rows;
         } catch (error) {
             throw new Error(error)
         }

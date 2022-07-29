@@ -19,13 +19,13 @@ export class RolRoutes {
         .get(this.rolController.getRol)
 
         app.route('/rol/getById')
-        .post(auth,this.rolController.getRolById)
+        .get(this.rolController.getRolById)
 
-        app.route('/rol/update')
-        .post(auth,this.rolController.updateRol)
+        app.route('/rol')
+        .put(this.rolController.updateRol)
 
-        app.route('/rol/delete')
-        .post(auth,this.rolController.deleteRol)
+        app.route('/rol')
+        .delete(this.rolController.deleteRol)
 
     }
 }

@@ -166,7 +166,7 @@ CREATE TABLE adm.permiso (
 
 CREATE TABLE adm.rol (
     rol_id int NOT NULL,
-    nombre character varying(64),
+    nombre_rol character varying(64),
     CONSTRAINT rol_pk PRIMARY KEY (rol_id)
 );
 
@@ -192,15 +192,15 @@ ALTER TABLE adm.permiso_rol ADD CONSTRAINT FK_permiso_rol FOREIGN KEY (rol_id) R
 INSERT INTO adm.usuario (usuario_id, rol_id, frase, nombre_usuario, nombre_completo, direccion, estado)
         VALUES ('1', 00, '$2a$12$qYjkbhIHnaJSsebbHmidkuPwQxsnzXstfMm2sB0yyDJIGycO6/qEy', 'adm', 'test', 'test', '1');
 
-INSERT INTO adm.rol(rol_id, nombre) VALUES(00, 'SuperUser');
-INSERT INTO adm.rol(rol_id, nombre) VALUES(11, 'Administrador POS');
-INSERT INTO adm.rol(rol_id, nombre) VALUES(12, 'Empleado POS');
-INSERT INTO adm.rol(rol_id, nombre) VALUES(13, 'Invitado POS');
-INSERT INTO adm.rol(rol_id, nombre) VALUES(21, 'Administrador Parking');
-INSERT INTO adm.rol(rol_id, nombre) VALUES(22, 'Empleado Parking');
-INSERT INTO adm.rol(rol_id, nombre) VALUES(23, 'Invitado Parking');
-INSERT INTO adm.rol(rol_id, nombre) VALUES(31, 'Contador');
-INSERT INTO adm.rol(rol_id, nombre) VALUES(34, 'Auxiliar Contable');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(00, 'SuperUser');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(11, 'Administrador POS');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(12, 'Empleado POS');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(13, 'Invitado POS');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(21, 'Administrador Parking');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(22, 'Empleado Parking');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(23, 'Invitado Parking');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(31, 'Contador');
+INSERT INTO adm.rol(rol_id, nombre_rol) VALUES(34, 'Auxiliar Contable');
 
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(1, -1, 0, 'Dashboard', 'cil-speedometer', '-');
 INSERT INTO adm.permiso (permiso_id, padre, nivel, nombre, icono, url) VALUES(2, -1, 0, 'Administrar', 'cil-settings', '-');

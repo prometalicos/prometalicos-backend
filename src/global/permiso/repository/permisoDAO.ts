@@ -26,12 +26,14 @@ export class PermisoDAO {
             let id = uuid.v4();
             permiso.permiso_id = id;
             let query = await this.connection.pool.query(`INSERT INTO adm.permiso (
+                permiso_id, 
                 padre,
                 nivel,
                 nombre,
                 icono,
                 url
-                ) VALUES ($1,$2,$3,$4,$5);`, [
+                ) VALUES ($1,$2,$3,$4,$5,$6);`, [
+                    permiso.permiso_id, 
                     permiso.padre,
                     permiso.nivel,
                     permiso.nombre,

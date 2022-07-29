@@ -2,9 +2,9 @@
 import {Request, Response, NextFunction} from "express";
 import * as auth from '../../../util/auth/services/authService'
 import * as cors from 'cors'
-import { PermisoController } from "global/permiso/controller/permiso.controller";
+import { PermisoController } from "../../permiso/controller/permiso.controller";
 
-export class ConcesionRoutes { 
+export class PermisoRoutes { 
     
     public permisoController: PermisoController = new PermisoController();
 
@@ -12,17 +12,20 @@ export class ConcesionRoutes {
 
         app.use(cors());
 
+        app.route('/permiso')
+        .post(this.permisoController.insertPermiso)
+
         app.route('/permiso/get')
-        .post(auth,this.permisoController.getPermiso)
+        .get(this.permisoController.getPermiso)
 
         app.route('/permiso/getById')
-        .post(auth,this.permisoController.getPermisoById)
+        .post(this.permisoController.getPermisoById)
 
-        app.route('/permiso/update')
-        .post(auth,this.permisoController.updatePermiso)
+        app.route('/permiso')
+        .put(this.permisoController.updatePermiso)
 
-        app.route('/permiso/delete')
-        .post(auth,this.permisoController.deletePermiso)
+        app.route('/permiso')
+        .delete(this.permisoController.deletePermiso)
 
     }
 }

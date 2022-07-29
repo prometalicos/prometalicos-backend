@@ -2,7 +2,7 @@
 import {Request, Response, NextFunction} from "express";
 import * as auth from '../../../util/auth/services/authService'
 import * as cors from 'cors'
-import { TipoPerifericoController } from "../../tipo_periferico/controller/tipoPerifericoController";
+import { TipoPerifericoController } from "../controller/tipoPerifericoController";
 
 export class TipoPerifericoRoutes { 
     
